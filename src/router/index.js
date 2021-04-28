@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+// import Home from "../views/Home.vue";
+import Discover from "@/views/Discover.vue";
+import Feed from "@/views/Feed.vue";
+import Login from "@/views/Login.vue";
+import Profile from "@/views/Profile.vue";
 
 Vue.use(VueRouter);
 
