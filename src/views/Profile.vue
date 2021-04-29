@@ -1,15 +1,26 @@
 <template>
-    <div>
+  <div>
+    <button>Edit Profile</button>
+    <section id="editProfile">
+      <edit-profile />
+    </section>
 
-    </div>
+    <button>Delete Profile</button>
+    <section>
+      <delete-profile />
+    </section>
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+import DeleteProfile from "../components/DeleteProfile.vue";
+import EditProfile from "../components/EditProfileForm.vue";
+export default {
+  components: {
+    EditProfile,
+    DeleteProfile,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

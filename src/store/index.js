@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
+// import axios from "axios";
+import cookies from "vue-cookies";
 
 Vue.use(Vuex);
 
@@ -8,27 +9,43 @@ export default new Vuex.Store({
   state: {
     loginToken: "",
     username: "",
+    userEmail: "",
+    userPassword: "",
+    // userImage:"",
+    userBirthdate: "",
+    userBio: "",
+    userId: "",
+    loginStatus: "",
   },
-  mutations: {},
-  actions: {
-    userSignup() {
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/users",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": `${process.env.VUE_APP_API_KEY}`,
-            //this process calls the .env.local file
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  mutations: {
+    updateLoginToken(state) {
+      let updatedLoginToken = cookies.get("loginToken");
+      state.loginToken = updatedLoginToken;
+      console.log(state.loginToken);
+    },
+    updateUserName(state, data) {
+      state.username = data;
+    },
+    updateUserEmail(state, data) {
+      state.userEmail = data;
+    },
+
+    updateUserPassword(state, data) {
+      state.userPassword = data;
+    },
+    updateUserBirthdate(state, data) {
+      state.userBirthdate = data;
+    },
+    updateUserBio(state, data) {
+      state.userBio = data;
+    },
+    updateUserId(state, data) {
+      state.userId = data;
+    },
+    updateLoginStatus(state, data) {
+      state.loginStatus = data;
     },
   },
-  modules: {},
+  actions: {},
+  getters: {},
 });
