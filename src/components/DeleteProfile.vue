@@ -22,14 +22,20 @@
         value="Delete Account"
       />
     </form>
+    <h4>{{ loginStatus }}</h4>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-// import cookies from "vue-cookies";
+import cookies from "vue-cookies";
 export default {
   name: "delete-profile",
+  data() {
+    return {
+      loginStatus: "",
+    };
+  },
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
@@ -39,9 +45,13 @@ export default {
     },
   },
   methods: {
+    navigateToHome() {
+      this.$router.push({ name: "Login" });
+    },
     // checkLoginToken() {
     //   console.log(this.loginToken);
     // },
+    //you can store json string as a cookie
     deleteProfile() {
       axios
         .request({
@@ -58,36 +68,20 @@ export default {
         })
         .then((res) => {
           console.log(res);
+          setTimeout(this.navigateToHome, 1500);
+          this.$store.commit("updateLoginToken", "");
+          cookies.remove("loginToken");
+          this.loginStatus = "Profile deleted! Redirecting...";
+
+          console.log(this.loginToken);
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.loginToken);
-          console.log(this.userPassword);
-        });
+          this.loginStatus = "Sorry, an error occurred. Please try again.";
 
-      // deleteProfile() {
-      //   axios
-      //     .request({
-      //       url: "https://tweeterest.ml/api/users",
-      //       method: "DELETE",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-      //       },
-      //       data: {
-      //         loginToken: this.loginToken,
-      //         password: document.getElementById("passwordInputDelete").value,
-      //       },
-      //     })
-      //     .then((res) => {
-      //       console.log(res);
-      //       // this.$store.commit("updateLoginToken", "");
-      //       cookies.remove("loginToken");
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      // },
+          // console.log(this.loginToken);
+          // console.log(this.userPassword);
+        });
     },
   },
 };

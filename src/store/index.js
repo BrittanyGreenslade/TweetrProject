@@ -15,13 +15,17 @@ export default new Vuex.Store({
     userBirthdate: "",
     userBio: "",
     userId: "",
-    loginStatus: "",
+    userInfo: cookies.get("setUserInfo"),
+    allUsers: "",
   },
   mutations: {
-    updateLoginToken(state) {
-      let updatedLoginToken = cookies.get("loginToken");
-      state.loginToken = updatedLoginToken;
-      console.log(state.loginToken);
+    updateAllUsers(state, data) {
+      state.allUsers = data;
+    },
+    updateLoginToken(state, data) {
+      // let updatedLoginToken = cookies.get("loginToken");
+      // state.loginToken = updatedLoginToken;
+      state.loginToken = data;
     },
     updateUserName(state, data) {
       state.username = data;
@@ -41,9 +45,6 @@ export default new Vuex.Store({
     },
     updateUserId(state, data) {
       state.userId = data;
-    },
-    updateLoginStatus(state, data) {
-      state.loginStatus = data;
     },
   },
   actions: {},

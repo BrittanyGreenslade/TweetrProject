@@ -19,6 +19,7 @@
       />
       <input @click="attemptLogin" type="button" id="loginBtn" value="Login" />
     </form>
+    <h4>{{ loginStatus }}</h4>
   </div>
 </template>
 
@@ -27,28 +28,10 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "login-form",
-  computed: {
-    // // userId() {
-    // //   return this.$store.state.userId;
-    // // },
-    // // userEmail() {
-    // //   return this.$store.state.userEmail;
-    // // },
-    // // username() {
-    // //   return this.$store.state.username;
-    // // },
-    // // userBio() {
-    // //   return this.$store.state.userBio;
-    // // },
-    // // userBirthdate() {
-    // //   return this.$store.state.userBirthdate;
-    // // },
-    // // userPassword() {
-    // //   return this.$store.state.userPassword;
-    // // },
-    // loginStatus() {
-    //   return this.$store.state.loginStatus;
-    // },
+  data() {
+    return {
+      loginStatus: "",
+    };
   },
   // mounted() {
   //   if (this.loginToken) {
@@ -64,16 +47,14 @@ export default {
       let userPassword = document.getElementById("passwordInputLogin").value;
       return this.$store.commit("updateUserPassword", userPassword);
     },
-    updateLoginToken() {
-      let updatedLoginToken = cookies.get("loginToken");
-      this.$store.commit("updateLoginToken", updatedLoginToken);
-    },
+    // updateLoginToken() {
+    //   let updatedLoginToken = cookies.get("loginToken");
+    //   this.$store.commit("updateLoginToken", updatedLoginToken);
+    // },
     navigateToProfile() {
       this.$router.push({ name: "Profile" });
     },
     attemptLogin() {
-      // this.$store.commit(("updateLoginStatus", "Logging in..."));
-      this.$store.state.loginStatus = "Logging in...";
       axios
         .request({
           url: "https://tweeterest.ml/api/login",
@@ -89,9 +70,10 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          this.loginStatus = "Logging in...";
+
+          //makes transition chill btwn navigations
           setTimeout(this.navigateToProfile, 1500);
-          this.$store.state.loginStatus = "Logged in! Redirecting...";
           //updating things in the store with data returned from API call
           this.$store.commit("updateUserId", res.data.userId);
           this.$store.commit("updateUserEmail", res.data.email);
@@ -99,15 +81,14 @@ export default {
           this.$store.commit("updateUserBio", res.data.bio);
           this.$store.commit("updateUserBirthdate", res.data.birthdate);
           cookies.set("loginToken", res.data.loginToken);
-          this.updateLoginToken();
-          // this.$store.commit("updateLoginToken", res.data.loginToken);
+          // this.$store.commit("updateLoginToken");
+          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
           this.updateUserPassword();
-          // console.log(this.loginToken);
+          this.loginStatus = "Logged in! Redirecting...";
         })
         .catch((err) => {
           console.log(err);
-          this.$store.state.loginStatus =
-            "Sorry, an error occurred. Please try again";
+          this.loginStatus = "Sorry, an error occurred. Please try again";
           // document.getElementById(
           //   "loginStatus"
           // ).innerHTML = `<h4>Sorry, an error occurred. Please try again. </h4>`;

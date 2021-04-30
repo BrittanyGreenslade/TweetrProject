@@ -14,15 +14,16 @@
 import LoginForm from "../components/LoginForm.vue";
 import SignUpForm from "../components/SignUpForm.vue";
 export default {
+  data() {
+    return {
+      loginStatus: "",
+    };
+  },
   components: {
     LoginForm,
     SignUpForm,
   },
-  computed: {
-    loginStatus() {
-      return this.$store.state.loginStatus;
-    },
-  },
+  computed: {},
 };
 </script>
 

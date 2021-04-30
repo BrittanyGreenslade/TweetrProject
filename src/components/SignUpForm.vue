@@ -26,14 +26,22 @@
       />
       <input @click="userSignup" type="button" id="signupBtn" value="Sign Up" />
     </form>
+
+    <h4>{{ loginStatus }}</h4>
   </section>
 </template>
 
 <script>
 import axios from "axios";
+import cookies from "vue-cookies";
 export default {
   name: "sign-up-form",
   computed: {},
+  data() {
+    return {
+      loginStatus: "",
+    };
+  },
   // mounted() {
   // if (this.loginToken) {
   //   this.getPosts();
@@ -42,6 +50,9 @@ export default {
     updateUserPassword() {
       let userPassword = document.getElementById("passwordInput").value;
       return this.$store.commit("updateUserPassword", userPassword);
+    },
+    navigateToProfile() {
+      this.$router.push({ name: "Profile" });
     },
     userSignup() {
       axios
@@ -63,18 +74,17 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          setTimeout(this.navigateToProfile, 1500);
+          // cookies.set("setUserInfo", res.data);
+          cookies.set("loginToken", res.data.loginToken);
+          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
           this.$store.commit("updateUserId", res.data.userId);
           this.$store.commit("updateUserEmail", res.data.email);
           this.$store.commit("updateUserName", res.data.username);
           this.$store.commit("updateUserBio", res.data.bio);
           this.$store.commit("updateUserBirthdate", res.data.birthdate);
-          this.$store.commit("updateLoginToken", res.data.loginToken);
           this.updateUserPassword();
-          this.$store.commit(
-            "updateLoginStatus",
-            "You've signed up! Logging you in..."
-          );
+          this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {
           this.loginStatus =

@@ -28,6 +28,7 @@
       />
       <input @click="editUserProfile" type="text" id="updateBtn" value="Save" />
     </form>
+    <h4>{{ loginStatus }}</h4>
   </section>
 </template>
 
@@ -35,6 +36,11 @@
 import axios from "axios";
 export default {
   name: "edit-profile-form",
+  data() {
+    return {
+      loginStatus: "",
+    };
+  },
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
@@ -59,6 +65,7 @@ export default {
           },
         })
         .then((res) => {
+          this.loginStatus = "Profile updated!";
           console.log(res);
         })
         .catch((err) => {
