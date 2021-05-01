@@ -5,8 +5,6 @@
       <router-link to="/profile">Profile</router-link> |
       <router-link to="/feed">Feed</router-link> |
       <router-link to="/discover">Discover</router-link>
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
     </div>
     <router-view />
     <!-- <login /> -->

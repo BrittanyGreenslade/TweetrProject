@@ -52,7 +52,7 @@ export default {
     //   this.$store.commit("updateLoginToken", updatedLoginToken);
     // },
     navigateToProfile() {
-      this.$router.push({ name: "Profile" });
+      this.$router.push({ path: "/profile" });
     },
     attemptLogin() {
       axios
@@ -81,7 +81,6 @@ export default {
           this.$store.commit("updateUserBio", res.data.bio);
           this.$store.commit("updateUserBirthdate", res.data.birthdate);
           cookies.set("loginToken", res.data.loginToken);
-          // this.$store.commit("updateLoginToken");
           this.$store.commit("updateLoginToken", cookies.get("loginToken"));
           this.updateUserPassword();
           this.loginStatus = "Logged in! Redirecting...";
@@ -89,9 +88,6 @@ export default {
         .catch((err) => {
           console.log(err);
           this.loginStatus = "Sorry, an error occurred. Please try again";
-          // document.getElementById(
-          //   "loginStatus"
-          // ).innerHTML = `<h4>Sorry, an error occurred. Please try again. </h4>`;
         });
     },
   },

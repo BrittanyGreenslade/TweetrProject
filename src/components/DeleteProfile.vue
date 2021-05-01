@@ -48,9 +48,7 @@ export default {
     navigateToHome() {
       this.$router.push({ name: "Login" });
     },
-    // checkLoginToken() {
-    //   console.log(this.loginToken);
-    // },
+
     //you can store json string as a cookie
     deleteProfile() {
       axios
@@ -78,9 +76,6 @@ export default {
         .catch((err) => {
           console.log(err);
           this.loginStatus = "Sorry, an error occurred. Please try again.";
-
-          // console.log(this.loginToken);
-          // console.log(this.userPassword);
         });
     },
   },

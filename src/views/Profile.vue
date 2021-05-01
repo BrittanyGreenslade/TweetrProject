@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-view />
     <button @click="logout" id="logoutBtn">Logout</button>
     <h4>{{ loginStatus }}</h4>
     <button>Edit Profile</button>
@@ -70,7 +69,7 @@ export default {
           this.$store.commit("updateLoginToken", "");
           this.loginStatus = "Logging you out!";
           console.log(res);
-          //how can I get rid of this res console log?
+          //how can I get rid of this res console log if there's no data passed back?
         })
         .catch((err) => {
           console.log(err);

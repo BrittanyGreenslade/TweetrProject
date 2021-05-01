@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loginToken: "",
+    loginToken: cookies.get("loginToken"),
+    // loginToken: "",
     username: "",
     userEmail: "",
     userPassword: "",
@@ -22,8 +23,20 @@ export default new Vuex.Store({
     singleUser: "",
     otherUserInfo: "",
     userTweets: [],
+    otherUsersTweets: [],
+    tweetId: "",
+    commentId: "",
   },
   mutations: {
+    updateCommentId(state, data) {
+      state.otherUsersTweets = data;
+    },
+    updateOtherUsersTweets(state, data) {
+      state.otherUsersTweets = data;
+    },
+    updateTweetId(state, data) {
+      state.tweetId = data;
+    },
     updateUserTweets(state, data) {
       state.userTweets = data;
     },

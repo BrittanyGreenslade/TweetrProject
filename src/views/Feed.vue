@@ -1,48 +1,24 @@
 <template>
   <div>
-    <section id="postTweetContainer">
-      <textarea name="postTweet" id="postTweet"></textarea>
-      <button>Post</button>
+    <section><user-tweets /></section>
+
+    <section>
+      <other-tweets />
     </section>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import UserTweets from "@/components/UserTweets.vue";
+import OtherTweets from "../components/OtherTweets.vue";
 export default {
-  computed: {
-    loginToken() {
-      return this.$store.state.loginToken;
-    },
+  components: {
+    UserTweets,
+    OtherTweets,
   },
-  methods: {
-    getTweets() {
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/tweets",
-          //  method:"GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-          data: {
-            loginToken: this.loginToken,
-            content: document.getElementById("postTweet").value,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
+  computed: {},
+  methods: {},
 };
 </script>
 
-<style scoped>
-textarea {
-  border: 1px solid black;
-}
-</style>
+<style scoped></style>

@@ -52,7 +52,7 @@ export default {
       return this.$store.commit("updateUserPassword", userPassword);
     },
     navigateToProfile() {
-      this.$router.push({ name: "Profile" });
+      this.$router.push({ path: "/profile" });
     },
     userSignup() {
       axios
