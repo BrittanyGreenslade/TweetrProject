@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view />
     <button @click="logout" id="logoutBtn">Logout</button>
     <h4>{{ loginStatus }}</h4>
     <button>Edit Profile</button>
@@ -16,6 +17,10 @@
     <section>
       <users-users />
     </section>
+
+    <!-- <section>
+      <single-user />
+    </section> -->
   </div>
 </template>
 
@@ -23,6 +28,7 @@
 import DeleteProfile from "../components/DeleteProfile.vue";
 import EditProfile from "../components/EditProfileForm.vue";
 import UsersUsers from "../components/UsersUsers.vue";
+
 import axios from "axios";
 import cookies from "vue-cookies";
 
@@ -40,6 +46,9 @@ export default {
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
+    },
+    userId() {
+      return this.$store.state.userId;
     },
   },
   methods: {

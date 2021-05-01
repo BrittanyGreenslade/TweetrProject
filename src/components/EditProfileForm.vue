@@ -4,6 +4,12 @@
       <p>User must not update all fields if not necessary</p>
       <input
         type="text"
+        id="editUsername"
+        name="usernameInput"
+        placeholder="Update Username"
+      />
+      <input
+        type="text"
         id="editEmail"
         name="emailInput"
         placeholder="Update Email"
@@ -57,6 +63,7 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
+            username: document.getElementById("editUsername").value,
             email: document.getElementById("editEmail").value,
             password: document.getElementById("editPassword").value,
             bio: document.getElementById("editBio").value,

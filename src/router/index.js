@@ -5,6 +5,8 @@ import Discover from "@/views/Discover.vue";
 import Feed from "@/views/Feed.vue";
 import Login from "@/views/Login.vue";
 import Profile from "@/views/Profile.vue";
+import SingleUser from "@/components/SingleUser.vue";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -24,12 +26,19 @@ const routes = [
     name: "Login",
     component: Login,
   },
+
   {
     path: "/profile",
-    name: "Profile",
+    // name: "Profile",
     component: Profile,
+    children: [
+      {
+        path: "otherUserId",
+        name: "User",
+        component: SingleUser,
+      },
+    ],
   },
-
   {
     path: "/feed",
     name: "Feed",
@@ -39,6 +48,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  store,
 });
 
 export default router;
