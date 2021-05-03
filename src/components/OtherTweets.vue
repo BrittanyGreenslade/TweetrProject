@@ -27,14 +27,14 @@ export default {
   components: { TweetComment },
   name: "other-tweets",
   computed: {
-    loginToken() {
-      return this.$store.state.loginToken;
-    },
+    // loginToken() {
+    //   return this.$store.state.loginToken;
+    // },
     otherUsersTweets() {
       return this.$store.state.otherUsersTweets;
     },
-    otherUserId() {
-      return this.$store.state.otherUserId;
+    otherUserInfo() {
+      return this.$store.state.otherUserInfo;
     },
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
-            userId: this.otherUserId,
+            userId: this.otherUserInfo.userId,
           },
         })
         .then((res) => {
@@ -77,7 +77,6 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updateOtherUsersTweets", res.data);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);

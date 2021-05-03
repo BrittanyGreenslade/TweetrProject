@@ -7,29 +7,116 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loginToken: cookies.get("loginToken"),
-    // loginToken: "",
-    username: "",
-    userEmail: "",
-    userPassword: "",
-    // userImage:"",
-    userBirthdate: "",
-    userBio: "",
-    myUserId: "",
-    otherUserId: "",
-    otherUserUsername: "",
-    userInfo: cookies.get("setUserInfo"),
+    currentUserPassword: "",
+    // loginToken: cookies.get("loginToken"),
+    currentUserInfo: cookies.get("userInfo"),
+    // currentUserInfo: {
+    //   userId: "",
+    //   email: "",
+    //   username: "",
+    //   bio: "",
+    //   imageUrl: "",
+    //   bannerUrl: "",
+    //   birthdate: "",
+    //   loginToken: cookies.get("loginToken"),
+    // },
+    // otherUserInfo: {
+    //   userId: "",
+    //   email:"",
+    //   username:"",
+    //   bio:"",
+    //   birthdate:"",
+    //   imageUrl:"",
+    //   bannerUrl:"",
+    // },
     allUsers: "",
     singleUser: "",
     otherUserInfo: "",
+    otherUserId: "",
     userTweets: [],
     otherUsersTweets: [],
+    tweetLikes: [],
+    numTweetLikes: "",
     tweetId: "",
-    commentId: "",
+    numCommentLikes: "",
+    followInfo: {
+      currentUserFollowers: [],
+      otherUserFollowers: [],
+    },
+    //same as otherUserId so might not need?
+    followId: "",
+    commentInfo: {
+      commentId: "",
+      commentTweetId: "",
+      commentUserId: "",
+      commentUsername: "",
+      commentContent: "",
+      commentCreatedAt: "",
+      commentLikes: [],
+    },
   },
   mutations: {
+    //all users mutations
+    updateAllUsers(state, data) {
+      state.allUsers = data;
+    },
+    //current User info Mutations
+    updateCurrentUserInfo(state, data) {
+      state.currentUserInfo = data;
+    },
+    updateCurrentUserId(state, data) {
+      state.currentUserInfo.userId = data;
+    },
+    updateCurrentUserEmail(state, data) {
+      state.currentUserInfo.email = data;
+    },
+    updateCurrentUsername(state, data) {
+      state.currentUserInfo.username = data;
+    },
+    updateCurrentUserBio(state, data) {
+      state.currentUserInfo.userBio = data;
+    },
+    updateCurrentUserBirthdate(state, data) {
+      state.currentUserInfo.userBirthdate = data;
+    },
+    updateLoginToken(state, data) {
+      state.currentUserInfo.loginToken = data;
+    },
+    updateCurrentUserPassword(state, data) {
+      state.currentUserPassword = data;
+    },
+    //Other users info mutations
+    updateFollowId(state, data) {
+      state.followId = data;
+    },
+    updateOtherUserId(state, data) {
+      state.otherUserId = data;
+    },
+    updateOtherUserInfo(state, data) {
+      state.otherUserInfo = data;
+    },
+    //comment mutations
+    updateNumCommentLikes(state, data) {
+      state.numCommentLikes = data;
+    },
+    updateCommentInfo(state, data) {
+      state.commentInfo = data;
+    },
+    updateCommentContent(state, data) {
+      state.commentContent = data;
+    },
+    updateCommentUserId(state, data) {
+      state.commentUserId = data;
+    },
     updateCommentId(state, data) {
-      state.otherUsersTweets = data;
+      state.commentInfo.commentId = data;
+    },
+    //tweet mutations
+    updateNumTweetLikes(state, data) {
+      state.numTweetLikes = data;
+    },
+    updateTweetLikes(state, data) {
+      state.tweetLikes = data;
     },
     updateOtherUsersTweets(state, data) {
       state.otherUsersTweets = data;
@@ -39,38 +126,6 @@ export default new Vuex.Store({
     },
     updateUserTweets(state, data) {
       state.userTweets = data;
-    },
-    updateAllUsers(state, data) {
-      state.allUsers = data;
-    },
-    updateLoginToken(state, data) {
-      state.loginToken = data;
-    },
-    updateUserName(state, data) {
-      state.username = data;
-    },
-    updateUserEmail(state, data) {
-      state.userEmail = data;
-    },
-
-    updateUserPassword(state, data) {
-      state.userPassword = data;
-    },
-    updateUserBirthdate(state, data) {
-      state.userBirthdate = data;
-    },
-    updateUserBio(state, data) {
-      state.userBio = data;
-    },
-    updateUserId(state, data) {
-      state.myUserId = data;
-    },
-    updateOtherUserId(state, data) {
-      state.otherUserId = data;
-    },
-    updateOtherUserInfo(state, data) {
-      state.otherUserInfo = data;
-      console.log(data);
     },
   },
   actions: {},

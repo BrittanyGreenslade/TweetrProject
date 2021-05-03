@@ -10,26 +10,54 @@
       <button @click="postComment">Post Comment</button>
       <br />
       <button @click="getComments">show comments</button>
+      <div
+        id="showComments"
+        v-for="comment in commentInfo"
+        :key="comment.commentId"
+      >
+        <h3>{{ comment.username }}</h3>
+        <p>{{ comment.content }}</p>
+        <button @click="deleteComment(comment.commentId)">
+          delete Comment
+        </button>
+        <textarea name="editComment" id="editComment" required></textarea>
+
+        <button @click="editComment(comment.commentId)">Edit Comment</button>
+        <button @click="testUdpateCommentId(comment.commentId)">
+          Test update comment Id
+        </button>
+        <comment-likes />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import CommentLikes from "./CommentLikes.vue";
 export default {
+  components: {
+    CommentLikes,
+  },
   name: "tweet-comment",
   computed: {
     loginToken() {
-      return this.$store.state.loginToken;
+      return this.$store.state.currentUserInfo.loginToken;
     },
     tweetId() {
       return this.$store.state.tweetId;
     },
+    commentInfo() {
+      return this.$store.state.commentInfo;
+    },
     commentId() {
-      return this.$store.state.commentId;
+      return this.$store.state.commentInfo.commentId;
     },
   },
   methods: {
+    testUdpateCommentId(commentId) {
+      this.$store.commit("updateCommentId", commentId);
+    },
     getComments() {
       axios
         .request({
@@ -45,12 +73,12 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          this.$store.commit("updateCommentInfo", res.data);
+          console.log(this.commentInfo);
+          // console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.tweetId);
-          console.log(this.loginToken);
         });
     },
     postComment() {
@@ -64,42 +92,66 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            //is this supposed to be commentId?
             tweetId: this.tweetId,
             content: document.getElementById("makeComment").value,
+          },
+        })
+        .then((res) => {
+          // this.$store.commit("updateCommentInfo", res.data);
+
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    deleteComment(commentId) {
+      this.$store.commit("updateCommentId", commentId);
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/comments",
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+          },
+          data: {
+            loginToken: this.loginToken,
+            commentId: this.commentInfo.commentId,
           },
         })
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(this.tweetId);
-          console.log(this.loginToken);
           console.log(err);
         });
     },
-    // editComment() {
-    //   this.$store.commit("updateCommentId", commentId);
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/comments",
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       data: {
-    //         loginToken: this.loginToken,
-    //         commentId: this.commentId,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
+    editComment(commentId) {
+      this.$store.commit("updateCommentId", commentId);
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/comments",
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+          },
+          data: {
+            loginToken: this.loginToken,
+            commentId: this.commentInfo.commentId,
+            content: "why does this work tho",
+            //can't do "Get element by id here?"
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <single-user />
     <button @click="logout" id="logoutBtn">Logout</button>
     <h4>{{ loginStatus }}</h4>
     <button>Edit Profile</button>
@@ -14,28 +15,26 @@
     </section>
 
     <section>
-      <users-users />
+      <other-users />
     </section>
-
-    <!-- <section>
-      <single-user />
-    </section> -->
   </div>
 </template>
 
 <script>
 import DeleteProfile from "../components/DeleteProfile.vue";
 import EditProfile from "../components/EditProfileForm.vue";
-import UsersUsers from "../components/UsersUsers.vue";
+import OtherUsers from "../components/OtherUsers.vue";
 
 import axios from "axios";
 import cookies from "vue-cookies";
+import SingleUser from "../components/SingleUser.vue";
 
 export default {
   components: {
     EditProfile,
     DeleteProfile,
-    UsersUsers,
+    OtherUsers,
+    SingleUser,
   },
   data() {
     return {
@@ -44,10 +43,7 @@ export default {
   },
   computed: {
     loginToken() {
-      return this.$store.state.loginToken;
-    },
-    userId() {
-      return this.$store.state.userId;
+      return this.$store.state.currentUserInfo.loginToken;
     },
   },
   methods: {
@@ -68,8 +64,8 @@ export default {
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
           this.loginStatus = "Logging you out!";
-          console.log(res);
-          //how can I get rid of this res console log if there's no data passed back?
+          //user this if "didn't user res" error shows and no data sent back
+          res;
         })
         .catch((err) => {
           console.log(err);

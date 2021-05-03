@@ -28,6 +28,11 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "login-form",
+  computed: {
+    loginToken() {
+      return this.$store.state.currentUserInfo.loginToken;
+    },
+  },
   data() {
     return {
       loginStatus: "",
@@ -43,14 +48,11 @@ export default {
 
   methods: {
     //this isn't returned as data from api so had to put it as its own separate fn
-    updateUserPassword() {
+    updateCurrentUserPassword() {
       let userPassword = document.getElementById("passwordInputLogin").value;
-      return this.$store.commit("updateUserPassword", userPassword);
+      return this.$store.commit("updateCurrentUserPassword", userPassword);
     },
-    // updateLoginToken() {
-    //   let updatedLoginToken = cookies.get("loginToken");
-    //   this.$store.commit("updateLoginToken", updatedLoginToken);
-    // },
+
     navigateToProfile() {
       this.$router.push({ path: "/profile" });
     },
@@ -75,14 +77,16 @@ export default {
           //makes transition chill btwn navigations
           setTimeout(this.navigateToProfile, 1500);
           //updating things in the store with data returned from API call
-          this.$store.commit("updateUserId", res.data.userId);
-          this.$store.commit("updateUserEmail", res.data.email);
-          this.$store.commit("updateUserName", res.data.username);
-          this.$store.commit("updateUserBio", res.data.bio);
-          this.$store.commit("updateUserBirthdate", res.data.birthdate);
+          this.$store.commit("updateCurrentUserId", res.data.userId);
+          this.$store.commit("updateCurrentUserEmail", res.data.email);
+          this.$store.commit("updateCurrentUsername", res.data.username);
+          this.$store.commit("updateCurrentUserBio", res.data.bio);
+          this.$store.commit("updateCurrentUserBirthdate", res.data.birthdate);
           cookies.set("loginToken", res.data.loginToken);
-          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
-          this.updateUserPassword();
+          cookies.set("userInfo", res.data);
+          console.log(res.data);
+          // this.$store.commit("updateLoginToken", cookies.get("loginToken"));
+          this.updateCurrentUserPassword();
           this.loginStatus = "Logged in! Redirecting...";
         })
         .catch((err) => {

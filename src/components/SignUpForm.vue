@@ -47,9 +47,9 @@ export default {
   //   this.getPosts();
   // }
   methods: {
-    updateUserPassword() {
+    updateCurrentUserPassword() {
       let userPassword = document.getElementById("passwordInput").value;
-      return this.$store.commit("updateUserPassword", userPassword);
+      return this.$store.commit("updateCurrentUserPassword", userPassword);
     },
     navigateToProfile() {
       this.$router.push({ path: "/profile" });
@@ -75,15 +75,15 @@ export default {
         })
         .then((res) => {
           setTimeout(this.navigateToProfile, 1500);
-          // cookies.set("setUserInfo", res.data);
+          cookies.set("userInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
-          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
-          this.$store.commit("updateUserId", res.data.userId);
-          this.$store.commit("updateUserEmail", res.data.email);
-          this.$store.commit("updateUserName", res.data.username);
-          this.$store.commit("updateUserBio", res.data.bio);
-          this.$store.commit("updateUserBirthdate", res.data.birthdate);
-          this.updateUserPassword();
+          // this.$store.commit("updateLoginToken", cookies.get("loginToken"));
+          this.$store.commit("updateCurrentUserId", res.data.userId);
+          this.$store.commit("updateCurrentUserEmail", res.data.email);
+          this.$store.commit("updateCurrentUsername", res.data.username);
+          this.$store.commit("updateCurrentUserBio", res.data.bio);
+          this.$store.commit("updateCurrentUserBirthdate", res.data.birthdate);
+          this.updateCurrentUserPassword();
           this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {

@@ -7,7 +7,9 @@
     </div>
 
     <div v-for="user in this.allUsers" v-bind:key="user.userId">
-      <button @click="updateOtherUserId(user.userId)">View user profile</button>
+      <button @click="updateOtherUserId(user.userId)">
+        View user profile
+      </button>
       <h3>
         Username: {{ user.username }}
         <br />
@@ -17,6 +19,8 @@
         <br />
         Birthday: {{ user.birthdate }}
       </h3>
+      <other-follows />
+      <other-followers />
 
       <br />
     </div>
@@ -25,17 +29,23 @@
 
 <script>
 import axios from "axios";
+import OtherFollows from "@/components/OtherFollowers.vue";
+import OtherFollowers from "@/components/OtherFollowers.vue";
 export default {
   name: "all-users",
+  components: {
+    OtherFollows,
+    OtherFollowers,
+  },
   computed: {
     allUsers() {
       return this.$store.state.allUsers;
     },
-    // userId() {
-    //   return this.$store.state.userId;
-    // },
     otherUserId() {
       return this.$store.state.otherUserId;
+    },
+    otherUserInfo() {
+      return this.$store.state.otherUserInfo;
     },
   },
   methods: {
@@ -54,12 +64,14 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    updateOtherUserId(otherUserId) {
-      this.$store.commit("updateOtherUserId", otherUserId);
-      this.viewUserProfile();
+    updateOtherUserId(userId) {
+      this.$store.commit("updateOtherUserId", userId);
+      this.viewOtherUserProfile();
+      console.log(userId);
     },
 
-    viewUserProfile() {
+    viewOtherUserProfile() {
+      // this.$store.commit("updateOtherUserId", userId);
       axios
         .request({
           url: "https://tweeterest.ml/api/users",
@@ -75,8 +87,9 @@ export default {
         .then((res) => {
           this.$store.commit("updateOtherUserInfo", res.data);
           //is this okkkkkk?
+          // this.$router.push(`/${this.otherUserId}`);
           this.$router.push({
-            name: "User",
+            name: "Single User",
             params: { otherUserId: this.otherUserId },
           });
         })

@@ -24,6 +24,7 @@ export default {
     SignUpForm,
   },
   computed: {},
+  methods: {},
 };
 </script>
 

@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     loginToken() {
-      return this.$store.state.loginToken;
+      return this.$store.state.currentUserInfo.loginToken;
     },
     userPassword() {
       return this.$store.state.userPassword;
@@ -70,8 +70,6 @@ export default {
           this.$store.commit("updateLoginToken", "");
           cookies.remove("loginToken");
           this.loginStatus = "Profile deleted! Redirecting...";
-
-          console.log(this.loginToken);
         })
         .catch((err) => {
           console.log(err);

@@ -1,12 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import Home from "../views/Home.vue";
+import store from "@/store";
 import Discover from "@/views/Discover.vue";
 import Feed from "@/views/Feed.vue";
 import Login from "@/views/Login.vue";
 import Profile from "@/views/Profile.vue";
 import SingleUser from "@/components/SingleUser.vue";
-import store from "@/store";
+// import OtherUsers from "@/components/OtherUsers.vue";
 
 Vue.use(VueRouter);
 
@@ -33,12 +33,14 @@ const routes = [
     component: Profile,
     children: [
       {
-        path: "otherUserId",
-        name: "User",
+        path: "/profile/:otherUserId",
+        name: "Single User",
         component: SingleUser,
       },
+      // { path: "/profile/:", name: "Other Users", component: OtherUsers },
     ],
   },
+
   {
     path: "/feed",
     name: "Feed",
