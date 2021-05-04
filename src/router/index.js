@@ -40,19 +40,19 @@ const routes = [
     // name: "Profile",
     component: Profile,
     children: [
-      {
-        path: "/profile/:selectedUserId",
-        name: "Single User",
-        component: SingleUser,
-      },
-      {
-        path: "/profile/OtherUsers",
-        name: "Other Users",
-        component: OtherUsers,
-      },
+      // /profile/:selectedUserId
     ],
   },
-
+  {
+    path: "/users/:selectedUserId",
+    name: "Single User",
+    component: SingleUser,
+  },
+  {
+    path: "/profile/users",
+    name: "Other Users",
+    component: OtherUsers,
+  },
   {
     path: "/feed",
     name: "Feed",

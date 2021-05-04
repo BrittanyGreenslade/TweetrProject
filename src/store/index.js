@@ -21,7 +21,7 @@ export default new Vuex.Store({
     allUsers: [],
     selectedUserId: "",
     singleUser: "",
-    otherUserInfo: [],
+    otherUserInfo: {},
     // otherUserId: "",
     currentUserTweets: [],
     otherUsersTweets: [],

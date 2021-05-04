@@ -12,10 +12,10 @@
     >
       Delete Profile
     </button>
-    <button @click="toggleViewUsersOn = !toggleViewUsersOn">
+    <button @click="viewAllUsers">
       View All Users
     </button>
-    <button @click="grabSelectedUserId(currentUserInfo.userId)">
+    <button @click="viewMyProfile">
       My Profile
     </button>
 
@@ -28,63 +28,64 @@
       <delete-profile />
       <button @click="toggleDeleteOn = !toggleDeleteOn">Cancel</button>
     </section>
-    <section v-if="toggleViewUsersOn === true">
-      <other-users />
-    </section>
-    <section>
+    <!-- v-if="this.selectedUserId" -->
+    <!-- <section>
       <single-user />
-    </section>
+    </section> -->
   </div>
 </template>
 
 <script>
 import DeleteProfile from "../components/DeleteProfile.vue";
 import EditProfile from "../components/EditProfileForm.vue";
-import OtherUsers from "../components/OtherUsers.vue";
+
 import axios from "axios";
 import cookies from "vue-cookies";
-import SingleUser from "../components/SingleUser.vue";
+// import SingleUser from "../components/SingleUser.vue";
 
 export default {
   components: {
     EditProfile,
     DeleteProfile,
-    OtherUsers,
-    SingleUser,
+    // SingleUser,
   },
   data() {
     return {
       loginStatus: "",
       toggleEditOn: false,
       toggleDeleteOn: false,
-      toggleViewUsersOn: false,
+      // toggleViewUsersOn: false,
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   computed: {
+    //id for user that's been clicked on
     selectedUserId() {
       return this.$store.state.selectedUserId;
     },
   },
   methods: {
-    grabSelectedUserId(userId) {
-      this.$store.commit("updateSelectedUserId", userId);
+    //updates selectedUserId when 'view my profile' btn clicked
+    viewMyProfile() {
+      let selectedUserId = this.currentUserInfo.userId;
+      this.$store.commit("updateSelectedUserId", selectedUserId);
+      this.$router.push({
+        name: "Single User",
+        params: { selectedUserId: this.selectedUserId },
+      });
     },
-    navigateToUserProfile() {
-      this.$router.push();
-    },
+    //changes the visible component when 'viewAllUsers" button clicked
     viewAllUsers() {
-      if (this.selecteduserId === null)
-        this.toggleViewUsersOn === !this.toggleViewUsersOn,
-          this.$router.push({
-            path: "/profile/otherUsers",
-          });
+      this.$router.push({
+        path: "/profile/users",
+      });
     },
+    //called in logout fn
     navigateToLogin() {
       this.$router.push({ name: "Login" });
     },
-
+    //logs user out and deletes cookie/updates store
     logout() {
       axios
         .request({

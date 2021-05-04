@@ -6,11 +6,17 @@
       </button>
     </div> -->
     <!-- @click="updateOtherUserId(user.userId)" -->
-    <div v-for="user in this.allUsers" v-bind:key="user.userId">
-      <button @click="grabSelectedUserId(user.userId)">
-        View user profile
-      </button>
+    <!-- <button @click="grabSelectedUserId(user[selectedUser].userId)">
+      View user profile
+    </button> -->
+    <!-- @click="grabSelectedUserId(user.userId)" -->
+
+    <div v-for="user in allUsers" :key="user.userId">
       <h3>
+        <button @click="viewSelectProfile(user.userId)">
+          View User's Profile
+        </button>
+        <br />
         Username: {{ user.username }}
         <br />
         Email:{{ user.email }}
@@ -55,12 +61,41 @@ export default {
     },
   },
   methods: {
-    grabSelectedUserId(userId) {
-      this.$store.commit("updateSelectedUserId", userId);
-      this.$router.push({
-        name: "Single User",
-        params: { selectedUserId: this.selectedUserId },
-      });
+    viewSelectProfile(userId) {
+      let selectedUserId = userId;
+      this.$store.commit("updateSelectedUserId", selectedUserId);
+      for (let i = 0; i < this.allUsers.length; i++) {
+        if (this.selectedUserId === this.allUsers[i].userId) {
+          //     this.$store.commit("updateOtherUserInfo", this.allUsers[i]);
+
+          //   }
+          // }
+          axios
+            .request({
+              url: "https://tweeterest.ml/api/users",
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+              },
+              params: {
+                userId: this.selectedUserId,
+              },
+            })
+            .then((res) => {
+              // res.data[this.selectedUserId] =
+              this.$store.commit("updateOtherUserInfo", res.data);
+              console.log(res.data);
+              this.$router.push({
+                name: "Single User",
+                params: { selectedUserId: this.selectedUserId },
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      }
     },
 
     getAllUsers() {
@@ -75,6 +110,7 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updateAllUsers", res.data);
+          console.log(this.allUsers);
         })
         .catch((err) => console.log(err));
     },
