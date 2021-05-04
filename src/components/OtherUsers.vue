@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       <button @click="getAllUsers">
         All Users
       </button>
-    </div>
-
+    </div> -->
+    <!-- @click="updateOtherUserId(user.userId)" -->
     <div v-for="user in this.allUsers" v-bind:key="user.userId">
-      <button @click="updateOtherUserId(user.userId)">
+      <button @click="grabSelectedUserId(user.userId)">
         View user profile
       </button>
       <h3>
@@ -32,23 +32,37 @@ import axios from "axios";
 import OtherFollows from "@/components/OtherFollowers.vue";
 import OtherFollowers from "@/components/OtherFollowers.vue";
 export default {
-  name: "all-users",
+  name: "other-users",
   components: {
     OtherFollows,
     OtherFollowers,
+  },
+  //this component is rendered on click in a fn in 'Profile.vue' so when it's mounted on
+  //the dom, I want to run the axios call to get the users
+  mounted() {
+    this.getAllUsers();
   },
   computed: {
     allUsers() {
       return this.$store.state.allUsers;
     },
-    otherUserId() {
-      return this.$store.state.otherUserId;
+    selectedUserId() {
+      return this.$store.state.selectedUserId;
     },
-    otherUserInfo() {
-      return this.$store.state.otherUserInfo;
+
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
     },
   },
   methods: {
+    grabSelectedUserId(userId) {
+      this.$store.commit("updateSelectedUserId", userId);
+      this.$router.push({
+        name: "Single User",
+        params: { selectedUserId: this.selectedUserId },
+      });
+    },
+
     getAllUsers() {
       axios
         .request({
@@ -64,39 +78,13 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    updateOtherUserId(userId) {
-      this.$store.commit("updateOtherUserId", userId);
-      this.viewOtherUserProfile();
-      console.log(userId);
-    },
-
-    viewOtherUserProfile() {
-      // this.$store.commit("updateOtherUserId", userId);
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/users",
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-          params: {
-            userId: this.otherUserId,
-          },
-        })
-        .then((res) => {
-          this.$store.commit("updateOtherUserInfo", res.data);
-          //is this okkkkkk?
-          // this.$router.push(`/${this.otherUserId}`);
-          this.$router.push({
-            name: "Single User",
-            params: { otherUserId: this.otherUserId },
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    // updateOtherUserId(userId) {
+    //   this.$store.commit("updateOtherUserId", userId);
+    // },
+    //   this.viewOtherUserProfile();
+    //   console.log(userId);
+    //   console.log(this.currentUserInfo);
+    // },
   },
 };
 </script>

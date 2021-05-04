@@ -7,6 +7,7 @@
     <section>
       <sign-up-form />
     </section>
+    <br /><br />
   </div>
 </template>
 
@@ -23,8 +24,6 @@ export default {
     LoginForm,
     SignUpForm,
   },
-  computed: {},
-  methods: {},
 };
 </script>
 

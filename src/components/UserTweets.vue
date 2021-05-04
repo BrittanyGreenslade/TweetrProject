@@ -36,7 +36,7 @@ export default {
   name: "user-tweets",
   computed: {
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
     userTweets() {
       return this.$store.state.userTweets;

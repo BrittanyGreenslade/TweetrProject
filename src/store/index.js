@@ -7,19 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUserPassword: "",
-    // loginToken: cookies.get("loginToken"),
+    loginToken: cookies.get("loginToken"),
     currentUserInfo: cookies.get("userInfo"),
-    // currentUserInfo: {
-    //   userId: "",
-    //   email: "",
-    //   username: "",
-    //   bio: "",
-    //   imageUrl: "",
-    //   bannerUrl: "",
-    //   birthdate: "",
-    //   loginToken: cookies.get("loginToken"),
-    // },
     // otherUserInfo: {
     //   userId: "",
     //   email:"",
@@ -29,11 +18,12 @@ export default new Vuex.Store({
     //   imageUrl:"",
     //   bannerUrl:"",
     // },
-    allUsers: "",
+    allUsers: [],
+    selectedUserId: "",
     singleUser: "",
-    otherUserInfo: "",
-    otherUserId: "",
-    userTweets: [],
+    otherUserInfo: [],
+    // otherUserId: "",
+    currentUserTweets: [],
     otherUsersTweets: [],
     tweetLikes: [],
     numTweetLikes: "",
@@ -60,6 +50,9 @@ export default new Vuex.Store({
     updateAllUsers(state, data) {
       state.allUsers = data;
     },
+    updateSelectedUserId(state, data) {
+      state.selectedUserId = data;
+    },
     //current User info Mutations
     updateCurrentUserInfo(state, data) {
       state.currentUserInfo = data;
@@ -80,7 +73,7 @@ export default new Vuex.Store({
       state.currentUserInfo.userBirthdate = data;
     },
     updateLoginToken(state, data) {
-      state.currentUserInfo.loginToken = data;
+      state.loginToken = data;
     },
     updateCurrentUserPassword(state, data) {
       state.currentUserPassword = data;
@@ -90,7 +83,7 @@ export default new Vuex.Store({
       state.followId = data;
     },
     updateOtherUserId(state, data) {
-      state.otherUserId = data;
+      state.otherUserInfo.userId = data;
     },
     updateOtherUserInfo(state, data) {
       state.otherUserInfo = data;

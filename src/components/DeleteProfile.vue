@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
     userPassword() {
       return this.$store.state.userPassword;
@@ -67,8 +67,11 @@ export default {
         .then((res) => {
           console.log(res);
           setTimeout(this.navigateToHome, 1500);
-          this.$store.commit("updateLoginToken", "");
           cookies.remove("loginToken");
+          this.$store.commit("updateLoginToken", "");
+          cookies.remove("currentUserInfo");
+          this.$store.commit("updateCurrentUserInfo", "");
+
           this.loginStatus = "Profile deleted! Redirecting...";
         })
         .catch((err) => {

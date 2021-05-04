@@ -1,21 +1,38 @@
 <template>
   <div>
-    <single-user />
     <button @click="logout" id="logoutBtn">Logout</button>
-    <h4>{{ loginStatus }}</h4>
-    <button>Edit Profile</button>
-    <section id="editProfile">
+    <!-- <h4>{{ loginStatus }}</h4> -->
+
+    <button v-if="toggleEditOn === false" @click="toggleEditOn = !toggleEditOn">
+      Edit Profile
+    </button>
+    <button
+      v-if="toggleDeleteOn === false"
+      @click="toggleDeleteOn = !toggleDeleteOn"
+    >
+      Delete Profile
+    </button>
+    <button @click="toggleViewUsersOn = !toggleViewUsersOn">
+      View All Users
+    </button>
+    <button @click="grabSelectedUserId(currentUserInfo.userId)">
+      My Profile
+    </button>
+
+    <section v-if="toggleEditOn === true" id="editProfile">
       <edit-profile />
+      <button @click="toggleEditOn = !toggleEditOn">Cancel</button>
     </section>
 
-    <button>Delete Profile</button>
-
-    <section>
+    <section v-if="toggleDeleteOn === true">
       <delete-profile />
+      <button @click="toggleDeleteOn = !toggleDeleteOn">Cancel</button>
     </section>
-
-    <section>
+    <section v-if="toggleViewUsersOn === true">
       <other-users />
+    </section>
+    <section>
+      <single-user />
     </section>
   </div>
 </template>
@@ -24,7 +41,6 @@
 import DeleteProfile from "../components/DeleteProfile.vue";
 import EditProfile from "../components/EditProfileForm.vue";
 import OtherUsers from "../components/OtherUsers.vue";
-
 import axios from "axios";
 import cookies from "vue-cookies";
 import SingleUser from "../components/SingleUser.vue";
@@ -39,17 +55,36 @@ export default {
   data() {
     return {
       loginStatus: "",
+      toggleEditOn: false,
+      toggleDeleteOn: false,
+      toggleViewUsersOn: false,
+      loginToken: cookies.get("loginToken"),
+      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   computed: {
-    loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+    selectedUserId() {
+      return this.$store.state.selectedUserId;
     },
   },
   methods: {
-    navigateToHome() {
+    grabSelectedUserId(userId) {
+      this.$store.commit("updateSelectedUserId", userId);
+    },
+    navigateToUserProfile() {
+      this.$router.push();
+    },
+    viewAllUsers() {
+      if (this.selecteduserId === null)
+        this.toggleViewUsersOn === !this.toggleViewUsersOn,
+          this.$router.push({
+            path: "/profile/otherUsers",
+          });
+    },
+    navigateToLogin() {
       this.$router.push({ name: "Login" });
     },
+
     logout() {
       axios
         .request({
@@ -60,9 +95,11 @@ export default {
           },
         })
         .then((res) => {
-          setTimeout(this.navigateToHome, 1500);
+          setTimeout(this.navigateToLogin, 1500);
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
+          cookies.remove("currentUserInfo");
+          this.$store.commit("updateCurrentUserInfo", "");
           this.loginStatus = "Logging you out!";
           //user this if "didn't user res" error shows and no data sent back
           res;
@@ -75,4 +112,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+button {
+  border: 1px solid black;
+}
+</style>

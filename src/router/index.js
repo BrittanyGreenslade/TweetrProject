@@ -6,15 +6,15 @@ import Feed from "@/views/Feed.vue";
 import Login from "@/views/Login.vue";
 import Profile from "@/views/Profile.vue";
 import SingleUser from "@/components/SingleUser.vue";
-// import OtherUsers from "@/components/OtherUsers.vue";
+import OtherUsers from "@/components/OtherUsers.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
+  //   path: "/",
+  //   name: "Home",
+  //   component: App,
   // },
   {
     path: "/discover",
@@ -25,6 +25,14 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    // children: [
+    //   {
+    //     path: "/login/:otherUserId",
+    //     name: "Single User",
+    //     component: SingleUser,
+    //   },
+    // { path: "/profile/:", name: "Other Users", component: OtherUsers },
+    // ],
   },
 
   {
@@ -33,11 +41,15 @@ const routes = [
     component: Profile,
     children: [
       {
-        path: "/profile/:otherUserId",
+        path: "/profile/:selectedUserId",
         name: "Single User",
         component: SingleUser,
       },
-      // { path: "/profile/:", name: "Other Users", component: OtherUsers },
+      {
+        path: "/profile/OtherUsers",
+        name: "Other Users",
+        component: OtherUsers,
+      },
     ],
   },
 

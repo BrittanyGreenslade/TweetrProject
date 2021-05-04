@@ -20,14 +20,13 @@
         <button @click="deleteComment(comment.commentId)">
           delete Comment
         </button>
-        <textarea name="editComment" id="editComment" required></textarea>
-
         <button @click="editComment(comment.commentId)">Edit Comment</button>
         <button @click="testUdpateCommentId(comment.commentId)">
           Test update comment Id
         </button>
         <comment-likes />
       </div>
+      <textarea name="editComment" id="editComment" required></textarea>
     </div>
   </div>
 </template>
@@ -42,7 +41,7 @@ export default {
   name: "tweet-comment",
   computed: {
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
     tweetId() {
       return this.$store.state.tweetId;
@@ -141,8 +140,9 @@ export default {
           data: {
             loginToken: this.loginToken,
             commentId: this.commentInfo.commentId,
-            content: "why does this work tho",
-            //can't do "Get element by id here?"
+            content: document.getElementById("editComment").value,
+            //remember: get element by id wasn't working because element went id was in loop
+            //= more than one element with that id
           },
         })
         .then((res) => {

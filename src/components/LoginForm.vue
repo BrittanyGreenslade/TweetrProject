@@ -20,17 +20,19 @@
       <input @click="attemptLogin" type="button" id="loginBtn" value="Login" />
     </form>
     <h4>{{ loginStatus }}</h4>
+    <!-- <div id="successContainer"></div> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
+// import lottie from "lottie-web";
 export default {
   name: "login-form",
   computed: {
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
   },
   data() {
@@ -39,11 +41,11 @@ export default {
     };
   },
   // mounted() {
-  //   if (this.loginToken) {
-  //     setTimeout(this.navigateToProfile, 1500);
-  //     // this.navigateToProfile();
-  //     // console.log(this.loginToken);
-  //   }
+  //   this.$store.commit("updateLoginToken", cookies.get("loginToken")),
+  //     this.$store.commit(
+  //       "updateCurrentUserInfo",
+  //       cookies.get("currentUserInfo")
+  //     );
   // },
 
   methods: {
@@ -56,6 +58,16 @@ export default {
     navigateToProfile() {
       this.$router.push({ path: "/profile" });
     },
+    // loginSuccess() {
+    //   lottie.loadAnimation({
+    //     container: document.getElementById("successContainer"),
+    //     path: "@/assets/animations/success.json",
+    //     loop: false,
+    //     autoplay: true,
+    //     renderer: "svg",
+    //     name: "success",
+    //   });
+    // },
     attemptLogin() {
       axios
         .request({
@@ -73,20 +85,17 @@ export default {
         })
         .then((res) => {
           this.loginStatus = "Logging in...";
-
           //makes transition chill btwn navigations
           setTimeout(this.navigateToProfile, 1500);
-          //updating things in the store with data returned from API call
-          this.$store.commit("updateCurrentUserId", res.data.userId);
-          this.$store.commit("updateCurrentUserEmail", res.data.email);
-          this.$store.commit("updateCurrentUsername", res.data.username);
-          this.$store.commit("updateCurrentUserBio", res.data.bio);
-          this.$store.commit("updateCurrentUserBirthdate", res.data.birthdate);
+          //store is updated when I 'get' cookie in store
+          cookies.set("currentUserInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
-          cookies.set("userInfo", res.data);
-          console.log(res.data);
-          // this.$store.commit("updateLoginToken", cookies.get("loginToken"));
-          this.updateCurrentUserPassword();
+          this.$store.commit("updateLoginToken", cookies.get("loginToken")),
+            this.$store.commit(
+              "updateCurrentUserInfo",
+              cookies.get("currentUserInfo")
+            );
+
           this.loginStatus = "Logged in! Redirecting...";
         })
         .catch((err) => {

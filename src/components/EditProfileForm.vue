@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
   },
   methods: {

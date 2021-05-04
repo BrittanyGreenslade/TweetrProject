@@ -23,7 +23,7 @@ export default {
       return this.$store.state.commentInfo.commentId;
     },
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
   },
   methods: {

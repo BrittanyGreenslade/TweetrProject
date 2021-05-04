@@ -17,7 +17,7 @@ export default {
       return this.$store.state.tweetId;
     },
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
     tweetLikes() {
       return this.$store.state.tweetLikes;

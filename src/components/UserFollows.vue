@@ -19,7 +19,7 @@ export default {
       return this.$store.state.followId;
     },
     loginToken() {
-      return this.$store.state.currentUserInfo.loginToken;
+      return this.$store.state.loginToken;
     },
     // otherUserId() {
     //   return this.$store.state.otherUserId;

@@ -75,15 +75,15 @@ export default {
         })
         .then((res) => {
           setTimeout(this.navigateToProfile, 1500);
-          cookies.set("userInfo", res.data);
+          cookies.set("currentUserInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
-          // this.$store.commit("updateLoginToken", cookies.get("loginToken"));
-          this.$store.commit("updateCurrentUserId", res.data.userId);
-          this.$store.commit("updateCurrentUserEmail", res.data.email);
-          this.$store.commit("updateCurrentUsername", res.data.username);
-          this.$store.commit("updateCurrentUserBio", res.data.bio);
-          this.$store.commit("updateCurrentUserBirthdate", res.data.birthdate);
-          this.updateCurrentUserPassword();
+          this.$store.commit(
+            "updateCurrentUserInfo",
+            cookies.get("currentUserInfo")
+          );
+          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
+
+          // this.updateCurrentUserPassword();
           this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {
