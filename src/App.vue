@@ -51,7 +51,7 @@ export default {
     notifyLogin() {
       if (!this.loginToken) {
         this.navigateToHome();
-        this.loginStatus = "Please login to continue";
+        // this.loginStatus = "Please login to continue";
       }
     },
     navigateToProfile() {

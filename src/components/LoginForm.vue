@@ -34,10 +34,14 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
+    // },
   },
   data() {
     return {
       loginStatus: "",
+      // currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   // mounted() {
@@ -49,14 +53,11 @@ export default {
   // },
 
   methods: {
-    //this isn't returned as data from api so had to put it as its own separate fn
-    updateCurrentUserPassword() {
-      let userPassword = document.getElementById("passwordInputLogin").value;
-      return this.$store.commit("updateCurrentUserPassword", userPassword);
-    },
-
     navigateToProfile() {
-      this.$router.push({ path: "/profile" });
+      this.$router.push({
+        path: "/profile/:userId",
+        // params: { userId: this.currentUserInfo.userId },
+      });
     },
     // loginSuccess() {
     //   lottie.loadAnimation({
@@ -86,16 +87,14 @@ export default {
         .then((res) => {
           this.loginStatus = "Logging in...";
           //makes transition chill btwn navigations
-          setTimeout(this.navigateToProfile, 1500);
-          //store is updated when I 'get' cookie in store
           cookies.set("currentUserInfo", res.data);
+          this.$store.commit(
+            "updateCurrentUserInfo",
+            cookies.get("currentUserInfo")
+          );
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
-            this.$store.commit(
-              "updateCurrentUserInfo",
-              cookies.get("currentUserInfo")
-            );
-
+            setTimeout(this.navigateToProfile, 1500);
           this.loginStatus = "Logged in! Redirecting...";
         })
         .catch((err) => {

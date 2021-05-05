@@ -75,9 +75,10 @@ export default new Vuex.Store({
     updateLoginToken(state, data) {
       state.loginToken = data;
     },
-    updateCurrentUserPassword(state, data) {
-      state.currentUserPassword = data;
+    updateCurrentUserTweets(state, data) {
+      state.currentUserTweets = data;
     },
+
     //Other users info mutations
     updateFollowId(state, data) {
       state.followId = data;

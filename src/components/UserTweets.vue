@@ -7,10 +7,11 @@
     </section>
     <section id="userTweetContainer">
       <h3>Your Tweets</h3>
-      <button @click="getMyTweets(currentUserId)">
-        View my tweets
-      </button>
-      <section v-for="tweet in userTweets" :key="tweet.tweetId">
+      <section
+        id="tweetContainer"
+        v-for="tweet in currentUserTweets"
+        :key="tweet.tweetId"
+      >
         <h3>{{ tweet.username }}</h3>
         <p>{{ tweet.content }}</p>
         <p>{{ tweet.createdAt }}</p>
@@ -31,28 +32,35 @@
 <script>
 import axios from "axios";
 import TweetLikes from "./TweetLikes.vue";
+import cookies from "vue-cookies";
 export default {
   components: { TweetLikes },
   name: "user-tweets",
+  data() {
+    return {
+      currentUserInfo: cookies.get("currentUserInfo"),
+      currentUserTweets: [],
+    };
+  },
+  mounted() {
+    this.viewMyTweets();
+  },
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    userTweets() {
-      return this.$store.state.userTweets;
-    },
     tweetId() {
       return this.$store.state.tweetId;
     },
-    currentUserId() {
-      return this.$store.state.currentUserInfo.userId;
-    },
+    // currentUserId() {
+    //   return this.$store.state.currentUserInfo.userId;
+    // },
   },
 
   methods: {
-    testUpdate(tweetId) {
-      this.$store.commit("updateTweetId", tweetId);
-    },
+    // testUpdate(tweetId) {
+    //   this.$store.commit("updateTweetId", tweetId);
+    // },
     postTweet() {
       axios
         .request({
@@ -68,7 +76,9 @@ export default {
           },
         })
         .then((res) => {
-          this.userTweets.push(res.data);
+          console.log(res.data);
+          this.currentUserTweets = res.data;
+          // this.userTweets.push(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -104,8 +114,7 @@ export default {
           console.log(err);
         });
     },
-    getMyTweets(currentUserId) {
-      this.$store.commit("updateCurrentUserId", currentUserId);
+    viewMyTweets() {
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -115,14 +124,16 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
-            userId: this.currentUserId,
+            userId: this.currentUserInfo.userId,
           },
         })
         .then((res) => {
-          this.$store.commit("updateUserTweets", res.data);
+          this.currentUserTweets = res.data;
+          // this.$store.commit("updateCurrentUserTweets", res.data);
         })
         .catch((err) => {
           console.log(err);
+          // console.log(userId);
         });
     },
     deleteTweetCall() {
@@ -151,7 +162,11 @@ export default {
 </script>
 
 <style scoped>
-textarea {
+textarea,
+button {
+  border: 1px solid black;
+}
+#tweetContainer {
   border: 1px solid black;
 }
 </style>
