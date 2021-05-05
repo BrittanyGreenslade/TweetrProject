@@ -1,10 +1,10 @@
 <template>
   <div>
     <div>
-      <h3>{{ this.currentUserInfo.username }}</h3>
-      <h5>{{ this.currentUserInfo.bio }}</h5>
-      <h5>{{ this.currentUserInfo.email }}</h5>
-      <h4>{{ this.currentUserInfo.birthdate }}</h4>
+      <h3>{{ currentUserInfo.username }}</h3>
+      <h5>{{ currentUserInfo.bio }}</h5>
+      <h5>{{ currentUserInfo.email }}</h5>
+      <h4>{{ currentUserInfo.birthdate }}</h4>
       <!-- <user-tweets /> -->
     </div>
     <button v-if="toggleEditOn === false" @click="toggleEditOn = !toggleEditOn">
@@ -26,7 +26,8 @@
       <delete-profile />
       <button @click="toggleDeleteOn = false">Cancel</button>
     </section>
-    <user-tweets />
+    <h3>Your Tweets</h3>
+    <current-user-tweets />
 
     <!-- <div v-else>
       <div>
@@ -45,18 +46,15 @@
 <script>
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
-import UserTweets from "./UserTweets.vue";
-import cookies from "vue-cookies";
-// import axios from "axios";
+import CurrentUserTweets from "./CurrentUserTweets.vue";
 export default {
-  components: { EditProfileForm, DeleteProfile, UserTweets },
+  components: { EditProfileForm, DeleteProfile, CurrentUserTweets },
   name: "current-user",
   data() {
     return {
       toggleEditOn: false,
       toggleDeleteOn: false,
       // paramId: this.$route.params.userId,
-      currentUserInfo: cookies.get("currentUserInfo"),
       // currentUserId: cookies.get("currentUserInfo").userId,
     };
   },
@@ -64,9 +62,9 @@ export default {
   //   this.viewUserProfile();
   // },
   computed: {
-    // currentUserInfo() {
-    //   return this.$store.state.currentUserInfo;
-    // },
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
     otherUserInfo() {
       return this.$store.state.otherUserInfo;
     },
@@ -76,7 +74,7 @@ export default {
     // selectedUserId() {
     //   return this.$store.state.selectedUserId;
     // },
-    userTweets() {
+    currentUserTweets() {
       return this.$store.state.currentUserTweets;
     },
   },

@@ -23,6 +23,7 @@ export default new Vuex.Store({
     singleUser: "",
     otherUserInfo: {},
     // otherUserId: "",
+    allTweets: [],
     currentUserTweets: [],
     otherUsersTweets: [],
     tweetLikes: [],
@@ -76,7 +77,7 @@ export default new Vuex.Store({
       state.loginToken = data;
     },
     updateCurrentUserTweets(state, data) {
-      state.currentUserTweets = data;
+      state.currentUserTweets += data;
     },
 
     //Other users info mutations

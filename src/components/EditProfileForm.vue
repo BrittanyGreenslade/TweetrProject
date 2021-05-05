@@ -51,6 +51,9 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
   },
   methods: {
     editUserProfile() {
@@ -73,7 +76,7 @@ export default {
         })
         .then((res) => {
           this.loginStatus = "Profile updated!";
-          console.log(res);
+          this.$store.commit("updateCurrentUserInfo", res.data);
         })
         .catch((err) => {
           console.log(err);

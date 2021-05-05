@@ -1,20 +1,24 @@
 <template>
   <div>
-    <section><user-tweets /></section>
-
+    <h1>News Feed</h1>
+    <current-user-post-tweet />
+    <current-user-tweets />
     <section>
-      <other-tweets />
+      <all-tweets-follow />
     </section>
   </div>
 </template>
 
 <script>
-import UserTweets from "@/components/UserTweets.vue";
-import OtherTweets from "../components/OtherTweets.vue";
+import CurrentUserTweets from "@/components/CurrentUserTweets.vue";
+import AllTweetsFollow from "../components/AllTweetsFollow.vue";
+import CurrentUserPostTweet from "../components/CurrentUserPostTweet.vue";
+
 export default {
   components: {
-    UserTweets,
-    OtherTweets,
+    CurrentUserTweets,
+    AllTweetsFollow,
+    CurrentUserPostTweet,
   },
   computed: {},
   methods: {},

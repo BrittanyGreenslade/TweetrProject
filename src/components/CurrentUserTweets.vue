@@ -1,7 +1,10 @@
 <template>
   <div>
     <section id="userTweetContainer">
-      <h3>Your Tweets</h3>
+      <!-- if user tweets is empty -->
+      <h4 v-if="(this.userTweets = null)">
+        No tweets posted by you yet! Post in "Feed"
+      </h4>
       <section
         id="tweetContainer"
         v-for="tweet in currentUserTweets"
@@ -38,7 +41,7 @@ import cookies from "vue-cookies";
 
 export default {
   components: { TweetLikes },
-  name: "user-tweets",
+  name: "current-user-tweets",
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
@@ -81,6 +84,7 @@ export default {
         })
         .then((res) => {
           this.editTweetViewOn === false;
+          //reloads so tweet view goes away
           location.reload(true);
           res;
         })

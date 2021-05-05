@@ -25,7 +25,7 @@ import axios from "axios";
 import TweetComment from "./TweetComment.vue";
 export default {
   components: { TweetComment },
-  name: "other-tweets",
+  name: "all-tweets-follow",
   computed: {
     // loginToken() {
     //   return this.$store.state.loginToken;
