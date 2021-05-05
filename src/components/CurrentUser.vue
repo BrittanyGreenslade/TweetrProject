@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- v-if="this.paramId === currentUserInfo.userId" -->
     <div>
-      <h3>{{ currentUserInfo.username }}</h3>
-      <h5>{{ currentUserInfo.bio }}</h5>
-      <h5>{{ currentUserInfo.email }}</h5>
-      <h4>{{ currentUserInfo.birthdate }}</h4>
+      <h3>{{ this.currentUserInfo.username }}</h3>
+      <h5>{{ this.currentUserInfo.bio }}</h5>
+      <h5>{{ this.currentUserInfo.email }}</h5>
+      <h4>{{ this.currentUserInfo.birthdate }}</h4>
       <!-- <user-tweets /> -->
     </div>
     <button v-if="toggleEditOn === false" @click="toggleEditOn = !toggleEditOn">
@@ -44,11 +43,10 @@
 </template>
 
 <script>
-import cookies from "vue-cookies";
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import UserTweets from "./UserTweets.vue";
-
+import cookies from "vue-cookies";
 // import axios from "axios";
 export default {
   components: { EditProfileForm, DeleteProfile, UserTweets },
@@ -57,7 +55,7 @@ export default {
     return {
       toggleEditOn: false,
       toggleDeleteOn: false,
-      // paramId: this.$router.params.userId,
+      // paramId: this.$route.params.userId,
       currentUserInfo: cookies.get("currentUserInfo"),
       // currentUserId: cookies.get("currentUserInfo").userId,
     };

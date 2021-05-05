@@ -2,7 +2,9 @@
   <div>
     <button @click="logout" id="logoutBtn">Logout</button>
     <current-user />
+    <!-- <current-user v-if="this.paramId === this.currentUserInfo.userId" /> -->
     <h4>{{ loginStatus }}</h4>
+    <!-- <other-user-profile /> -->
   </div>
 </template>
 
@@ -10,15 +12,17 @@
 import axios from "axios";
 import cookies from "vue-cookies";
 import CurrentUser from "../components/CurrentUser.vue";
-
+// import OtherUserProfile from "../components/OtherUserProfile.vue";
 export default {
   components: {
     CurrentUser,
+    // OtherUserProfile,
   },
   data() {
     return {
       loginStatus: "",
-      // paramId: this.$router.params.userId,
+      // paramId: this.$route.params.userId,
+      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
 
@@ -26,9 +30,9 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    currentUserInfo() {
-      return this.$store.state.currentUserInfo;
-    },
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
+    // },
   },
   methods: {
     //called in logout fn

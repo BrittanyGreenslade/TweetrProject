@@ -34,14 +34,15 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    // currentUserInfo() {
-    //   return this.$store.state.currentUserInfo;
+    // currentUserId() {
+    //   return this.$store.state.currentUserInfo.userId;
     // },
   },
   data() {
     return {
       loginStatus: "",
-      // currentUserInfo: cookies.get("currentUserInfo"),
+      currentUserInfo: cookies.get("currentUserInfo"),
+      // paramId: this.$route.params.userId,
     };
   },
   // mounted() {
@@ -55,10 +56,12 @@ export default {
   methods: {
     navigateToProfile() {
       this.$router.push({
-        path: "/profile/:userId",
-        // params: { userId: this.currentUserInfo.userId },
+        name: "Profile",
+        // path: `/profile/${this.paramId}`,
+        //     // params: { userId: this.currentUserInfo.userId },
       });
     },
+    // },
     // loginSuccess() {
     //   lottie.loadAnimation({
     //     container: document.getElementById("successContainer"),
@@ -96,6 +99,7 @@ export default {
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
             setTimeout(this.navigateToProfile, 1500);
           this.loginStatus = "Logged in! Redirecting...";
+          this.paramId = cookies.get("currentUserInfo").userId;
         })
         .catch((err) => {
           console.log(err);

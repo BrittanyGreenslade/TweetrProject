@@ -86,10 +86,10 @@ export default {
               // res.data[this.selectedUserId] =
               this.$store.commit("updateOtherUserInfo", res.data);
               console.log(res.data);
-              this.$router.push({
-                name: "Single User",
-                params: { selectedUserId: this.selectedUserId },
-              });
+              // // this.$router.push({
+              // //   name: "Single User",
+              // //   params: { selectedUserId: this.selectedUserId },
+              // });
             })
             .catch((err) => {
               console.log(err);

@@ -12,7 +12,7 @@
         <router-link to="/login">Login/Sign-up</router-link>
       </span>
       <span v-else-if="this.loginToken">
-        <router-link to="/profile">Profile</router-link>
+        <router-link to="/profile"> Profile</router-link>
         |
         <router-link to="/feed">Feed</router-link>
         |
@@ -25,10 +25,12 @@
   </div>
 </template>
 <script>
+import cookies from "vue-cookies";
 export default {
   data() {
     return {
       loginStatus: "",
+      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   computed: {
