@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>Discover page</h1>
-    <!-- <button @click="viewAllUsers">
-      View All Users
-    </button> -->
+
     <all-tweets-dont-follow />
   </div>
 </template>

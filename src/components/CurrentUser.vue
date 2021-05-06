@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import cookies from "vue-cookies";
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
@@ -54,6 +55,7 @@ export default {
     return {
       toggleEditOn: false,
       toggleDeleteOn: false,
+      currentUserInfo: cookies.get("currentUserInfo"),
       // paramId: this.$route.params.userId,
       // currentUserId: cookies.get("currentUserInfo").userId,
     };
@@ -62,9 +64,9 @@ export default {
   //   this.viewUserProfile();
   // },
   computed: {
-    currentUserInfo() {
-      return this.$store.state.currentUserInfo;
-    },
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
+    // },
     otherUserInfo() {
       return this.$store.state.otherUserInfo;
     },

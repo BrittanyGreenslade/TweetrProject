@@ -7,12 +7,14 @@
     />
     <!-- New here? Sign up! -->
     <div id="nav">
-      <span v-if="!this.loginToken">
+      <span v-if="!loginToken">
         <!-- hallllp how to make this show only on homepage but not on login page -->
         <router-link to="/login">Login/Sign-up</router-link>
       </span>
-      <span v-else-if="this.loginToken">
-        <router-link to="/profile"> Profile</router-link>
+      <span v-else-if="loginToken">
+        <router-link :to="`/profile/${currentUserInfo.userId}`">
+          Profile</router-link
+        >
         |
         <router-link to="/feed">Feed</router-link>
         |
@@ -48,7 +50,7 @@ export default {
   // },
   methods: {
     navigateToHome() {
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: "/feed" });
     },
     notifyLogin() {
       if (!this.loginToken) {
@@ -57,7 +59,7 @@ export default {
       }
     },
     navigateToProfile() {
-      this.$router.push({ path: "/profile" });
+      this.$router.push({ path: `/profile/${this.currentUserInfo.userId}` });
     },
   },
 };

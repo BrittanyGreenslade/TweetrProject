@@ -2,31 +2,35 @@
   <div>
     <section id="userTweetContainer">
       <!-- if user tweets is empty -->
-      <h4 v-if="(this.userTweets = null)">
+      <h4 v-if="recentCurrentTweets === null">
         No tweets posted by you yet! Post in "Feed"
       </h4>
-      <section
-        id="tweetContainer"
-        v-for="tweet in currentUserTweets"
-        :key="tweet.tweetId"
-      >
-        <h3>{{ tweet.username }}</h3>
-        <p>{{ tweet.content }}</p>
-        <p>{{ tweet.createdAt }}</p>
-        <!-- <div>{{tweet.imageUrl}}</div> -->
-        <button v-if="editTweetViewOn === false" @click="toggleEditView">
-          Edit Tweet
-        </button>
-        <section id="editTweetContainer">
-          <section v-if="editTweetViewOn === true">
-            <textarea name="editTweet" id="editTweet"></textarea>
-            <button @click="editTweet">Post EditedTweet</button>
-            <button @click="editTweetViewOn = false">Cancel</button>
+      <section>
+        <div
+          id="tweetContainer"
+          v-for="tweet in recentCurrentTweets"
+          :key="tweet.tweetId"
+        >
+          <h3>
+            {{ tweet.username }}
+          </h3>
+          <p>{{ tweet.content }}</p>
+          <p>{{ tweet.createdAt }}</p>
+          <p>{{ tweet.tweetId }}</p>
+          <!-- <div>{{tweet.imageUrl}}</div> -->
+          <button v-if="editTweetViewOn === false" @click="toggleEditView">
+            Edit Tweet
+          </button>
+          <section id="editTweetContainer">
+            <section v-if="editTweetViewOn === true">
+              <textarea name="editTweet" id="editTweet"></textarea>
+              <button @click="editTweet">Post EditedTweet</button>
+              <button @click="editTweetViewOn = false">Cancel</button>
+            </section>
           </section>
-        </section>
-        <button @click="deleteTweet()">Delete Tweet</button>
-
-        <tweet-likes />
+          <button @click="deleteTweet(tweet.tweetId)">Delete Tweet</button>
+        </div>
+        <!-- <tweet-likes /> -->
       </section>
     </section>
 
@@ -36,30 +40,32 @@
 
 <script>
 import axios from "axios";
-import TweetLikes from "./TweetLikes.vue";
+// import TweetLikes from "./TweetLikes.vue";
 import cookies from "vue-cookies";
 
 export default {
-  components: { TweetLikes },
+  // components: { TweetLikes },
   name: "current-user-tweets",
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
-      currentUserTweets: [],
+      loginToken: cookies.get("loginToken"),
       editTweetViewOn: false,
-      tweetId: 1218,
     };
   },
   mounted() {
     this.viewMyTweets();
   },
   computed: {
-    loginToken() {
-      return this.$store.state.loginToken;
+    currentUserTweets() {
+      return this.$store.state.currentUserTweets;
     },
-    // tweetId() {
-    //   return this.$store.state.tweetId;
-    // },
+    recentCurrentTweets() {
+      return this.$store.getters.recentCurrentTweets;
+    },
+    selectedTweetId() {
+      return this.$store.state.selectedTweetId;
+    },
   },
 
   methods: {
@@ -78,14 +84,15 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            tweetId: this.tweetId,
+            tweetId: this.selectedTweetId,
             content: document.getElementById("editTweet").value,
           },
         })
         .then((res) => {
           this.editTweetViewOn === false;
+
           //reloads so tweet view goes away
-          location.reload(true);
+          // location.reload(true);
           res;
         })
         .catch((err) => {
@@ -107,17 +114,14 @@ export default {
           },
         })
         .then((res) => {
-          this.currentUserTweets = res.data;
-
-          // this.$store.commit("updateCurrentUserTweets", res.data);
+          this.$store.commit("updateCurrentUserTweets", res.data);
         })
         .catch((err) => {
           console.log(err);
-          // console.log(userId);
         });
     },
-    deleteTweet() {
-      // this.$store.commit("updateTweetId", tweetId);
+    deleteTweet(tweetId) {
+      this.$store.commit("updateSelectedTweetId", tweetId);
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -128,17 +132,21 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            tweetId: this.tweetId,
+            tweetId: this.selectedTweetId,
           },
         })
         .then((res) => {
+          res;
           document.getElementById(
             "tweetContainer"
-          ).innerHTML = `<h2>Post Deleted!</h2>`;
-          res;
+          ).innerHtml = `<h2>Post Removed!</h2>`;
+          this.$store.commit("removeTweetFromCurrentTweets", tweetId);
+          this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
+          console.log(this.currentUserTweets);
         })
         .catch((err) => {
           console.log(err);
+          console.log(this.selectedTweetId);
         });
     },
   },

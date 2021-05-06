@@ -2,7 +2,7 @@
   <div>
     <h1>News Feed</h1>
     <current-user-post-tweet />
-    <current-user-tweets />
+    <!-- <current-user-tweets /> -->
     <section>
       <all-tweets-follow />
     </section>
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import CurrentUserTweets from "@/components/CurrentUserTweets.vue";
+// import CurrentUserTweets from "@/components/CurrentUserTweets.vue";
 import AllTweetsFollow from "../components/AllTweetsFollow.vue";
 import CurrentUserPostTweet from "../components/CurrentUserPostTweet.vue";
 
 export default {
   components: {
-    CurrentUserTweets,
+    // CurrentUserTweets,
     AllTweetsFollow,
     CurrentUserPostTweet,
   },

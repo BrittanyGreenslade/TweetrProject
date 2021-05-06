@@ -6,6 +6,7 @@
         name="postTweet"
         id="postTweet"
         placeholder="max 200 characters"
+        required
       ></textarea>
       <button @click="postTweet">Post</button>
     </section>
@@ -22,6 +23,14 @@ export default {
       loginToken: cookies.get("loginToken"),
     };
   },
+  computed: {
+    currentUserTweets() {
+      return this.$store.state.currentUserTweets;
+    },
+  },
+  // mounted() {
+  //   this.postTweet();
+  // },
   methods: {
     postTweet() {
       axios
@@ -38,10 +47,8 @@ export default {
           },
         })
         .then((res) => {
-          this.$store.commit("updateCurrentUserTweets", res.data);
-          location.reload();
-          // console.log(res.data);
-          // this.userTweets.push(res.data);
+          this.$store.commit("addTweetToCurrentsTweets", res.data);
+          this.$store.commit("addTweetToAllTweets", res.data);
         })
         .catch((err) => {
           console.log(err);

@@ -23,18 +23,18 @@ export default new Vuex.Store({
     singleUser: "",
     otherUserInfo: {},
     // otherUserId: "",
-    allTweets: [],
+    allUsersTweets: [],
     currentUserTweets: [],
-    otherUsersTweets: [],
+    // otherUsersTweets: [],
     tweetLikes: [],
     numTweetLikes: "",
-    tweetId: "",
+    selectedTweetId: undefined,
     numCommentLikes: "",
     followInfo: {
       currentUserFollowers: [],
       otherUserFollowers: [],
     },
-    //same as otherUserId so might not need?
+    //same as otherUserInfo.id so might not need?
     followId: "",
     commentInfo: {
       commentId: "",
@@ -77,7 +77,7 @@ export default new Vuex.Store({
       state.loginToken = data;
     },
     updateCurrentUserTweets(state, data) {
-      state.currentUserTweets += data;
+      state.currentUserTweets = data;
     },
 
     //Other users info mutations
@@ -113,16 +113,38 @@ export default new Vuex.Store({
     updateTweetLikes(state, data) {
       state.tweetLikes = data;
     },
-    updateOtherUsersTweets(state, data) {
-      state.otherUsersTweets = data;
+    updateAllUsersTweets(state, data) {
+      state.allUsersTweets = data;
     },
-    updateTweetId(state, data) {
-      state.tweetId = data;
+    updateSelectedTweetId(state, data) {
+      state.selectedTweetId = data;
     },
-    updateUserTweets(state, data) {
-      state.userTweets = data;
+    addTweetToCurrentsTweets(state, data) {
+      state.currentUserTweets.push(data);
     },
+    addTweetToAllTweets(state, data) {
+      state.allUsersTweets.push(data);
+    },
+    removeTweetFromCurrentTweets(state, data) {
+      state.currentUserTweets.pop(data);
+    },
+    removeTweetFromAllUsersTweets(state, data) {
+      state.allUsersTweets.pop(data);
+    },
+    // udpateAllTweets(state, data) {
+    //   state.allTweets = data;
+    // },
+    // updateUserTweets(state, data) {
+    //   state.userTweets = data;
+    // },
   },
   actions: {},
-  getters: {},
+  getters: {
+    recentCurrentTweets(state) {
+      return state.currentUserTweets.reverse();
+    },
+    recentAllUsersTweets(state) {
+      return state.allUsersTweets.reverse();
+    },
+  },
 });

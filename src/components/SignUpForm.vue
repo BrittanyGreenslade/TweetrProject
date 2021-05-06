@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       loginStatus: "",
+      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   // mounted() {
@@ -52,7 +53,9 @@ export default {
       return this.$store.commit("updateCurrentUserPassword", userPassword);
     },
     navigateToProfile() {
-      this.$router.push({ path: "/profile" });
+      this.$router.push({
+        path: `/profile/${this.currentUserInfo.userId}`,
+      });
     },
     userSignup() {
       axios

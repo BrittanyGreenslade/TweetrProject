@@ -1,49 +1,85 @@
 <template>
   <div>
-    <button @click="getOtherUsersTweets">Other Users' tweets</button>
     <section
-      v-for="otherUsersTweet in this.otherUsersTweets"
-      :key="otherUsersTweet.tweetId"
-      id="tweetsContainer"
+      v-for="recentAllUsersTweet in recentAllUsersTweets"
+      :key="recentAllUsersTweet.tweetId"
+      id="tweetContainer"
     >
-      <h3>{{ otherUsersTweet.username }}</h3>
-      <p>{{ otherUsersTweet.content }}</p>
-      <button @click="getSpecificUserTweets(otherUsersTweet.userId)">
-        Specific User Tweets
+      <h3>{{ recentAllUsersTweet.username }}</h3>
+      <h5>{{ recentAllUsersTweet.createdAt }}</h5>
+      <p>{{ recentAllUsersTweet.content }}</p>
+      <button
+        v-if="
+          editTweetViewOn === false &&
+            currentUserInfo.userId === recentAllUsersTweet.userId
+        "
+        @click="toggleEditView"
+      >
+        Edit Tweet
       </button>
+      <section id="editTweetContainer">
+        <section v-if="editTweetViewOn === true">
+          <textarea name="editTweet" id="editTweet"></textarea>
+          <!-- <button @click="editTweet">Post EditedTweet</button> -->
+          <button @click="editTweetViewOn = false">Cancel</button>
+        </section>
+      </section>
+      <button
+        v-if="currentUserInfo.userId === recentAllUsersTweet.userId"
+        @click="deleteTweet(recentAllUsersTweet.tweetId)"
+      >
+        Delete Tweet
+      </button>
+
       <br />
-      <button @click="getTweetId(otherUsersTweet.tweetId)">
-        Test button
-      </button>
-      <tweet-comment />
     </section>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import TweetComment from "./TweetComment.vue";
+import cookies from "vue-cookies";
+// import TweetComment from "./TweetComment.vue";
 export default {
-  components: { TweetComment },
+  // components: { TweetComment },
   name: "all-tweets-follow",
+
+  data() {
+    return {
+      loginToken: cookies.get("loginToken"),
+      currentUserInfo: cookies.get("currentUserInfo"),
+      currentUserId: cookies.get("currentUserInfo").userId,
+      editTweetViewOn: false,
+    };
+  },
+  mounted() {
+    this.getFollowingUsersTweets();
+  },
   computed: {
+    selectedTweetId() {
+      return this.$store.state.selectedTweetId;
+    },
+    allUsersTweets() {
+      return this.$store.state.allUsersTweets;
+    },
     // loginToken() {
     //   return this.$store.state.loginToken;
+    // // },
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
     // },
-    otherUsersTweets() {
-      return this.$store.state.otherUsersTweets;
+    recentAllUsersTweets() {
+      return this.$store.getters.recentAllUsersTweets;
     },
-    otherUserInfo() {
-      return this.$store.state.otherUserInfo;
-    },
+    // otherUserInfo() {
+    //   return this.$store.state.otherUserInfo;
+    // },
   },
   methods: {
-    getTweetId(testTweetId) {
-      this.$store.commit("updateTweetId", testTweetId);
+    toggleEditView() {
+      this.editTweetViewOn = !this.editTweetViewOn;
     },
-
-    getSpecificUserTweets(userId) {
-      this.$store.commit("updateOtherUserId", userId);
+    getFollowingUsersTweets() {
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -52,34 +88,72 @@ export default {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
-          params: {
-            userId: this.otherUserInfo.userId,
-          },
         })
         .then((res) => {
-          this.$store.commit("updateOtherUsersTweets", res.data);
-          console.log(res);
+          this.$store.commit("updateAllUsersTweets", res.data);
+          // res.data.filter(notMyTweets);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-
-    getOtherUsersTweets() {
+    editTweet() {
+      // this.$store.commit("updateSelectedTweetId", tweetId);
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
-          method: "GET",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
+          data: {
+            loginToken: this.loginToken,
+            tweetId: this.selectedTweetId,
+            content: document.getElementById("editTweet").value,
+          },
         })
         .then((res) => {
-          this.$store.commit("updateOtherUsersTweets", res.data);
+          this.editTweetViewOn === false;
+
+          //reloads so tweet view goes away
+          // location.reload(true);
+          res;
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    deleteTweet(tweetId) {
+      this.$store.commit("updateSelectedTweetId", tweetId);
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweets",
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+          },
+          data: {
+            loginToken: this.loginToken,
+            tweetId: this.selectedTweetId,
+          },
+        })
+        .then((res) => {
+          res;
+          document.getElementById(
+            "tweetContainer"
+          ).innerHtml = `<h2>Post Removed!</h2>`;
+          this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
+          console.log(this.allUsersTweets);
+          (document.getElementById(
+            "tweetContainer"
+          ).innerHTML = `<h2>Post deleted!</h2>`),
+            res;
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(this.selectedTweetId);
         });
     },
   },

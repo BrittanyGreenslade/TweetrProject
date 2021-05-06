@@ -29,7 +29,7 @@ const routes = [
   //   children: [],
   // },
   {
-    path: "/profile",
+    path: "/profile/:userId",
     name: "Profile",
     component: Profile,
     // children: [

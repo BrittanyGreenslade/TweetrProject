@@ -30,18 +30,20 @@ import cookies from "vue-cookies";
 // import lottie from "lottie-web";
 export default {
   name: "login-form",
+
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    // currentUserId() {
-    //   return this.$store.state.currentUserInfo.userId;
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
     // },
   },
   data() {
     return {
       loginStatus: "",
       currentUserInfo: cookies.get("currentUserInfo"),
+
       // paramId: this.$route.params.userId,
     };
   },
@@ -56,8 +58,7 @@ export default {
   methods: {
     navigateToProfile() {
       this.$router.push({
-        name: "Profile",
-        // path: `/profile/${this.paramId}`,
+        path: `/profile/${this.currentUserInfo.userId}`,
         //     // params: { userId: this.currentUserInfo.userId },
       });
     },
@@ -99,7 +100,7 @@ export default {
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
             setTimeout(this.navigateToProfile, 1500);
           this.loginStatus = "Logged in! Redirecting...";
-          this.paramId = cookies.get("currentUserInfo").userId;
+          this.currentUserInfo = cookies.get("currentUserInfo");
         })
         .catch((err) => {
           console.log(err);
