@@ -20,7 +20,6 @@
       <input @click="attemptLogin" type="button" id="loginBtn" value="Login" />
     </form>
     <h4>{{ loginStatus }}</h4>
-    <!-- <div id="successContainer"></div> -->
   </div>
 </template>
 

@@ -6,6 +6,11 @@
 import axios from "axios";
 export default {
   name: "other-user-profile",
+  computed: {
+    allUsers() {
+      return this.$store.state.allUsers;
+    },
+  },
   methods: {
     viewUserProfile() {
       axios
@@ -17,13 +22,12 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
-            userId: this.currentUserId,
+            userId: this.selectedUserId,
           },
         })
         .then((res) => {
           this.$router.push({
-            name: "Profile",
-            // params: { userId: this.otherUserInfo.userId },
+            path: `/profile/${this.selectedUserId}`,
           }),
             console.log(res.data);
         })

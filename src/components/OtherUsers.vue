@@ -1,16 +1,6 @@
 <template>
+  <!-- maybe make a users page? -->
   <div>
-    <!-- <div>
-      <button @click="getAllUsers">
-        All Users
-      </button>
-    </div> -->
-    <!-- @click="updateOtherUserId(user.userId)" -->
-    <!-- <button @click="grabSelectedUserId(user[selectedUser].userId)">
-      View user profile
-    </button> -->
-    <!-- @click="grabSelectedUserId(user.userId)" -->
-
     <div v-for="user in allUsers" :key="user.userId">
       <h3>
         <button @click="viewSelectProfile(user.userId)">

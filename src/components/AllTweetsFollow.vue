@@ -1,9 +1,11 @@
 <template>
   <div>
+    <!-- .reverse() here causes infinite loop -->
+
     <section
       v-for="recentAllUsersTweet in recentAllUsersTweets"
       :key="recentAllUsersTweet.tweetId"
-      id="tweetContainer"
+      :id="`tweetContainer${recentAllUsersTweet.tweetId}`"
     >
       <h3>{{ recentAllUsersTweet.username }}</h3>
       <h5>{{ recentAllUsersTweet.createdAt }}</h5>
@@ -13,17 +15,25 @@
           editTweetViewOn === false &&
             currentUserInfo.userId === recentAllUsersTweet.userId
         "
-        @click="toggleEditView"
+        @click="toggleEditView(recentAllUsersTweet.tweetId)"
       >
         Edit Tweet
       </button>
-      <section id="editTweetContainer">
-        <section v-if="editTweetViewOn === true">
-          <textarea name="editTweet" id="editTweet"></textarea>
-          <!-- <button @click="editTweet">Post EditedTweet</button> -->
-          <button @click="editTweetViewOn = false">Cancel</button>
-        </section>
+
+      <section
+        v-if="
+          editTweetViewOn === true &&
+            recentAllUsersTweet.tweetId === selectedTweetId
+        "
+      >
+        <textarea
+          name="editTweet"
+          :id="`editTweet${recentAllUsersTweet.tweetId}`"
+        ></textarea>
+        <button @click="editTweet">Post Edited Tweet</button>
+        <button @click="editTweetViewOn = false">Cancel</button>
       </section>
+
       <button
         v-if="currentUserInfo.userId === recentAllUsersTweet.userId"
         @click="deleteTweet(recentAllUsersTweet.tweetId)"
@@ -48,7 +58,6 @@ export default {
     return {
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
-      currentUserId: cookies.get("currentUserInfo").userId,
       editTweetViewOn: false,
     };
   },
@@ -59,31 +68,19 @@ export default {
     selectedTweetId() {
       return this.$store.state.selectedTweetId;
     },
-    allUsersTweets() {
-      return this.$store.state.allUsersTweets;
-    },
-    // loginToken() {
-    //   return this.$store.state.loginToken;
-    // // },
-    // currentUserInfo() {
-    //   return this.$store.state.currentUserInfo;
-    // },
+
     recentAllUsersTweets() {
       return this.$store.getters.recentAllUsersTweets;
     },
-    // otherUserInfo() {
-    //   return this.$store.state.otherUserInfo;
-    // },
   },
   methods: {
-    toggleEditView() {
-      this.editTweetViewOn = !this.editTweetViewOn;
-    },
     getFollowingUsersTweets() {
+      //do you have these grouping into tweets that are all by the same person?
+      //most recent is at top but on page mount "get tweets" it's in a different order
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
-          method: "GET",
+          // method: "GET",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
@@ -97,8 +94,11 @@ export default {
           console.log(err);
         });
     },
+    toggleEditView(tweetId) {
+      this.editTweetViewOn = !this.editTweetViewOn;
+      this.$store.commit("updateSelectedTweetId", tweetId);
+    },
     editTweet() {
-      // this.$store.commit("updateSelectedTweetId", tweetId);
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -110,15 +110,26 @@ export default {
           data: {
             loginToken: this.loginToken,
             tweetId: this.selectedTweetId,
-            content: document.getElementById("editTweet").value,
+            content: document.getElementById(
+              "editTweet" + `${this.selectedTweetId}`
+            ).value,
           },
         })
         .then((res) => {
-          this.editTweetViewOn === false;
+          this.editTweetViewOn = false;
+          console.log(res.data);
+          for (let i = 0; i < this.recentAllUsersTweets.length; i++) {
+            if (this.recentAllUsersTweets[i].tweetId === this.selectedTweetId) {
+              this.recentAllUsersTweets[i].content = res.data.content;
+              this.$store.commit(
+                "updateAllUsersTweets",
+                this.recentAllUsersTweets
+              );
+            }
+          }
 
           //reloads so tweet view goes away
           // location.reload(true);
-          res;
         })
         .catch((err) => {
           console.log(err);
@@ -142,18 +153,15 @@ export default {
         .then((res) => {
           res;
           document.getElementById(
-            "tweetContainer"
-          ).innerHtml = `<h2>Post Removed!</h2>`;
+            "tweetContainer" + `${tweetId}`
+          ).innerHTML = `<h2>Post Removed!</h2>`;
           this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
-          console.log(this.allUsersTweets);
-          (document.getElementById(
-            "tweetContainer"
-          ).innerHTML = `<h2>Post deleted!</h2>`),
-            res;
+
+          res;
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.selectedTweetId);
+          console.log(this.allUsersTweets);
         });
     },
   },

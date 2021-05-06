@@ -1,33 +1,45 @@
 <template>
   <div>
-    <section id="userTweetContainer">
+    <section class="userTweetContainer">
       <!-- if user tweets is empty -->
       <h4 v-if="recentCurrentTweets === null">
         No tweets posted by you yet! Post in "Feed"
       </h4>
       <section>
         <div
-          id="tweetContainer"
           v-for="tweet in recentCurrentTweets"
           :key="tweet.tweetId"
+          :id="`tweetContainer${tweet.tweetId}`"
         >
           <h3>
             {{ tweet.username }}
           </h3>
           <p>{{ tweet.content }}</p>
           <p>{{ tweet.createdAt }}</p>
-          <p>{{ tweet.tweetId }}</p>
           <!-- <div>{{tweet.imageUrl}}</div> -->
-          <button v-if="editTweetViewOn === false" @click="toggleEditView">
+          <button
+            @click="toggleEditView(tweet.tweetId)"
+            v-if="editTweetViewOn === false"
+          >
             Edit Tweet
           </button>
-          <section id="editTweetContainer">
-            <section v-if="editTweetViewOn === true">
-              <textarea name="editTweet" id="editTweet"></textarea>
-              <button @click="editTweet">Post EditedTweet</button>
-              <button @click="editTweetViewOn = false">Cancel</button>
-            </section>
+
+          <section
+            v-if="editTweetViewOn === true && tweet.tweetId === selectedTweetId"
+          >
+            <textarea
+              name="editTweet"
+              placeholder="max 200 characters"
+              class="editTweet"
+              :id="`editTweet${tweet.tweetId}`"
+            ></textarea>
+            <!-- OMG DYNAMIC BINDING TWEET ID WORKED  -->
+            <button @click="editTweet">
+              Post EditedTweet
+            </button>
+            <button @click="editTweetViewOn = false">Cancel</button>
           </section>
+
           <button @click="deleteTweet(tweet.tweetId)">Delete Tweet</button>
         </div>
         <!-- <tweet-likes /> -->
@@ -69,11 +81,11 @@ export default {
   },
 
   methods: {
-    toggleEditView() {
+    toggleEditView(tweetId) {
+      this.$store.commit("updateSelectedTweetId", tweetId);
       this.editTweetViewOn = !this.editTweetViewOn;
     },
     editTweet() {
-      //   this.$store.commit("updateTweetId", tweetId);
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -85,15 +97,26 @@ export default {
           data: {
             loginToken: this.loginToken,
             tweetId: this.selectedTweetId,
-            content: document.getElementById("editTweet").value,
+            content: document.getElementById(
+              "editTweet" + `${this.selectedTweetId}`
+            ).value,
+            //AND GRABBING THE DYNAMIC ID WORKED HERE AHHHHHH
           },
         })
         .then((res) => {
-          this.editTweetViewOn === false;
+          this.editTweetViewOn = false;
+          console.log(res.data);
+          // this.$store;
 
-          //reloads so tweet view goes away
-          // location.reload(true);
-          res;
+          for (let i = 0; i < this.currentUserTweets.length; i++) {
+            if (this.currentUserTweets[i].tweetId === this.selectedTweetId) {
+              this.currentUserTweets[i].content = res.data.content;
+              this.$store.commit(
+                "updateCurrentUserTweets",
+                this.currentUserTweets
+              );
+            }
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -138,7 +161,7 @@ export default {
         .then((res) => {
           res;
           document.getElementById(
-            "tweetContainer"
+            "tweetContainer" + `${tweetId}`
           ).innerHtml = `<h2>Post Removed!</h2>`;
           this.$store.commit("removeTweetFromCurrentTweets", tweetId);
           this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
@@ -146,7 +169,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.selectedTweetId);
         });
     },
   },
@@ -158,7 +180,7 @@ textarea,
 button {
   border: 1px solid black;
 }
-#tweetContainer {
+.tweetContainer {
   border: 1px solid black;
 }
 </style>

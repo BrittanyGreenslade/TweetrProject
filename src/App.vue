@@ -21,6 +21,7 @@
         <router-link to="/discover">Discover</router-link>
       </span>
     </div>
+    <logout-button />
     <router-view />
     {{ loginStatus }}
     <!-- @click.native="updateCurrentUserId" -->
@@ -28,7 +29,11 @@
 </template>
 <script>
 import cookies from "vue-cookies";
+import LogoutButton from "./components/LogoutButton.vue";
 export default {
+  components: {
+    LogoutButton,
+  },
   data() {
     return {
       loginStatus: "",

@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loginToken: cookies.get("loginToken"),
-    currentUserInfo: cookies.get("userInfo"),
+    currentUserInfo: cookies.get("currentUserInfo"),
     // otherUserInfo: {
     //   userId: "",
     //   email:"",
@@ -18,6 +18,7 @@ export default new Vuex.Store({
     //   imageUrl:"",
     //   bannerUrl:"",
     // },
+    toggleEditOn: false,
     allUsers: [],
     selectedUserId: "",
     singleUser: "",
@@ -48,6 +49,9 @@ export default new Vuex.Store({
   },
   mutations: {
     //all users mutations
+    updateToggle(state, data) {
+      state.toggleEditOn = data;
+    },
     updateAllUsers(state, data) {
       state.allUsers = data;
     },
@@ -61,18 +65,7 @@ export default new Vuex.Store({
     updateCurrentUserId(state, data) {
       state.currentUserInfo.userId = data;
     },
-    updateCurrentUserEmail(state, data) {
-      state.currentUserInfo.email = data;
-    },
-    updateCurrentUsername(state, data) {
-      state.currentUserInfo.username = data;
-    },
-    updateCurrentUserBio(state, data) {
-      state.currentUserInfo.userBio = data;
-    },
-    updateCurrentUserBirthdate(state, data) {
-      state.currentUserInfo.userBirthdate = data;
-    },
+
     updateLoginToken(state, data) {
       state.loginToken = data;
     },
@@ -131,6 +124,7 @@ export default new Vuex.Store({
     removeTweetFromAllUsersTweets(state, data) {
       state.allUsersTweets.pop(data);
     },
+
     // udpateAllTweets(state, data) {
     //   state.allTweets = data;
     // },

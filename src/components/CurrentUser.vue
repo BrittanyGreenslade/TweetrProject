@@ -7,7 +7,7 @@
       <h4>{{ currentUserInfo.birthdate }}</h4>
       <!-- <user-tweets /> -->
     </div>
-    <button v-if="toggleEditOn === false" @click="toggleEditOn = !toggleEditOn">
+    <button v-if="toggleEditOn === false" @click="toggleEdit">
       Edit Profile
     </button>
     <button
@@ -19,7 +19,7 @@
 
     <section v-if="toggleEditOn === true" id="editProfile">
       <edit-profile-form />
-      <button @click="toggleEditOn = false">Cancel</button>
+      <button @click="toggleEdit">Cancel</button>
     </section>
 
     <section v-if="toggleDeleteOn === true">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import cookies from "vue-cookies";
+// import cookies from "vue-cookies";
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
@@ -53,20 +53,20 @@ export default {
   name: "current-user",
   data() {
     return {
-      toggleEditOn: false,
       toggleDeleteOn: false,
-      currentUserInfo: cookies.get("currentUserInfo"),
+
       // paramId: this.$route.params.userId,
       // currentUserId: cookies.get("currentUserInfo").userId,
     };
   },
-  // mounted() {
-  //   this.viewUserProfile();
-  // },
+
   computed: {
-    // currentUserInfo() {
-    //   return this.$store.state.currentUserInfo;
-    // },
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
+    toggleEditOn() {
+      return this.$store.state.toggleEditOn;
+    },
     otherUserInfo() {
       return this.$store.state.otherUserInfo;
     },
@@ -82,38 +82,9 @@ export default {
   },
 
   methods: {
-    // viewOtherUserProfile() {
-    //   for (let i = 0; i < this.otherUserInfo.length; i++) {
-    //     let otherUserInfo = this.otherUserInfo[i];
-    //     this.$store.commit("updateOtherUserInfo", otherUserInfo);
-    //   }
-    // },
-    // viewUserProfile() {
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/users",
-    //       // method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       params: {
-    //         userId: this.currentUserId,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.$router.push({
-    //         name: "User Profile",
-    //         params: { userId: this.currentUserInfo.userId },
-    //       }),
-    //         console.log(res.data);
-    //       //is this okkkkkk?
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       console.log(this.currentUserInfo);
-    //     });
-    // },
+    toggleEdit() {
+      this.$store.commit("updateToggle", !this.toggleEditOn);
+    },
   },
 };
 </script>

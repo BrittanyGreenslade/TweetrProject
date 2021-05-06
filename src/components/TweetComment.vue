@@ -10,11 +10,7 @@
       <button @click="postComment">Post Comment</button>
       <br />
       <button @click="getComments">show comments</button>
-      <div
-        id="showComments"
-        v-for="comment in commentInfo"
-        :key="comment.commentId"
-      >
+      <div v-for="comment in commentInfo" :key="comment.commentId">
         <h3>{{ comment.username }}</h3>
         <p>{{ comment.content }}</p>
         <button @click="deleteComment(comment.commentId)">
@@ -26,7 +22,11 @@
         </button>
         <comment-likes />
       </div>
-      <textarea name="editComment" id="editComment" required></textarea>
+      <textarea
+        name="editComment"
+        :id="`editComment${comment.commentId}`"
+        required
+      ></textarea>
     </div>
   </div>
 </template>
@@ -140,7 +140,7 @@ export default {
           data: {
             loginToken: this.loginToken,
             commentId: this.commentInfo.commentId,
-            content: document.getElementById("editComment").value,
+            content: document.getElementById("editComment" + commentId).value,
             //remember: get element by id wasn't working because element went id was in loop
             //= more than one element with that id
           },

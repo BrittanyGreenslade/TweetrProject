@@ -39,17 +39,20 @@
 </template>
 
 <script>
+import cookies from "vue-cookies";
 import axios from "axios";
 export default {
   name: "edit-profile-form",
   data() {
     return {
       loginStatus: "",
+      loginToken: cookies.get("loginToken"),
+      // currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   computed: {
-    loginToken() {
-      return this.$store.state.loginToken;
+    toggleEditOn() {
+      return this.$store.state.toggleEditOn;
     },
     currentUserInfo() {
       return this.$store.state.currentUserInfo;
@@ -76,7 +79,13 @@ export default {
         })
         .then((res) => {
           this.loginStatus = "Profile updated!";
-          this.$store.commit("updateCurrentUserInfo", res.data);
+          cookies.set("currentUserInfo", res.data);
+          this.$store.commit(
+            "updateCurrentUserInfo",
+            cookies.get("currentUserInfo")
+          );
+          setTimeout(this.$store.commit("updateToggle", false), 1500);
+          console.log(cookies.get("currentUserInfo"));
         })
         .catch((err) => {
           console.log(err);
