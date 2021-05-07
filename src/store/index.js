@@ -118,7 +118,7 @@ export default new Vuex.Store({
     updateTweetComments(state, data) {
       state.tweetComments = data;
     },
-    addTweetCommentToComments(state, data) {
+    addCommentToComments(state, data) {
       state.tweetComments.push(data);
     },
     addTweetToCurrentTweets(state, data) {

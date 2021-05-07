@@ -1,27 +1,5 @@
 <template>
   <div>
-    <!-- <button
-            @click="toggleEditView(tweet.tweetId)"
-            v-if="editTweetViewOn === false"
-          >
-            Edit Tweet
-          </button> -->
-
-    <!-- <section
-            v-if="editTweetViewOn === true && tweet.tweetId === selectedTweetId"
-          >
-            <textarea
-              name="editTweet"
-              placeholder="max 200 characters"
-              class="editTweet"
-              :id="`editTweet${tweet.tweetId}`"
-            ></textarea> -->
-    <!-- OMG DYNAMIC BINDING TWEET ID WORKED  -->
-    <!-- <button @click="editTweet">
-              Post EditedTweet
-            </button>
-            <button @click="editTweetViewOn = false">Cancel</button>
-          </section> -->
     <h2>{{ successMsg }}</h2>
     <button
       v-if="

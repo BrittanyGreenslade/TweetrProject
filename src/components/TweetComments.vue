@@ -1,16 +1,20 @@
 <template>
   <div>
-    <div id="tweetCommentsContainer">
+    <button v-if="commentViewOn === false" @click="getComments">
+      View Comments
+    </button>
+    <div v-if="commentViewOn === true" class="tweetCommentsContainer">
+      <h2 v-if="tweetComments === null">No tweets yet!</h2>
       <div v-for="comment in tweetComments" :key="comment.commentId">
         <h3>{{ comment.username }}</h3>
+        <h4>{{ comment.createdAt }}</h4>
         <p>{{ comment.content }}</p>
-        <button @click="deleteComment(comment.commentId)">
-          delete Comment
-        </button>
-        <!-- <button @click="editComment(comment.commentId)">Edit Comment</button> -->
-
+        <edit-comment :commentId="comment.commentId" />
+        <post-comment :tweetId="comment.tweetId" />
         <!-- <comment-likes /> -->
       </div>
+
+      <button @click="commentViewOn = false">Hide Comments</button>
     </div>
     <!-- <single-comment /> -->
   </div>
@@ -18,33 +22,40 @@
 
 <script>
 import axios from "axios";
+import cookies from "vue-cookies";
+import EditComment from "./EditComment.vue";
+import PostComment from "./PostComment.vue";
 // import SingleComment from "./SingleComment.vue";
 // import CommentLikes from "./CommentLikes.vue";
 export default {
   components: {
+    EditComment,
+    PostComment,
     // SingleComment,
     // CommentLikes,
   },
   name: "tweet-comments",
+  data() {
+    return {
+      loginToken: cookies.get("loginToken"),
+
+      commentViewOn: false,
+    };
+  },
+  props: {
+    tweetId: Number,
+  },
   computed: {
-    loginToken() {
-      return this.$store.state.loginToken;
-    },
-    selectedTweetId() {
-      return this.$store.state.selectedTweetId;
-    },
     tweetComments() {
       return this.$store.state.tweetComments;
     },
-    // commentId() {
-    //   return this.$store.state.commentInfo.commentId;
-    // },
   },
-  mounted() {
-    this.getComments();
-  },
+  // mounted() {
+  //   this.getComments();
+  // },
   methods: {
     getComments() {
+      this.commentViewOn = true;
       axios
         .request({
           url: "https://tweeterest.ml/api/comments",
@@ -54,72 +65,28 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
-            tweetId: this.selectedTweetId,
+            tweetId: this.tweetId,
           },
         })
         .then((res) => {
           this.$store.commit("updateTweetComments", res.data);
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.selectedTweetId);
+          console.log(this.tweetId);
         });
     },
-    deleteComment(commentId) {
-      this.$store.commit("updateCommentId", commentId);
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/comments",
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-          data: {
-            loginToken: this.loginToken,
-            commentId: commentId,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    // editComment(commentId) {
-    //   this.$store.commit("updateCommentId", commentId);
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/comments",
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       data: {
-    //         loginToken: this.loginToken,
-    //         commentId: this.commentInfo.commentId,
-    //         content: document.getElementById("editComment" + commentId).value,
-    //         //remember: get element by id wasn't working because element went id was in loop
-    //         //= more than one element with that id - can bind Id
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
 };
 </script>
 
 <style scoped>
 button,
-textarea {
+textarea,
+.tweetCommentsContainer {
   border: 1px solid black;
+}
+.tweetCommentsContainer {
+  height: 200px;
 }
 </style>

@@ -18,8 +18,10 @@
           <p>{{ tweet.content }}</p>
           <p>{{ tweet.createdAt }}</p>
           <h1>{{ tweet.tweetId }}</h1>
-          <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+          <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+
+          <tweet-comments :tweetId="tweet.tweetId" />
         </div>
         <br /><br />
         <!-- <div>{{tweet.imageUrl}}</div> -->
@@ -27,7 +29,6 @@
         <!-- <tweet-likes /> -->
       </section>
     </section>
-    <!-- <tweet-comments /> -->
   </div>
 </template>
 
@@ -36,13 +37,13 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import EditTweet from "./EditTweet.vue";
 import DeleteTweet from "./DeleteTweet.vue";
-// import TweetComments from "./TweetComment.vue";
+import TweetComments from "./TweetComments.vue";
 
 export default {
   components: {
     EditTweet,
     DeleteTweet,
-    // TweetComments
+    TweetComments,
   },
   name: "current-user-tweets",
   data() {

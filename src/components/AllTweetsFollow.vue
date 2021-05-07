@@ -16,40 +16,8 @@
       </button>
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
       <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      <tweet-comments :tweetId="tweet.tweetId" />
       <section />
-      <!-- <button
-        v-if="toggleCommentOn === false"
-        @click="toggleCommentPost(recentAllUsersTweet.tweetId)"
-      >
-        Comment On Tweet
-      </button>
-      <post-comment
-        v-if="
-          toggleCommentOn === true &&
-            recentAllUsersTweet.tweetId === selectedTweetId
-        "
-      />
-      <button v-if="toggleCommentOn === true" @click="toggleCommentPost">
-        Cancel
-      </button>
-      <br />
-      <button
-        v-if="toggleCommentViewOn === false"
-        @click="toggleCommentView(recentAllUsersTweet.tweetId)"
-      >
-        View Comments
-      </button>
-      <tweet-comments
-        v-if="
-          toggleCommentViewOn === true &&
-            recentAllUsersTweet.tweetId === selectedTweetId
-        "
-      />
-      <button v-if="toggleCommentViewOn === true" @click="toggleCommentView">
-        Cancel
-      </button> -->
-
-      <!-- <delete-comment :tweetId="recentUsersTweet.tweetId" /> -->
     </section>
   </div>
 </template>
@@ -59,6 +27,7 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
+import TweetComments from "./TweetComments.vue";
 
 export default {
   name: "all-tweets-follow",
@@ -66,6 +35,8 @@ export default {
   components: {
     DeleteTweet,
     EditTweet,
+
+    TweetComments,
   },
   data() {
     return {
@@ -101,6 +72,7 @@ export default {
             return tweet2.tweetId - tweet1.tweetId;
           });
           this.$store.commit("udpateAllTweets", sortedTweets);
+          this.followedUsersTweets = res.data;
         })
         .catch((err) => {
           console.log(err);

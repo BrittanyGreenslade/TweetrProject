@@ -58,34 +58,6 @@ export default {
           console.log(err);
         });
     },
-    // deleteTweet(tweetId) {
-    //   this.$store.commit("updateSelectedTweetId", tweetId);
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/tweets",
-    //       method: "DELETE",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       data: {
-    //         loginToken: this.loginToken,
-    //         tweetId: this.selectedTweetId,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       res;
-    //       document.getElementById(
-    //         "tweetContainer" + `${tweetId}`
-    //       ).innerHtml = `<h2>Post Removed!</h2>`;
-    //       this.$store.commit("removeTweetFromCurrentTweets", tweetId);
-    //       this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
-    //       console.log(this.currentUserTweets);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
 };
 </script>

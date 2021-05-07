@@ -5,6 +5,37 @@
       <h3>{{ comment.createdAt }}</h3>
       <p>{{ comment.content }}</p>
     </div>
+    <!-- <button
+        v-if="toggleCommentOn === false"
+        @click="toggleCommentPost(recentAllUsersTweet.tweetId)"
+      >
+        Comment On Tweet
+      </button>
+      <post-comment
+        v-if="
+          toggleCommentOn === true &&
+            recentAllUsersTweet.tweetId === selectedTweetId
+        "
+      />
+      <button v-if="toggleCommentOn === true" @click="toggleCommentPost">
+        Cancel
+      </button>
+      <br />
+      <button
+        v-if="toggleCommentViewOn === false"
+        @click="toggleCommentView(recentAllUsersTweet.tweetId)"
+      >
+        View Comments
+      </button>
+      <tweet-comments
+        v-if="
+          toggleCommentViewOn === true &&
+            recentAllUsersTweet.tweetId === selectedTweetId
+        "
+      />
+      <button v-if="toggleCommentViewOn === true" @click="toggleCommentView">
+        Cancel
+      </button> -->
   </div>
 </template>
 
