@@ -21,10 +21,9 @@
         <router-link to="/discover">Discover</router-link>
       </span>
     </div>
-    <logout-button />
+    <logout-button v-if="loginToken" />
     <router-view />
     {{ loginStatus }}
-    <!-- @click.native="updateCurrentUserId" -->
   </div>
 </template>
 <script>
@@ -40,19 +39,12 @@ export default {
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
+
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
     },
   },
-  // mounted() {
-  //   if (this.loginToken) {
-  //     this.navigateToProfile();
-  //     setTimeout(this.navigateToProfile, 1500);
-  //   } else if (!this.loginToken) {
-  //     this.emptyLoginToken();
-  //   }
-  // },
   methods: {
     navigateToHome() {
       this.$router.push({ path: "/feed" });

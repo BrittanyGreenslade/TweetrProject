@@ -1,39 +1,52 @@
 <template>
   <section>
-    <form action="javascript:void(0)">
-      <p>User must not update all fields if not necessary</p>
-      <input
-        type="text"
-        id="editUsername"
-        name="usernameInput"
-        placeholder="Update Username"
-      />
-      <input
-        type="text"
-        id="editEmail"
-        name="emailInput"
-        placeholder="Update Email"
-      />
-      <input
-        type="password"
-        id="editPassword"
-        name="passwordInput"
-        placeholder="Update Password"
-      />
-      <textarea
-        name="bioInput"
-        id="editBio"
-        placeholder="Update Bio"
-      ></textarea>
-      <label for="birthdateInput">Update Birthdate:</label>
-      <input
-        type="text"
-        id="editBirthdate"
-        name="birthdateInput"
-        placeholder="YYYY/MM/DD"
-      />
-      <input @click="editUserProfile" type="text" id="updateBtn" value="Save" />
-    </form>
+    <button v-if="toggleEditOn === false" @click="toggleEditOn = true">
+      Edit Profile
+    </button>
+    <div v-if="toggleEditOn === true">
+      <form action="javascript:void(0)">
+        <p>User must not update all fields if not necessary</p>
+        <input
+          type="text"
+          id="editUsername"
+          name="usernameInput"
+          placeholder="Update Username"
+        />
+        <input
+          type="text"
+          id="editEmail"
+          name="emailInput"
+          placeholder="Update Email"
+        />
+        <input
+          type="password"
+          id="editPassword"
+          name="passwordInput"
+          placeholder="Update Password"
+        />
+        <textarea
+          name="bioInput"
+          id="editBio"
+          placeholder="Update Bio"
+        ></textarea>
+        <label for="birthdateInput">Update Birthdate:</label>
+        <input
+          type="text"
+          id="editBirthdate"
+          name="birthdateInput"
+          placeholder="YYYY/MM/DD"
+        />
+        <input
+          @click="editUserProfile"
+          type="text"
+          id="updateBtn"
+          value="Save"
+        />
+        <button @click="toggleEditOn = false">Cancel</button>
+        <!-- /#/profile/988:1 Form submission canceled because the form is not
+        connected -->
+      </form>
+    </div>
     <h4>{{ loginStatus }}</h4>
   </section>
 </template>
@@ -47,13 +60,10 @@ export default {
     return {
       loginStatus: "",
       loginToken: cookies.get("loginToken"),
-      // currentUserInfo: cookies.get("currentUserInfo"),
+      toggleEditOn: false,
     };
   },
   computed: {
-    toggleEditOn() {
-      return this.$store.state.toggleEditOn;
-    },
     currentUserInfo() {
       return this.$store.state.currentUserInfo;
     },
@@ -84,8 +94,6 @@ export default {
             "updateCurrentUserInfo",
             cookies.get("currentUserInfo")
           );
-          setTimeout(this.$store.commit("updateToggle", false), 1500);
-          console.log(cookies.get("currentUserInfo"));
         })
         .catch((err) => {
           console.log(err);

@@ -1,47 +1,55 @@
 <template>
   <div>
     <!-- .reverse() here causes infinite loop -->
-
     <section
-      v-for="recentAllUsersTweet in recentAllUsersTweets"
-      :key="recentAllUsersTweet.tweetId"
-      :id="`tweetContainer${recentAllUsersTweet.tweetId}`"
+      v-for="tweet in followedUsersTweets"
+      :key="tweet.tweetId"
+      :id="`tweetContainer${tweet.tweetId}`"
+      :userId="tweet.userId"
+      :tweetId="tweet.tweetId"
     >
-      <h3>{{ recentAllUsersTweet.username }}</h3>
-      <h5>{{ recentAllUsersTweet.createdAt }}</h5>
-      <p>{{ recentAllUsersTweet.content }}</p>
-      <button
-        v-if="
-          editTweetViewOn === false &&
-            currentUserInfo.userId === recentAllUsersTweet.userId
-        "
-        @click="toggleEditView(recentAllUsersTweet.tweetId)"
-      >
-        Edit Tweet
+      <h3>{{ tweet.username }}</h3>
+      <h5>{{ tweet.createdAt }}</h5>
+      <p>{{ tweet.content }}</p>
+      <button @click="navigateToUserProfile(tweet.userId)">
+        View User's Profile
       </button>
-
-      <section
+      <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      <section />
+      <!-- <button
+        v-if="toggleCommentOn === false"
+        @click="toggleCommentPost(recentAllUsersTweet.tweetId)"
+      >
+        Comment On Tweet
+      </button>
+      <post-comment
         v-if="
-          editTweetViewOn === true &&
+          toggleCommentOn === true &&
             recentAllUsersTweet.tweetId === selectedTweetId
         "
-      >
-        <textarea
-          name="editTweet"
-          :id="`editTweet${recentAllUsersTweet.tweetId}`"
-        ></textarea>
-        <button @click="editTweet">Post Edited Tweet</button>
-        <button @click="editTweetViewOn = false">Cancel</button>
-      </section>
-
-      <button
-        v-if="currentUserInfo.userId === recentAllUsersTweet.userId"
-        @click="deleteTweet(recentAllUsersTweet.tweetId)"
-      >
-        Delete Tweet
+      />
+      <button v-if="toggleCommentOn === true" @click="toggleCommentPost">
+        Cancel
       </button>
-
       <br />
+      <button
+        v-if="toggleCommentViewOn === false"
+        @click="toggleCommentView(recentAllUsersTweet.tweetId)"
+      >
+        View Comments
+      </button>
+      <tweet-comments
+        v-if="
+          toggleCommentViewOn === true &&
+            recentAllUsersTweet.tweetId === selectedTweetId
+        "
+      />
+      <button v-if="toggleCommentViewOn === true" @click="toggleCommentView">
+        Cancel
+      </button> -->
+
+      <!-- <delete-comment :tweetId="recentUsersTweet.tweetId" /> -->
     </section>
   </div>
 </template>
@@ -49,34 +57,36 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
-// import TweetComment from "./TweetComment.vue";
+import DeleteTweet from "./DeleteTweet.vue";
+import EditTweet from "./EditTweet.vue";
+
 export default {
-  // components: { TweetComment },
   name: "all-tweets-follow",
 
+  components: {
+    DeleteTweet,
+    EditTweet,
+  },
   data() {
     return {
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
-      editTweetViewOn: false,
+      followedUsersTweets: [],
     };
   },
   mounted() {
-    this.getFollowingUsersTweets();
+    this.getAllUsersTweets();
   },
   computed: {
-    selectedTweetId() {
-      return this.$store.state.selectedTweetId;
-    },
-
-    recentAllUsersTweets() {
-      return this.$store.getters.recentAllUsersTweets;
+    allTweets() {
+      return this.$store.state.allTweets;
     },
   },
   methods: {
-    getFollowingUsersTweets() {
-      //do you have these grouping into tweets that are all by the same person?
-      //most recent is at top but on page mount "get tweets" it's in a different order
+    navigateToUserProfile(userId) {
+      this.$router.push({ path: `/profile/${userId}` });
+    },
+    getAllUsersTweets() {
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -87,81 +97,13 @@ export default {
           },
         })
         .then((res) => {
-          this.$store.commit("updateAllUsersTweets", res.data);
-          // res.data.filter(notMyTweets);
+          let sortedTweets = res.data.sort(function(tweet1, tweet2) {
+            return tweet2.tweetId - tweet1.tweetId;
+          });
+          this.$store.commit("udpateAllTweets", sortedTweets);
         })
         .catch((err) => {
           console.log(err);
-        });
-    },
-    toggleEditView(tweetId) {
-      this.editTweetViewOn = !this.editTweetViewOn;
-      this.$store.commit("updateSelectedTweetId", tweetId);
-    },
-    editTweet() {
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/tweets",
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-          data: {
-            loginToken: this.loginToken,
-            tweetId: this.selectedTweetId,
-            content: document.getElementById(
-              "editTweet" + `${this.selectedTweetId}`
-            ).value,
-          },
-        })
-        .then((res) => {
-          this.editTweetViewOn = false;
-          console.log(res.data);
-          for (let i = 0; i < this.recentAllUsersTweets.length; i++) {
-            if (this.recentAllUsersTweets[i].tweetId === this.selectedTweetId) {
-              this.recentAllUsersTweets[i].content = res.data.content;
-              this.$store.commit(
-                "updateAllUsersTweets",
-                this.recentAllUsersTweets
-              );
-            }
-          }
-
-          //reloads so tweet view goes away
-          // location.reload(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    deleteTweet(tweetId) {
-      this.$store.commit("updateSelectedTweetId", tweetId);
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/tweets",
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-          data: {
-            loginToken: this.loginToken,
-            tweetId: this.selectedTweetId,
-          },
-        })
-        .then((res) => {
-          res;
-          document.getElementById(
-            "tweetContainer" + `${tweetId}`
-          ).innerHTML = `<h2>Post Removed!</h2>`;
-          this.$store.commit("removeTweetFromAllUsersTweets", tweetId);
-
-          res;
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log(this.allUsersTweets);
         });
     },
   },

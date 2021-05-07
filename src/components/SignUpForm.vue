@@ -36,22 +36,17 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "sign-up-form",
-  computed: {},
   data() {
     return {
       loginStatus: "",
-      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
-  // mounted() {
-  // if (this.loginToken) {
-  //   this.getPosts();
-  // }
-  methods: {
-    updateCurrentUserPassword() {
-      let userPassword = document.getElementById("passwordInput").value;
-      return this.$store.commit("updateCurrentUserPassword", userPassword);
+  computed: {
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
     },
+  },
+  methods: {
     navigateToProfile() {
       this.$router.push({
         path: `/profile/${this.currentUserInfo.userId}`,
@@ -66,7 +61,7 @@ export default {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
             //this process calls the .env.local file that's storing our api key so github
-            //can't see it ~safety~
+            //can't see it - for ~safety~
           },
           data: {
             email: document.getElementById("emailInput").value,
@@ -85,8 +80,6 @@ export default {
             cookies.get("currentUserInfo")
           );
           this.$store.commit("updateLoginToken", cookies.get("loginToken"));
-
-          // this.updateCurrentUserPassword();
           this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {

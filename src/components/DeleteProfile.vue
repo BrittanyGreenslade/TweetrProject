@@ -1,27 +1,36 @@
 <template>
   <section>
-    <form action="javascript:void(0)">
-      <input
-        type="text"
-        id="emailInputDelete"
-        name="emailInput"
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        id="passwordInputDelete"
-        name="passwordInput"
-        placeholder="Password"
-        required
-      />
-      <input
-        @click="deleteProfile"
-        type="text"
-        id="deleteBtn"
-        value="Delete Account"
-      />
-    </form>
+    <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
+      Delete Profile
+    </button>
+
+    <div v-if="toggleDeleteOn === true">
+      Enter your email & password to delete your profile:
+      <form action="javascript:void(0)">
+        <input
+          type="text"
+          id="emailInputDelete"
+          name="emailInput"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          id="passwordInputDelete"
+          name="passwordInput"
+          placeholder="Password"
+          required
+        />
+        <input
+          @click="deleteProfile"
+          type="text"
+          id="deleteBtn"
+          value="Delete Account"
+        />
+      </form>
+
+      <button @click="toggleDeleteOn = false">Cancel</button>
+    </div>
     <h4>{{ loginStatus }}</h4>
   </section>
 </template>
@@ -34,6 +43,7 @@ export default {
   data() {
     return {
       loginStatus: "",
+      toggleDeleteOn: false,
     };
   },
   computed: {
@@ -45,11 +55,10 @@ export default {
     },
   },
   methods: {
-    navigateToHome() {
+    navigateToLogin() {
       this.$router.push({ name: "Login" });
     },
 
-    //you can store json string as a cookie
     deleteProfile() {
       axios
         .request({
@@ -65,13 +74,12 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
-          setTimeout(this.navigateToHome, 1500);
+          res;
+          setTimeout(this.navigateToLogin, 1500);
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
           cookies.remove("currentUserInfo");
           this.$store.commit("updateCurrentUserInfo", "");
-
           this.loginStatus = "Profile deleted! Redirecting...";
         })
         .catch((err) => {
@@ -90,7 +98,8 @@ form {
   width: 100px;
 }
 input,
-textarea {
+textarea,
+button {
   border: 1px solid black;
 }
 </style>

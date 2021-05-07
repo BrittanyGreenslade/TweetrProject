@@ -56,10 +56,6 @@ export default {
       this.$store.commit("updateSelectedUserId", selectedUserId);
       for (let i = 0; i < this.allUsers.length; i++) {
         if (this.selectedUserId === this.allUsers[i].userId) {
-          //     this.$store.commit("updateOtherUserInfo", this.allUsers[i]);
-
-          //   }
-          // }
           axios
             .request({
               url: "https://tweeterest.ml/api/users",
@@ -73,13 +69,11 @@ export default {
               },
             })
             .then((res) => {
-              // res.data[this.selectedUserId] =
               this.$store.commit("updateOtherUserInfo", res.data);
               console.log(res.data);
-              // // this.$router.push({
-              // //   name: "Single User",
-              // //   params: { selectedUserId: this.selectedUserId },
-              // });
+              this.$router.push({
+                path: `/profile/${this.selectedUserId}`,
+              });
             })
             .catch((err) => {
               console.log(err);

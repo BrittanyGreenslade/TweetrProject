@@ -34,15 +34,13 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    // currentUserInfo() {
-    //   return this.$store.state.currentUserInfo;
-    // },
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
   },
   data() {
     return {
       loginStatus: "",
-      currentUserInfo: cookies.get("currentUserInfo"),
-
       // paramId: this.$route.params.userId,
     };
   },
@@ -61,7 +59,6 @@ export default {
         //     // params: { userId: this.currentUserInfo.userId },
       });
     },
-    // },
     // loginSuccess() {
     //   lottie.loadAnimation({
     //     container: document.getElementById("successContainer"),
@@ -89,7 +86,7 @@ export default {
         })
         .then((res) => {
           this.loginStatus = "Logging in...";
-          //makes transition chill btwn navigations
+
           cookies.set("currentUserInfo", res.data);
           this.$store.commit(
             "updateCurrentUserInfo",
@@ -97,9 +94,9 @@ export default {
           );
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
+            //navigation is chill
             setTimeout(this.navigateToProfile, 1500);
           this.loginStatus = "Logged in! Redirecting...";
-          this.currentUserInfo = cookies.get("currentUserInfo");
         })
         .catch((err) => {
           console.log(err);

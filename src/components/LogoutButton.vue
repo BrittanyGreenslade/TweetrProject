@@ -13,11 +13,7 @@ export default {
       loginToken: cookies.get("loginToken"),
     };
   },
-  computed: {
-    // loginToken() {
-    //   this.$store.state.loginToken;
-    // },
-  },
+  computed: {},
   methods: {
     //called in logout fn
     navigateToLogin() {
@@ -40,7 +36,7 @@ export default {
           cookies.remove("currentUserInfo");
           this.$store.commit("updateCurrentUserInfo", "");
           this.loginStatus = "Logging you out!";
-          //user this if "didn't user res" error shows and no data sent back
+          //use this if "didn't user res" error shows and no data sent back
           res;
         })
         .catch((err) => {

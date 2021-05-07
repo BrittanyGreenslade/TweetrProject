@@ -28,9 +28,6 @@ export default {
       return this.$store.state.currentUserTweets;
     },
   },
-  // mounted() {
-  //   this.postTweet();
-  // },
   methods: {
     postTweet() {
       axios
@@ -47,8 +44,9 @@ export default {
           },
         })
         .then((res) => {
-          this.$store.commit("addTweetToCurrentsTweets", res.data);
+          this.$store.commit("addTweetToCurrentTweets", res.data);
           this.$store.commit("addTweetToAllTweets", res.data);
+          this.$store.commit("updateCurrentUserTweets", this.currentUserTweets);
         })
         .catch((err) => {
           console.log(err);

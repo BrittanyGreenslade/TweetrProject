@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-// import axios from "axios";
+
 import cookies from "vue-cookies";
 
 Vue.use(Vuex);
@@ -9,22 +9,16 @@ export default new Vuex.Store({
   state: {
     loginToken: cookies.get("loginToken"),
     currentUserInfo: cookies.get("currentUserInfo"),
-    // otherUserInfo: {
-    //   userId: "",
-    //   email:"",
-    //   username:"",
-    //   bio:"",
-    //   birthdate:"",
-    //   imageUrl:"",
-    //   bannerUrl:"",
-    // },
     toggleEditOn: false,
     allUsers: [],
+    allTweets: [],
     selectedUserId: "",
     singleUser: "",
-    otherUserInfo: {},
+    otherUserInfo: [],
     // otherUserId: "",
     allUsersTweets: [],
+    otherUserTweets: [],
+
     currentUserTweets: [],
     // otherUsersTweets: [],
     tweetLikes: [],
@@ -35,22 +29,31 @@ export default new Vuex.Store({
       currentUserFollowers: [],
       otherUserFollowers: [],
     },
+    toggleCommentOn: false,
+    toggleCommentViewOn: false,
     //same as otherUserInfo.id so might not need?
     followId: "",
-    commentInfo: {
-      commentId: "",
-      commentTweetId: "",
-      commentUserId: "",
-      commentUsername: "",
-      commentContent: "",
-      commentCreatedAt: "",
-      commentLikes: [],
-    },
+    tweetComments: [],
+    // commentInfo: {
+    //   commentId: "",
+    //   commentTweetId: "",
+    //   commentUserId: "",
+    //   commentUsername: "",
+    //   commentContent: "",
+    //   commentCreatedAt: "",
+    //   commentLikes: [],
+    // },
   },
   mutations: {
     //all users mutations
-    updateToggle(state, data) {
+    updateEditToggle(state, data) {
       state.toggleEditOn = data;
+    },
+    updateCommentToggle(state, data) {
+      state.toggleCommentOn = data;
+    },
+    updateToggleCommentView(state, data) {
+      state.toggleCommentViewOn = data;
     },
     updateAllUsers(state, data) {
       state.allUsers = data;
@@ -112,33 +115,32 @@ export default new Vuex.Store({
     updateSelectedTweetId(state, data) {
       state.selectedTweetId = data;
     },
-    addTweetToCurrentsTweets(state, data) {
+    updateTweetComments(state, data) {
+      state.tweetComments = data;
+    },
+    addTweetCommentToComments(state, data) {
+      state.tweetComments.push(data);
+    },
+    addTweetToCurrentTweets(state, data) {
       state.currentUserTweets.push(data);
     },
     addTweetToAllTweets(state, data) {
       state.allUsersTweets.push(data);
     },
     removeTweetFromCurrentTweets(state, data) {
-      state.currentUserTweets.pop(data);
+      state.currentUserTweets.splice(data);
     },
     removeTweetFromAllUsersTweets(state, data) {
-      state.allUsersTweets.pop(data);
+      state.allUsersTweets.splice(data);
+    },
+    updateOtherUserTweets(state, data) {
+      state.otherUserTweets = data;
     },
 
-    // udpateAllTweets(state, data) {
-    //   state.allTweets = data;
-    // },
-    // updateUserTweets(state, data) {
-    //   state.userTweets = data;
-    // },
+    udpateAllTweets(state, data) {
+      state.allTweets = data;
+    },
   },
   actions: {},
-  getters: {
-    recentCurrentTweets(state) {
-      return state.currentUserTweets.reverse();
-    },
-    recentAllUsersTweets(state) {
-      return state.allUsersTweets.reverse();
-    },
-  },
+  getters: {},
 });

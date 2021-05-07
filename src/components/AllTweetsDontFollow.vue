@@ -8,6 +8,9 @@
       <h2>{{ tweet.username }}</h2>
       <h3>{{ tweet.createdAt }}</h3>
       <p>{{ tweet.content }}</p>
+      <!-- <button @click="navigateToUserProfile(recentAllUsersTweet.userId)">
+        View user's profile
+      </button> -->
     </section>
   </div>
 </template>
@@ -25,6 +28,10 @@ export default {
     this.viewTweetsDontFollow();
   },
   methods: {
+    //     navigateToUserProfile(userId) {
+    //   this.$router.push({ path: `/profile/${userId}` });
+    //   this.$store.commit("updateSelectedUserId", userId);
+    // },
     viewTweetsDontFollow() {
       axios
         .request({
