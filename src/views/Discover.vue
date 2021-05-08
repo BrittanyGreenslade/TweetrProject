@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Discover page</h1>
+    <h4>~v empty~</h4>
 
     <all-tweets-dont-follow />
   </div>

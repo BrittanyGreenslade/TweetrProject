@@ -1,13 +1,9 @@
 <template>
   <div>
     <div v-for="user in allUsers" :key="user.userId">
-      <h2>
-        {{ user.username }}
-        <br />
-      </h2>
-
-      <other-user-profile :userInfo="user" />
-
+      <router-link :to="`/profile/${user.userId}`">
+        {{ user.username }}</router-link
+      >
       <br />
     </div>
   </div>
@@ -15,18 +11,11 @@
 
 <script>
 import axios from "axios";
-import OtherUserProfile from "./OtherUserProfile.vue";
 
 export default {
   name: "all-users",
-  components: {
-    OtherUserProfile,
-  },
-  data() {
-    return {
-      profileViewOn: false,
-    };
-  },
+  components: {},
+
   mounted() {
     this.getAllUsers();
   },
@@ -49,7 +38,10 @@ export default {
         .then((res) => {
           this.$store.commit("updateAllUsers", res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          console.log(this.allUsers);
+        });
     },
   },
 };

@@ -11,20 +11,8 @@ export default new Vuex.Store({
     currentUserInfo: cookies.get("currentUserInfo"),
     allUsers: [],
     allTweets: [],
-    // otherUserInfo: [],
-    otherUserTweets: [],
-    currentUserTweets: [],
-    // toggleTweetLikeOn: false,
-    toggleTweetLikeOn: false,
-    // tweetLikes: [],
-    // numTweetLikes: "",
-    // numCommentLikes: "",
-    // followInfo: {
-    //   currentUserFollowers: [],
-    //   otherUserFollowers: [],
-    // },
 
-    // followId: "",
+    currentUserTweets: [],
   },
   mutations: {
     //all users mutations
@@ -39,7 +27,6 @@ export default new Vuex.Store({
       state.loginToken = data;
     },
     //tweet mutations
-
     updateCurrentUserTweets(state, data) {
       state.currentUserTweets = data;
     },
@@ -49,26 +36,6 @@ export default new Vuex.Store({
     updateToggleTweetLikeOn(state, data) {
       state.toggleTweetLikeOn = data;
     },
-    //Other users info mutations
-    // updateFollowId(state, data) {
-    //   state.followId = data;
-    // },
-    // updateOtherUserInfo(state, data) {
-    //   state.otherUserInfo = data;
-    // },
-
-    // updateNumCommentLikes(state, data) {
-    //   state.numCommentLikes = data;
-    // },
-
-    //tweet mutations
-    // updateNumTweetLikes(state, data) {
-    //   state.numTweetLikes = data;
-    // },
-    // updateTweetLikes(state, data) {
-    //   state.tweetLikes = data;
-    // },
-
     addTweetToCurrentTweets(state, data) {
       state.currentUserTweets.push(data);
     },

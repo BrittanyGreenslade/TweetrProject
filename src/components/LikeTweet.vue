@@ -1,7 +1,17 @@
 <template>
   <div>
-    <button @click="likeATweet">
+    <div class="likesContainer">
+      <h2 v-if="this.tweetLikes.length >= 1">Tweet Likes ({{ numLikes }}):</h2>
+
+      <h2 v-for="like in tweetLikes" :key="like.userId">
+        {{ like.username }}
+      </h2>
+    </div>
+    <button v-if="tweetLiked === false" @click="likeTweet">
       Like this tweet
+    </button>
+    <button v-else @click="unlikeTweet">
+      Unlike tweet
     </button>
   </div>
 </template>
@@ -14,15 +24,47 @@ export default {
   data() {
     return {
       loginToken: cookies.get("loginToken"),
+      tweetLiked: false,
+      currentUserInfo: cookies.get("currentUserInfo"),
+      tweetLikes: [],
+      numLikes: "",
     };
   },
   props: {
     tweetId: Number,
   },
-  computed: {},
-
+  mounted() {
+    this.viewTweetLikes();
+  },
   methods: {
-    likeATweet() {
+    viewTweetLikes() {
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweet-likes",
+          // method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+          },
+          params: {
+            tweetId: this.tweetId,
+          },
+        })
+        .then((res) => {
+          this.tweetLikes = res.data;
+          this.numLikes = res.data.length;
+          for (let i = 0; i < res.data.length; i++) {
+            if (this.currentUserInfo.userId === res.data[i].userId) {
+              this.tweetLiked = true;
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    likeTweet() {
+      this.tweetLiked = true;
       axios
         .request({
           url: "https://tweeterest.ml/api/tweet-likes",
@@ -37,7 +79,34 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          this.viewTweetLikes();
+          res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    unlikeTweet() {
+      this.tweetLiked = false;
+      axios
+        .request({
+          url: "https://tweeterest.ml/api/tweet-likes",
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+          },
+          data: {
+            loginToken: this.loginToken,
+            tweetId: this.tweetId,
+          },
+        })
+        .then((res) => {
+          res;
+          // for (let i = 0; i < this.tweetLikes.length; i++) {
+
+          // }
+          // this.viewTweetLikes();
         })
         .catch((err) => {
           console.log(err);

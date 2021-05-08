@@ -27,11 +27,8 @@
           :tweetComments="tweetComments"
           :commentId="comment.commentId"
         />
-        <comment-likes :commentId="comment.commentId" />
         <like-comment :commentId="comment.commentId" />
-        <unlike-comment />
       </div>
-
       <button @click="commentViewOn = false">Hide Comments</button>
     </div>
   </div>
@@ -43,17 +40,14 @@ import cookies from "vue-cookies";
 import EditComment from "./EditComment.vue";
 import PostComment from "./PostComment.vue";
 import DeleteComment from "./DeleteComment.vue";
-import CommentLikes from "./CommentLikes.vue";
 import LikeComment from "./LikeComment.vue";
-import UnlikeComment from "./UnlikeComment.vue";
+
 export default {
   components: {
     EditComment,
     PostComment,
     DeleteComment,
-    CommentLikes,
     LikeComment,
-    UnlikeComment,
   },
   name: "tweet-comments",
   data() {
@@ -102,8 +96,6 @@ export default {
         })
         .then((res) => {
           this.tweetComments = res.data;
-          // // this.$store.commit("updateTweetComments", res.data);
-          // console.log(this.tweetComments);
         })
         .catch((err) => {
           console.log(err);

@@ -11,14 +11,12 @@
       <h3>{{ tweet.username }}</h3>
       <h5>{{ tweet.createdAt }}</h5>
       <p>{{ tweet.content }}</p>
-      <!-- <button @click="navigateToUserProfile(tweet.userId)">
-        View User's Profile
-      </button> -->
       <tweet-comments :tweetId="tweet.tweetId" />
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
       <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <!-- <tweet-comments :tweetId="tweet.tweetId" /> -->
+      <like-tweet :tweetId="tweet.tweetId" />
       <section />
+      <br /><br /><br />
     </section>
   </div>
 </template>
@@ -30,6 +28,7 @@ import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
 
+import LikeTweet from "./LikeTweet.vue";
 export default {
   name: "all-tweets",
 
@@ -37,12 +36,13 @@ export default {
     DeleteTweet,
     EditTweet,
     TweetComments,
+    LikeTweet,
   },
   data() {
     return {
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
-      // followedUsersTweets: [],
+      toggleLike: false,
     };
   },
   mounted() {
@@ -52,14 +52,8 @@ export default {
     sortedAllTweets() {
       return this.$store.getters.sortedAllTweets;
     },
-    allTweets() {
-      return this.$store.state.allTweets;
-    },
   },
   methods: {
-    navigateToUserProfile(userId) {
-      this.$router.push({ path: `/profile/${userId}` });
-    },
     getAllTweets() {
       axios
         .request({

@@ -22,14 +22,7 @@
           <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           <tweet-comments :tweetId="tweet.tweetId" />
           <br />
-
-          <tweet-likes :tweetId="tweet.tweetId" />
-          <!-- <h4>Number of likes:{{ likesNumber }}</h4> -->
-          <!-- @addTweetLike="handleAddTweetLikeNum"
-          @onToggleTweetLike="handleToggleTweetLikeOn" v-if="toggleTweetLikeOn
-          === false" -->
           <like-tweet :tweetId="tweet.tweetId" />
-          <unlike-tweet :tweetId="tweet.tweetId" />
         </div>
         <br /><br />
         <!-- <div>{{tweet.imageUrl}}</div> -->
@@ -44,25 +37,20 @@ import cookies from "vue-cookies";
 import EditTweet from "./EditTweet.vue";
 import DeleteTweet from "./DeleteTweet.vue";
 import TweetComments from "./TweetComments.vue";
-import TweetLikes from "./TweetLikes.vue";
 import LikeTweet from "./LikeTweet.vue";
-import UnlikeTweet from "./UnlikeTweet.vue";
+
 export default {
   components: {
     EditTweet,
     DeleteTweet,
     TweetComments,
-    TweetLikes,
     LikeTweet,
-    UnlikeTweet,
   },
   name: "current-user-tweets",
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
       loginToken: cookies.get("loginToken"),
-
-      likesNumber: 0,
     };
   },
   mounted() {
@@ -102,7 +90,7 @@ export default {
 <style scoped>
 textarea,
 button,
-.tweetContainer {
+.userTweetContainer {
   border: 1px solid black;
 }
 </style>

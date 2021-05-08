@@ -11,7 +11,7 @@
       Edit Tweet
     </button>
     <section v-if="toggleEditOn === true">
-      <textarea name="editTweet" :id="`editTweet${tweetId}`"></textarea>
+      <textarea name="editTweet" id="editTweet"></textarea>
       <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
       <button @click="editTweet">Post Edited Tweet</button>
       <button @click="toggleEditOn = !toggleEditOn">Cancel</button>
@@ -58,7 +58,8 @@ export default {
           data: {
             loginToken: this.loginToken,
             tweetId: this.tweetId,
-            content: document.getElementById("editTweet" + this.tweetId).value,
+            content: document.getElementById("editTweet").value,
+            // content: document.getElementById("editTweet" + this.tweetId).value,
           },
         })
         .then((res) => {

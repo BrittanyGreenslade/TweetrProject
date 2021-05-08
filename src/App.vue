@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Tweeter</h1>
+    <h1>Sustainappbility</h1>
     <img
       src="@/assets/images/peace-dove.svg"
       alt="black outline of dove holding flower"
@@ -41,7 +41,7 @@ export default {
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
-
+  //try global emit toast popup
   computed: {
     loginToken() {
       return this.$store.state.loginToken;

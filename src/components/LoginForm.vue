@@ -41,22 +41,13 @@ export default {
   data() {
     return {
       loginStatus: "",
-      // paramId: this.$route.params.userId,
     };
   },
-  // mounted() {
-  //   this.$store.commit("updateLoginToken", cookies.get("loginToken")),
-  //     this.$store.commit(
-  //       "updateCurrentUserInfo",
-  //       cookies.get("currentUserInfo")
-  //     );
-  // },
-
   methods: {
     navigateToProfile() {
       this.$router.push({
-        path: `/profile/${this.currentUserInfo.userId}`,
-        //     // params: { userId: this.currentUserInfo.userId },
+        // path: `/profile/${this.currentUserInfo.userId}`,
+        path: "/feed",
       });
     },
     // loginSuccess() {
@@ -86,7 +77,6 @@ export default {
         })
         .then((res) => {
           this.loginStatus = "Logging in...";
-
           cookies.set("currentUserInfo", res.data);
           this.$store.commit(
             "updateCurrentUserInfo",
