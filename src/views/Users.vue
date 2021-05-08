@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <all-users />
+  </div>
+</template>
+
+<script>
+import AllUsers from "@/components/AllUsers.vue";
+
+export default {
+  name: "users",
+  components: {
+    AllUsers,
+  },
+};
+</script>
+
+<style scoped></style>

@@ -1,32 +1,35 @@
 <template>
   <div>
-    <!-- @click="deleteTweet(recentAllUsersTweet.tweetId)" -->
-    <button v-if="toggleDeleteOn === false">
-      Delete Tweet
+    <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
+      Delete Comment
     </button>
-    <button @click="deleteComment(comment.commentId)">
-      delete Comment
-    </button>
-    <!-- <delete-comment :tweetId="recentUsersTweet.tweetId" /> -->
+
+    <div v-if="toggleDeleteOn === true">
+      <h4>Are you sure?</h4>
+      <button @click="deleteComment">Confirm Delete</button>
+      <button @click="toggleDeleteOn = false">Cancel</button>
+    </div>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: "delete-comment",
   data() {
     return {
       toggleDeleteOn: false,
-      // tweetId: value,
       loginToken: cookies.get("loginToken"),
     };
   },
+  props: {
+    tweetComments: Array,
+    commentId: Number,
+  },
   computed: {},
   methods: {
-    deleteComment(commentId) {
-      this.$store.commit("updateCommentId", commentId);
+    deleteComment() {
       axios
         .request({
           url: "https://tweeterest.ml/api/comments",
@@ -37,13 +40,23 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            commentId: commentId,
+            commentId: this.commentId,
           },
         })
         .then((res) => {
-          console.log(res);
+          res;
+          for (let i = 0; i < this.tweetComments.length; i++) {
+            if (this.tweetComments[i].commentId === this.commentId) {
+              //at index [i] (where tweetId = commentID)
+              this.tweetComments.splice(i, 1);
+              this.$emit("commentsAfterDelete", this.tweetComments);
+              // console.log(updatedComments);
+            }
+          }
         })
         .catch((err) => {
+          console.log(this.tweetComments);
+
           console.log(err);
         });
     },

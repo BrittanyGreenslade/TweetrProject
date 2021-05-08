@@ -12,7 +12,6 @@
       <button @click="editComment">Post Edited Comment</button>
       <button @click="editViewOn = false">Cancel</button>
     </div>
-    <!-- <button @click="editComment(comment.commentId)">Edit Comment</button> -->
   </div>
 </template>
 
@@ -56,12 +55,7 @@ export default {
           },
         })
         .then((res) => {
-          for (let i = 0; i < this.tweetComments.length; i++) {
-            if (this.tweetComments[i].commentId === this.commentId) {
-              this.tweetComments[i].content === res.data.content;
-              this.$store.commit("updateTweetComments", this.tweetComments);
-            }
-          }
+          this.$emit("newlyEditedComment", res.data);
         })
         .catch((err) => {
           console.log(err);

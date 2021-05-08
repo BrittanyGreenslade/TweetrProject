@@ -17,7 +17,7 @@
 import axios from "axios";
 import cookies from "vue-cookies";
 export default {
-  name: "current-user-post-tweet",
+  name: "post-tweet",
   data() {
     return {
       loginToken: cookies.get("loginToken"),
@@ -26,6 +26,9 @@ export default {
   computed: {
     currentUserTweets() {
       return this.$store.state.currentUserTweets;
+    },
+    allTweets() {
+      return this.$store.state.allTweets;
     },
   },
   methods: {
@@ -47,6 +50,8 @@ export default {
           this.$store.commit("addTweetToCurrentTweets", res.data);
           this.$store.commit("addTweetToAllTweets", res.data);
           this.$store.commit("updateCurrentUserTweets", this.currentUserTweets);
+          this.$store.commit("updateAllTweets", this.allTweets);
+          document.getElementById("postTweet").value = "";
         })
         .catch((err) => {
           console.log(err);

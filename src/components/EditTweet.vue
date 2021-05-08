@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ successMsg }}</h2>
+    <!-- <h2>{{ successMsg }}</h2> -->
     <button
       v-if="
         toggleEditOn === false &&
@@ -40,6 +40,9 @@ export default {
     currentUserTweets() {
       return this.$store.state.currentUserTweets;
     },
+    allTweets() {
+      return this.$store.state.allTweets;
+    },
   },
   methods: {
     editTweet() {
@@ -60,64 +63,28 @@ export default {
         })
         .then((res) => {
           this.editTweetViewOn = false;
-          console.log(res.data);
+
           for (let i = 0; i < this.currentUserTweets.length; i++) {
             if (this.currentUserTweets[i].tweetId === this.tweetId) {
               this.currentUserTweets[i].content = res.data.content;
               this.$store.commit(
-                "updateAllUsersTweets",
+                "updateCurrentUserTweets",
                 this.currentUserTweets
               );
             }
+            for (let i = 0; i < this.allTweets.length; i++) {
+              if (this.allTweets[i].tweetId === this.tweetId) {
+                this.allTweets[i].content = res.data.content;
+              }
+              this.$store.commit("updateAllTweets", this.allTweets);
+            }
           }
-          this.successMsg = "Tweet Edited!";
+          // this.successMsg = "Tweet Edited!";
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.tweetId);
         });
     },
-    // toggleEditView(tweetId) {
-    //   this.$store.commit("updateSelectedTweetId", tweetId);
-    //   this.editTweetViewOn = !this.editTweetViewOn;
-    // },
-    // editTweet() {
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/tweets",
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       data: {
-    //         loginToken: this.loginToken,
-    //         tweetId: this.selectedTweetId,
-    //         content: document.getElementById(
-    //           "editTweet" + `${this.selectedTweetId}`
-    //         ).value,
-    //         //AND GRABBING THE DYNAMIC ID WORKED HERE AHHHHHH
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.editTweetViewOn = false;
-    //       console.log(res.data);
-    //       // this.$store;
-
-    //       for (let i = 0; i < this.currentUserTweets.length; i++) {
-    //         if (this.currentUserTweets[i].tweetId === this.selectedTweetId) {
-    //           this.currentUserTweets[i].content = res.data.content;
-    //           this.$store.commit(
-    //             "updateCurrentUserTweets",
-    //             this.currentUserTweets
-    //           );
-    //         }
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
 };
 </script>

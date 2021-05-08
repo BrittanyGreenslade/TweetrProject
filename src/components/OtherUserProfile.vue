@@ -1,40 +1,47 @@
 <template>
   <div>
-    <div v-for="userInfo in otherUserInfo" :key="userInfo.userId">
-      <h2>{{ userInfo.username }}</h2>
-      <h3>{{ userInfo.birthdate }}</h3>
-      <h4>{{ userInfo.bio }}</h4>
-      <p>{{ userInfo.email }}</p>
+    <button v-if="profileViewOn === false" @click="viewUserProfile">
+      View User Profile
+    </button>
+    <!-- v-if="Number(paramId) === currentUserInfo.userId" -->
+    <div v-if="profileViewOn === true">
+      <div v-for="info in userProfile" :key="info.userId">
+        <!-- <h2>{{ info.username }}</h2> -->
+        <h3>{{ info.birthdate }}</h3>
+        <h4>{{ info.bio }}</h4>
+        <p>{{ info.email }}</p>
+        <button @click="profileViewOn = false">Cancel</button>
+      </div>
     </div>
-    <other-user-tweets />
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import OtherUserTweets from "./OtherUserTweets.vue";
+
 export default {
-  components: { OtherUserTweets },
+  components: {},
   name: "other-user-profile",
+  data() {
+    return {
+      profileViewOn: false,
+      userProfile: [],
+    };
+  },
   props: {
-    userId: Number,
+    userInfo: Object,
   },
   computed: {
     allUsers() {
       return this.$store.state.allUsers;
     },
-    selectedUserId() {
-      return this.$store.state.selectedUserId;
-    },
-    otherUserInfo() {
-      return this.$store.state.otherUserInfo;
-    },
   },
-  mounted() {
-    this.viewUserProfile();
-  },
+  // mounted() {
+  //   this.viewUserProfile();
+  // },
   methods: {
     viewUserProfile() {
+      this.profileViewOn = true;
       axios
         .request({
           url: "https://tweeterest.ml/api/users",
@@ -44,14 +51,15 @@ export default {
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
-            userId: this.userId,
+            userId: this.userInfo.userId,
           },
         })
         .then((res) => {
-          this.$store.commit("updateOtherUserInfo", res.data);
+          this.userProfile = res.data;
         })
         .catch((err) => {
           console.log(err);
+          console.log(this.userInfo);
         });
     },
   },

@@ -2,7 +2,7 @@
   <div>
     <!-- .reverse() here causes infinite loop -->
     <section
-      v-for="tweet in followedUsersTweets"
+      v-for="tweet in sortedAllTweets"
       :key="tweet.tweetId"
       :id="`tweetContainer${tweet.tweetId}`"
       :userId="tweet.userId"
@@ -11,12 +11,13 @@
       <h3>{{ tweet.username }}</h3>
       <h5>{{ tweet.createdAt }}</h5>
       <p>{{ tweet.content }}</p>
-      <button @click="navigateToUserProfile(tweet.userId)">
+      <!-- <button @click="navigateToUserProfile(tweet.userId)">
         View User's Profile
-      </button>
+      </button> -->
+
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
       <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <tweet-comments :tweetId="tweet.tweetId" />
+      <!-- <tweet-comments :tweetId="tweet.tweetId" /> -->
       <section />
     </section>
   </div>
@@ -27,28 +28,30 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
-import TweetComments from "./TweetComments.vue";
+// import TweetComments from "./TweetComments.vue";
 
 export default {
-  name: "all-tweets-follow",
+  name: "all-tweets",
 
   components: {
     DeleteTweet,
     EditTweet,
-
-    TweetComments,
+    // TweetComments,
   },
   data() {
     return {
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
-      followedUsersTweets: [],
+      // followedUsersTweets: [],
     };
   },
   mounted() {
-    this.getAllUsersTweets();
+    this.getAllTweets();
   },
   computed: {
+    sortedAllTweets() {
+      return this.$store.getters.sortedAllTweets;
+    },
     allTweets() {
       return this.$store.state.allTweets;
     },
@@ -57,7 +60,7 @@ export default {
     navigateToUserProfile(userId) {
       this.$router.push({ path: `/profile/${userId}` });
     },
-    getAllUsersTweets() {
+    getAllTweets() {
       axios
         .request({
           url: "https://tweeterest.ml/api/tweets",
@@ -68,11 +71,7 @@ export default {
           },
         })
         .then((res) => {
-          let sortedTweets = res.data.sort(function(tweet1, tweet2) {
-            return tweet2.tweetId - tweet1.tweetId;
-          });
-          this.$store.commit("udpateAllTweets", sortedTweets);
-          this.followedUsersTweets = res.data;
+          this.$store.commit("updateAllTweets", res.data);
         })
         .catch((err) => {
           console.log(err);

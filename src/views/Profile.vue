@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h4>{{ loginStatus }}</h4>
-
-    <current-user v-if="Number(paramId) === currentUserInfo.userId" />
-
-    <other-user-profile v-else />
+    <!-- v-if="Number(paramId) === currentUserInfo.userId" -->
+    <current-user />
   </div>
 </template>
 
@@ -12,22 +9,17 @@
 // import axios from "axios";
 import cookies from "vue-cookies";
 import CurrentUser from "../components/CurrentUser.vue";
-import OtherUserProfile from "../components/OtherUserProfile.vue";
+
 export default {
   components: {
     CurrentUser,
-    OtherUserProfile,
   },
   data() {
     return {
-      loginStatus: "",
-      paramId: this.$route.params.userId,
+      // paramId: this.$route.params.userId,
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
-
-  computed: {},
-  methods: {},
 };
 </script>
 

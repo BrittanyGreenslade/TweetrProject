@@ -2,13 +2,13 @@
   <div>
     <h3>Your Tweets</h3>
     <section class="userTweetContainer">
-      <!-- if user tweets is empty, tell them to go post a thing -->
+      <!-- help plz if user tweets is empty, tell them to go post a thing -->
       <!-- <h4 v-if="currentUserTweets === null">
         No tweets posted by you yet! Post in "Feed"
       </h4> -->
       <section>
         <div
-          v-for="tweet in currentUserTweets"
+          v-for="tweet in sortedCurrentTweets"
           :key="tweet.tweetId"
           :id="`tweetContainer${tweet.tweetId}`"
         >
@@ -20,7 +20,6 @@
           <h1>{{ tweet.tweetId }}</h1>
           <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
-
           <tweet-comments :tweetId="tweet.tweetId" />
         </div>
         <br /><br />
@@ -57,8 +56,8 @@ export default {
     this.viewMyTweets();
   },
   computed: {
-    currentUserTweets() {
-      return this.$store.state.currentUserTweets;
+    sortedCurrentTweets() {
+      return this.$store.getters.sortedCurrentTweets;
     },
   },
 
@@ -77,10 +76,7 @@ export default {
           },
         })
         .then((res) => {
-          let sortedTweets = res.data.sort(function(tweet1, tweet2) {
-            return tweet2.tweetId - tweet1.tweetId;
-          });
-          this.$store.commit("updateCurrentUserTweets", sortedTweets);
+          this.$store.commit("updateCurrentUserTweets", res.data);
         })
         .catch((err) => {
           console.log(err);

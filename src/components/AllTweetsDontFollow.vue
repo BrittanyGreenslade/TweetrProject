@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- IGNORE THIS PAGE FOR NOW -->
     <section
       id="tweetsContainer"
       v-for="tweet in allTweetsDontFollow"
@@ -47,8 +48,6 @@ export default {
         })
         .then((res) => {
           this.allTweetsDontFollow = res.data;
-
-          // this.$store.commit("updateCurrentUserTweets", res.data);
         })
         .catch((err) => {
           console.log(err);

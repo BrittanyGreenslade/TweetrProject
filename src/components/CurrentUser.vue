@@ -9,7 +9,7 @@
     <edit-profile-form />
     <delete-profile />
     <br /><br /><br />
-    <current-user-post-tweet />
+    <post-tweet />
     <current-user-tweets />
   </div>
 </template>
@@ -19,14 +19,14 @@ import cookies from "vue-cookies";
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
-import CurrentUserPostTweet from "./CurrentUserPostTweet.vue";
+import PostTweet from "./PostTweet.vue";
 
 export default {
   components: {
     EditProfileForm,
     DeleteProfile,
     CurrentUserTweets,
-    CurrentUserPostTweet,
+    PostTweet,
   },
   name: "current-user",
   data() {

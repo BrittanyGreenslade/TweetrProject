@@ -21,9 +21,6 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    // otherUserId() {
-    //   return this.$store.state.otherUserId;
-    // },
   },
   methods: {
     getAllCurrentUserFollows() {

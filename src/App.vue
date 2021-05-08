@@ -5,34 +5,36 @@
       src="@/assets/images/peace-dove.svg"
       alt="black outline of dove holding flower"
     />
-    <!-- New here? Sign up! -->
     <div id="nav">
       <span v-if="!loginToken">
-        <!-- hallllp how to make this show only on homepage but not on login page -->
         <router-link to="/login">Login/Sign-up</router-link>
       </span>
       <span v-else-if="loginToken">
         <router-link :to="`/profile/${currentUserInfo.userId}`">
-          Profile</router-link
+          My Profile</router-link
         >
         |
         <router-link to="/feed">Feed</router-link>
         |
-        <router-link to="/discover">Discover</router-link>
+        <router-link to="/discover">Discover</router-link> |
+        <router-link to="/users">Users</router-link>
       </span>
     </div>
     <logout-button v-if="loginToken" />
     <router-view />
+
     {{ loginStatus }}
   </div>
 </template>
 <script>
 import cookies from "vue-cookies";
 import LogoutButton from "./components/LogoutButton.vue";
+
 export default {
   components: {
     LogoutButton,
   },
+
   data() {
     return {
       loginStatus: "",

@@ -5,8 +5,7 @@ import Discover from "@/views/Discover.vue";
 import Feed from "@/views/Feed.vue";
 import Login from "@/views/Login.vue";
 import Profile from "@/views/Profile.vue";
-// import CurrentUser from "@/components/CurrentUser.vue";
-// import OtherUsers from "@/components/OtherUsers.vue";
+import Users from "@/views/Users.vue";
 
 Vue.use(VueRouter);
 
@@ -22,23 +21,15 @@ const routes = [
     component: Login,
   },
 
-  // {
-  //   path: "/profile",
-  //   name
-  //   component: Profile,
-  //   children: [],
-  // },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
+  },
   {
     path: "/profile/:userId",
     name: "Profile",
     component: Profile,
-    // children: [
-    //   {
-    //     path: "/profile/:userId",
-    //     name: "Other User Profile",
-    //     component: CurrentUser,
-    //   },
-    // ],
   },
   {
     path: "/feed",

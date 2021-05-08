@@ -25,16 +25,18 @@ export default {
   data() {
     return {
       loginToken: cookies.get("loginToken"),
+      // tweetComments: [],
       commentViewOn: false,
     };
   },
   props: {
     commentId: Number,
+    tweetId: Number,
   },
   computed: {
-    tweetComments() {
-      return this.$store.state.tweetComments;
-    },
+    // tweetComments() {
+    //   return this.$store.state.tweetComments;
+    // },
   },
   methods: {
     postComment() {
@@ -55,12 +57,9 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
-          this.$store.commit("addCommentToComments", res.data);
-          this.$store.commit("updateTweetComments", this.tweetComments);
+          this.$emit("newlyPostedComment", res.data);
         })
         .catch((err) => {
-          console.log(this.selectedTweetId);
           console.log(err);
         });
     },
