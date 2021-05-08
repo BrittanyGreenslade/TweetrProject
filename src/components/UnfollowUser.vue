@@ -1,39 +1,37 @@
 <template>
-  <div>
-    <button @click="viewCommentLikes">View Comment Likes</button>
-  </div>
+  <div><button @click="unfollowUser">Unfollow User</button></div>
 </template>
 
 <script>
 import axios from "axios";
-
+import cookies from "vue-cookies";
 export default {
-  name: "comment-likes",
+  name: "unfollow-user",
   data() {
     return {
-      commentLikes: [],
+      loginToken: cookies.get("loginToken"),
     };
   },
   props: {
-    commentId: Number,
+    followId: Number,
   },
-  computed: {},
   methods: {
-    viewCommentLikes() {
+    unfollowUser() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/comment-likes",
-          // method:"GET",
+          url: "https://tweeterest.ml/api/follows",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
-            commentId: this.commentId,
+            loginToken: this.loginToken,
+            followId: this.followId,
           },
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);

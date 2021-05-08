@@ -10,6 +10,11 @@
         <h3>{{ info.birthdate }}</h3>
         <h4>{{ info.bio }}</h4>
         <p>{{ info.email }}</p>
+        <user-followers />
+        <user-follows :userId="info.userId" />
+        <follow-user :followId="info.userId" />
+        <unfollow-user :followId="info.userId" />
+
         <button @click="profileViewOn = false">Cancel</button>
       </div>
     </div>
@@ -18,9 +23,13 @@
 
 <script>
 import axios from "axios";
+import FollowUser from "./FollowUser.vue";
+import UserFollows from "./UserFollows.vue";
+import UnfollowUser from "./UnfollowUser.vue";
+import UserFollowers from "./UserFollowers.vue";
 
 export default {
-  components: {},
+  components: { FollowUser, UserFollows, UnfollowUser, UserFollowers },
   name: "other-user-profile",
   data() {
     return {

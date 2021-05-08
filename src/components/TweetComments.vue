@@ -27,12 +27,13 @@
           :tweetComments="tweetComments"
           :commentId="comment.commentId"
         />
-        <!-- <comment-likes /> -->
+        <comment-likes :commentId="comment.commentId" />
+        <like-comment :commentId="comment.commentId" />
+        <unlike-comment />
       </div>
 
       <button @click="commentViewOn = false">Hide Comments</button>
     </div>
-    <!-- <single-comment /> -->
   </div>
 </template>
 
@@ -42,15 +43,17 @@ import cookies from "vue-cookies";
 import EditComment from "./EditComment.vue";
 import PostComment from "./PostComment.vue";
 import DeleteComment from "./DeleteComment.vue";
-// import SingleComment from "./SingleComment.vue";
-// import CommentLikes from "./CommentLikes.vue";
+import CommentLikes from "./CommentLikes.vue";
+import LikeComment from "./LikeComment.vue";
+import UnlikeComment from "./UnlikeComment.vue";
 export default {
   components: {
     EditComment,
     PostComment,
-    // SingleComment,,
     DeleteComment,
-    // CommentLikes,
+    CommentLikes,
+    LikeComment,
+    UnlikeComment,
   },
   name: "tweet-comments",
   data() {

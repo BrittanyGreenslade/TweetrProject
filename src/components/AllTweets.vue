@@ -14,7 +14,7 @@
       <!-- <button @click="navigateToUserProfile(tweet.userId)">
         View User's Profile
       </button> -->
-
+      <tweet-comments :tweetId="tweet.tweetId" />
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
       <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
       <!-- <tweet-comments :tweetId="tweet.tweetId" /> -->
@@ -28,7 +28,7 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
-// import TweetComments from "./TweetComments.vue";
+import TweetComments from "./TweetComments.vue";
 
 export default {
   name: "all-tweets",
@@ -36,7 +36,7 @@ export default {
   components: {
     DeleteTweet,
     EditTweet,
-    // TweetComments,
+    TweetComments,
   },
   data() {
     return {

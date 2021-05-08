@@ -1,39 +1,37 @@
 <template>
-  <div>
-    <button @click="viewCommentLikes">View Comment Likes</button>
-  </div>
+  <div><button>Unlike Comment</button></div>
 </template>
 
 <script>
 import axios from "axios";
-
+import cookies from "vue-cookies";
 export default {
-  name: "comment-likes",
+  name: "unlike-comment",
   data() {
     return {
-      commentLikes: [],
+      loginToken: cookies.get("loginToken"),
     };
   },
   props: {
     commentId: Number,
   },
-  computed: {},
   methods: {
-    viewCommentLikes() {
+    removeCommentLike() {
       axios
         .request({
           url: "https://tweeterest.ml/api/comment-likes",
-          // method:"GET",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
+            loginToken: this.loginToken,
             commentId: this.commentId,
           },
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);

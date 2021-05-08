@@ -14,7 +14,8 @@ export default new Vuex.Store({
     // otherUserInfo: [],
     otherUserTweets: [],
     currentUserTweets: [],
-    tweetComments: [],
+    // toggleTweetLikeOn: false,
+    toggleTweetLikeOn: false,
     // tweetLikes: [],
     // numTweetLikes: "",
     // numCommentLikes: "",
@@ -22,7 +23,7 @@ export default new Vuex.Store({
     //   currentUserFollowers: [],
     //   otherUserFollowers: [],
     // },
-    //same as otherUserInfo.id so might not need?
+
     // followId: "",
   },
   mutations: {
@@ -45,7 +46,9 @@ export default new Vuex.Store({
     updateAllTweets(state, data) {
       state.allTweets = data;
     },
-
+    updateToggleTweetLikeOn(state, data) {
+      state.toggleTweetLikeOn = data;
+    },
     //Other users info mutations
     // updateFollowId(state, data) {
     //   state.followId = data;

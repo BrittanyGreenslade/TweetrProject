@@ -50,7 +50,6 @@ export default {
               //at index [i] (where tweetId = commentID)
               this.tweetComments.splice(i, 1);
               this.$emit("commentsAfterDelete", this.tweetComments);
-              // console.log(updatedComments);
             }
           }
         })

@@ -12,7 +12,7 @@
     </button>
     <section v-if="toggleEditOn === true">
       <textarea name="editTweet" :id="`editTweet${tweetId}`"></textarea>
-      <!-- OMG DYNAMIC BINDING TWEET ID this is fun  -->
+      <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
       <button @click="editTweet">Post Edited Tweet</button>
       <button @click="toggleEditOn = !toggleEditOn">Cancel</button>
     </section>

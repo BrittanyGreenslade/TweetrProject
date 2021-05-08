@@ -7,6 +7,7 @@
       </h2>
 
       <other-user-profile :userInfo="user" />
+
       <br />
     </div>
   </div>
@@ -14,8 +15,8 @@
 
 <script>
 import axios from "axios";
-
 import OtherUserProfile from "./OtherUserProfile.vue";
+
 export default {
   name: "all-users",
   components: {

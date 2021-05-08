@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       loginToken: cookies.get("loginToken"),
-      // tweetComments: [],
+
       commentViewOn: false,
     };
   },
@@ -33,11 +33,7 @@ export default {
     commentId: Number,
     tweetId: Number,
   },
-  computed: {
-    // tweetComments() {
-    //   return this.$store.state.tweetComments;
-    // },
-  },
+
   methods: {
     postComment() {
       this.commentViewOn = false;

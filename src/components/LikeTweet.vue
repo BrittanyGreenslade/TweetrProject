@@ -1,35 +1,39 @@
 <template>
   <div>
-    <button @click="viewCommentLikes">View Comment Likes</button>
+    <button @click="likeATweet">
+      Like this tweet
+    </button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import cookies from "vue-cookies";
 export default {
-  name: "comment-likes",
+  name: "like-tweet",
   data() {
     return {
-      commentLikes: [],
+      loginToken: cookies.get("loginToken"),
     };
   },
   props: {
-    commentId: Number,
+    tweetId: Number,
   },
   computed: {},
+
   methods: {
-    viewCommentLikes() {
+    likeATweet() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/comment-likes",
-          // method:"GET",
+          url: "https://tweeterest.ml/api/tweet-likes",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
-            commentId: this.commentId,
+            loginToken: this.loginToken,
+            tweetId: this.tweetId,
           },
         })
         .then((res) => {

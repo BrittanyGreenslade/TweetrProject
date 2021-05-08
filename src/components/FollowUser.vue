@@ -1,28 +1,33 @@
 <template>
-  <div></div>
+  <div><button @click="followUser">Follow this user</button></div>
 </template>
 
 <script>
 import axios from "axios";
+import cookies from "vue-cookies";
 export default {
-  name: "other-user-followers",
-  computed: {
-    otherUserInfo() {
-      return this.$store.state.otherUserInfo;
-    },
+  name: "follow-user",
+  data() {
+    return {
+      loginToken: cookies.get("loginToken"),
+    };
+  },
+  props: {
+    followId: Number,
   },
   methods: {
-    getOtherUserFollowers() {
+    followUser() {
       axios
         .request({
           url: "https://tweeterest.ml/api/follows",
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
-            userId: this.otherUserInfo.userId,
+            loginToken: this.loginToken,
+            followId: this.followId,
           },
         })
         .then((res) => {
@@ -30,6 +35,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          console.log(this.followId);
         });
     },
   },

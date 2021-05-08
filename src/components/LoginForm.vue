@@ -9,7 +9,7 @@
         placeholder="Email"
         required
       />
-      <!-- <label for="passwordInput">Password:</label> -->
+
       <input
         type="password"
         id="passwordInputLogin"

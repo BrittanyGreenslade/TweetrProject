@@ -29,11 +29,7 @@ export default {
   props: {
     commentId: Number,
   },
-  computed: {
-    tweetComments() {
-      return this.$store.state.tweetComments;
-    },
-  },
+
   methods: {
     editComment() {
       this.editViewOn = false;
