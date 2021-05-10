@@ -35,6 +35,7 @@ export default {
   },
   mounted() {
     this.viewTweetLikes();
+    console.log(this.tweetLikes);
   },
   methods: {
     viewTweetLikes() {

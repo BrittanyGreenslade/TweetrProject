@@ -9,6 +9,7 @@
     <edit-profile-form />
     <delete-profile />
     <br /><br /><br />
+    <!-- <user-following :userId="currentUserInfo.userId" /> -->
     <post-tweet />
     <current-user-tweets />
   </div>
@@ -20,13 +21,14 @@ import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
 import PostTweet from "./PostTweet.vue";
-
+// import UserFollowing from "./UserFollowing.vue";
 export default {
   components: {
     EditProfileForm,
     DeleteProfile,
     CurrentUserTweets,
     PostTweet,
+    // UserFollowing,
   },
   name: "current-user",
   data() {

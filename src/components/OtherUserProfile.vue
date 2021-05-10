@@ -2,12 +2,11 @@
   <div>
     <div>
       <div v-for="user in userProfile" :key="user.userId">
+        <!-- <follow-unfollow :followId="user.userId" /> -->
         <h2>{{ user.username }}</h2>
         <h3>{{ user.birthdate }}</h3>
         <h4>{{ user.bio }}</h4>
         <p>{{ user.email }}</p>
-        <user-followers />
-        <user-following :userId="user.userId" />
       </div>
     </div>
   </div>
@@ -15,11 +14,16 @@
 
 <script>
 import axios from "axios";
-import UserFollowing from "./UserFollowing.vue";
-import UserFollowers from "./UserFollowers.vue";
+// import UserFollowing from "./UserFollowing.vue";
+// import UserFollowers from "./UserFollowers.vue";
+// import FollowUnfollow from "./FollowUnfollow.vue";
 
 export default {
-  components: { UserFollowing, UserFollowers },
+  components: {
+    // UserFollowing,
+    // UserFollowers,
+    // FollowUnfollow,
+  },
   name: "other-user-profile",
   data() {
     return {

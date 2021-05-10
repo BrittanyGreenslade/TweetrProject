@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <h1>Sustainappbility</h1>
+    <!-- <h1>Greetings Earthlings! Welcome to (Tweeter)</h1> -->
+    <!-- <h4>Crafting a green world</h4> -->
+    <!-- <h4>Be earth friendly.</h4> -->
+    <!-- <p>A platform on which to share sustainability tips, products, and information</p> -->
     <img
       src="@/assets/images/peace-dove.svg"
       alt="black outline of dove holding flower"
@@ -46,6 +50,11 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+  },
+  mounted() {
+    this.$store.dispatch("getAllUsers");
+    this.$store.dispatch("getAllTweets");
+    // this.$store.dispatch("getFollowing");
   },
   methods: {
     navigateToHome() {
@@ -95,8 +104,3 @@ img {
   color: #42b983;
 }
 </style>
-
-<!-- <h1>Greetings Earthlings! Welcome to (Tweeter)</h1> -->
-<!-- <h4>Crafting a green world</h4> -->
-<!-- <h4>Be earth friendly.</h4> -->
-<!-- <p>A platform on which to share sustainability tips, products, and information</p> -->
