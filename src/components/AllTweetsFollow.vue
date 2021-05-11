@@ -39,36 +39,8 @@ export default {
     };
   },
   mounted() {
-    axios
-      .request({
-        url: "https://tweeterest.ml/api/follows",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-        },
-        //this is the userId of the follower
-        params: { userId: this.currentUserInfo.userId },
-      })
-      .then((res) => {
-        this.$store.commit("updateFollowingUsers", res.data);
-        //whyyyyyyyyyyyyyyy this took so long to figure out0
-        for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
-          for (let i = 0; i < this.followingUsers.length; i++) {
-            if (
-              this.allTweets[tweet].userId === this.followingUsers[i].userId
-            ) {
-              this.followedTweets.push(this.allTweets[tweet]);
-            }
-          }
-        }
-        this.getFollowersComplete = true;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     // this.$store.dispatch("getFollowing");
-    // this.getFollowing();
+    this.getFollowing();
     this.$store.dispatch("getAllTweets");
   },
 
