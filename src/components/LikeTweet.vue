@@ -122,8 +122,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.actionIcon {
-  width: 20px;
-}
-</style>
+<style scoped></style>
