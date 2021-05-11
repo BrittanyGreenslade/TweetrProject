@@ -1,5 +1,5 @@
 <template>
-  <div><button @click="logout" id="logoutBtn">Logout</button></div>
+  <button @click="logout" id="logoutBtn">Logout</button>
 </template>
 
 <script>

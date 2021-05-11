@@ -9,6 +9,7 @@
         :id="`makeComment${commentId}`"
         cols="30"
         rows="5"
+        maxlength="150"
         placeholder="max 150 characters"
       ></textarea>
       <button @click="postComment">Post Comment</button>

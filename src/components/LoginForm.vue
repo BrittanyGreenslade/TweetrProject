@@ -110,8 +110,7 @@ form {
   grid-auto-flow: column;
   column-gap: 10px;
 }
-input,
-textarea {
+/* input {
   border: 1px solid black;
-}
+} */
 </style>

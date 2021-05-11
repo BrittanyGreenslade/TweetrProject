@@ -1,10 +1,14 @@
 <template>
   <!-- this page doesn't load on refresh :( -->
-  <div class="tweetCard" v-if="getFollowersComplete">
-    <div v-for="tweet in followedTweets" :key="tweet.tweetId">
+  <div v-if="getFollowersComplete">
+    <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
       <h3>{{ tweet.username }}</h3>
       <h4>{{ tweet.createdAt }}</h4>
       <p>{{ tweet.content }}</p>
+      <tweet-comments :tweetId="tweet.tweetId" />
+      <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      <like-tweet :tweetId="tweet.tweetId" />
       <!-- <follow-unfollow :followId="tweet.userId" /> -->
     </div>
   </div>
@@ -13,10 +17,18 @@
 <script>
 import cookies from "vue-cookies";
 import axios from "axios";
+import DeleteTweet from "./DeleteTweet.vue";
+import EditTweet from "./EditTweet.vue";
+import TweetComments from "./TweetComments.vue";
+import LikeTweet from "./LikeTweet.vue";
 // import FollowUnfollow from "./FollowUnfollow.vue";
 export default {
   name: "all-tweets-follow",
   components: {
+    DeleteTweet,
+    EditTweet,
+    TweetComments,
+    LikeTweet,
     // FollowUnfollow,
   },
   data() {

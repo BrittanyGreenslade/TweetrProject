@@ -57,7 +57,6 @@ export default {
     //   return this.$store.getters.sortedAllTweets;
     // },
   },
-  methods: {},
 };
 </script>
 

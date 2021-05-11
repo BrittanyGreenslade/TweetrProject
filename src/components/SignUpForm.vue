@@ -101,10 +101,7 @@ form {
   display: grid;
   row-gap: 5px;
 }
-input,
-textarea {
-  border: 1px solid black;
-}
+
 /* // does this block of code need to be accssed by just this component, or lots of 
 // components? */
 </style>

@@ -1,47 +1,45 @@
 <template>
-  <div id="pageContainer">
-    <div id="app">
-      <div id="titleContainer">
-        <h1>Sustainappbility</h1>
-        <img
-          id="logo"
-          src="@/assets/images/peace-dove.svg"
-          alt="black outline of dove holding flower"
-        />
-      </div>
-      <section id="nav">
-        <div v-if="loginToken" id="navIconsContainer">
-          <router-link to="/feed">
-            <img
-              class="navIcon"
-              src="@/assets/images/home.svg"
-              alt="group of trees - users icon"
-            />
-          </router-link>
-          <router-link :to="`/profile/${currentUserInfo.userId}`">
-            <img
-              class="navIcon"
-              src="@/assets/images/tree.svg"
-              alt="single tree - user profile icon"
-          /></router-link>
-          <router-link to="/discover"
-            ><img
-              class="navIcon"
-              src="@/assets/images/discover.svg"
-              alt="light bulb with leaves inside - discover icon"
-            />
-          </router-link>
-          <router-link to="/users">
-            <img
-              class="navIcon"
-              src="@/assets/images/trees.svg"
-              alt="group of trees - users icon"
-          /></router-link>
-        </div>
-      </section>
-      <logout-button id="logoutBtn" v-if="loginToken" />
-      <router-view />
+  <div id="app">
+    <div id="titleContainer">
+      <h1>Sustainappbility</h1>
+      <img
+        id="logo"
+        src="@/assets/images/peace-dove.svg"
+        alt="black outline of dove holding flower"
+      />
     </div>
+    <section id="nav">
+      <div v-if="loginToken" id="navIconsContainer">
+        <router-link to="/feed">
+          <img
+            class="navIcon"
+            src="@/assets/images/home.svg"
+            alt="group of trees - users icon"
+          />
+        </router-link>
+        <router-link :to="`/profile/${currentUserInfo.userId}`">
+          <img
+            class="navIcon"
+            src="@/assets/images/tree.svg"
+            alt="single tree - user profile icon"
+        /></router-link>
+        <router-link to="/discover"
+          ><img
+            class="navIcon"
+            src="@/assets/images/discover.svg"
+            alt="light bulb with leaves inside - discover icon"
+          />
+        </router-link>
+        <router-link to="/users">
+          <img
+            class="navIcon"
+            src="@/assets/images/trees.svg"
+            alt="group of trees - users icon"
+        /></router-link>
+      </div>
+    </section>
+    <logout-button id="logoutBtn" v-if="loginToken" />
+    <router-view />
   </div>
 </template>
 <script>
@@ -105,17 +103,30 @@ font-family: 'Prata', serif; */
 }
 #titleContainer {
   display: grid;
-  width: 100%;
+  width: 80%;
   grid-template-columns: 2fr 0.5fr;
   column-gap: 5px;
   place-items: center;
   margin-top: 5vh;
 }
-#logoutBtn {
+button {
   border-radius: 4px;
-  border: 1px solid #30321c;
-  width: 55px;
-  box-shadow: 0px 1px 1px #30321c6f;
+  border: 2px solid #30321c;
+  /* width: 55px; */
+  padding: 5px 10px;
+  background: #a7b18e;
+  color: #30321c;
+  box-shadow: 0px 1px 2px 1px #30321c6f;
+  font-weight: 700;
+}
+#logoutBtn:active {
+  border-bottom: 1px solid 35a5d346f;
+  box-shadow: none;
+  /* box-shadow: 0px 1px 1px 0x #5a5d346f; */
+}
+textarea {
+  display: block;
+  border: 2px solid #30321c;
 }
 .navIcon {
   width: 30px;
@@ -137,7 +148,6 @@ font-family: 'Prata', serif; */
 #app {
   color: #30321c;
   font-size: 14px;
-  background: #efffc8;
   width: 100%;
   display: grid;
   place-items: center;

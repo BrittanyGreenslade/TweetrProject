@@ -62,8 +62,4 @@ export default {
 };
 </script>
 
-<style scoped>
-textarea {
-  border: solid black 1px;
-}
-</style>
+<style scoped></style>

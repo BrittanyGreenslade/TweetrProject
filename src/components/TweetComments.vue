@@ -107,8 +107,6 @@ export default {
 </script>
 
 <style scoped>
-button,
-textarea,
 .tweetCommentsContainer {
   border: 1px solid black;
 }
