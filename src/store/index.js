@@ -31,7 +31,9 @@ export default new Vuex.Store({
     addUserToFollowing(state, data) {
       state.followingUsers.push(data);
     },
-
+    removeUserFromFollowing(state, data) {
+      state.followingUsers.splice(data, 1);
+    },
     //current User info Mutations
     updateCurrentUserInfo(state, data) {
       state.currentUserInfo = data;

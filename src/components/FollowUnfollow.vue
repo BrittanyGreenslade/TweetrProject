@@ -24,10 +24,12 @@ export default {
     };
   },
   props: {
+    user: Object,
     followId: Number,
   },
   mounted() {
     this.$store.dispatch("getFollowing");
+    this.$store.dispatch("getAllUsers");
   },
   computed: {
     allUsers() {
@@ -41,41 +43,19 @@ export default {
     //runs when computed values change
     followingUsers(newValue, oldValue) {
       for (let i = 0; i < newValue.length; i++) {
-        if (newValue[i].userId === this.followId) {
+        if (newValue[i].userId === this.user.userId) {
           this.followedUser = true;
           return;
         }
       }
       oldValue;
     },
+    // allTweets(newValue, oldValue) {
+    //   this.$store.commit("updateAllTweets", newValue);
+    //   oldValue;
+    // },
   },
   methods: {
-    // getFollowing() {
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/follows",
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       //this is the userId of the follower
-    //       params: { userId: this.currentUserInfo.userId },
-    //     })
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       this.$store.commit("updateFollowingUsers", res.data);
-    //       // //   this.numFollowing = res.data.length;
-    //       for (let i = 0; i < res.data.length; i++) {
-    //         if (this.followId === res.data[i].userId) {
-    //           this.followedUser = true;
-    //         }
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
     followUser() {
       axios
         .request({
@@ -87,29 +67,18 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            followId: this.followId,
+            followId: this.user.userId,
           },
         })
         .then((res) => {
           res;
           this.followedUser = true;
-          // for (let user = 0; user < this.allUsers.length; user++) {
-          //   for (let i = 0; i < this.followingUsers.length; i++) {
-          //     if (
-          //       this.allUsers[user].userId === this.followingUsers[i].userId
-          //     ) {
-          //       // this.followingUsers = this.allUsers[user];
-          //       this.$store.commit("addUserToFollowing", this.allUsers[i]);
-          //     }
-          //     // this.$store.commit("addUserToFollowing", this.allUsers[i]);
-          //   }
-          // }
-          // this.$store.commit("updateFollowingUsers", this.followingUsers);
+
+          this.$store.commit("addUserToFollowing", this.user);
+          console.log(this.followingUsers);
         })
         .catch((err) => {
-          // console.log(this.followingUsers);
-          // console.log(this.allUsers);
-          console.log(err);
+          console.log(err.response);
         });
     },
     unfollowUser() {
@@ -123,20 +92,20 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            followId: this.followId,
+            followId: this.user.userId,
           },
         })
         .then((res) => {
           res;
           this.followedUser = false;
+          for (let i = 0; i < this.followingUsers.length; i++) {
+            if (this.user.userId === this.followingUsers[i].userId) {
+              this.$store.commit("removeUserFromFollowing", i);
+            }
+          }
 
-          // for (let i = 0; i < this.allUsers.length; i++) {
-          //   for (let i = 0; i < this.followingUsers.length; i++) {
-          //     if (this.allUsers[i].userId === this.followingUsers[i].userId) {
-          //       this.followingUsers.splice(i, 1);
-          //     }
-          //   }
-          // }
+          this.$store.commit("updateFollowingUsers", this.followingUsers);
+          console.log(this.followingUsers);
         })
         .catch((err) => {
           console.log(err);

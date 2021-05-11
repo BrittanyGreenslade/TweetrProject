@@ -6,6 +6,7 @@
         name="postTweet"
         id="postTweet"
         placeholder="max 200 characters"
+        maxlength="200"
         required
       ></textarea>
       <button @click="postTweet">Post</button>

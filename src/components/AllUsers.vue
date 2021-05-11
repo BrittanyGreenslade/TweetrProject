@@ -5,9 +5,10 @@
         {{ user.username }}</router-link
       >
       <follow-unfollow
-        :followId="user.userId"
+        :user="user"
         v-if="user.userId !== currentUserInfo.userId"
       />
+      <!-- :followId="user.userId" -->
       <br />
     </div>
   </div>

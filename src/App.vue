@@ -1,33 +1,47 @@
 <template>
-  <div id="app">
-    <h1>Sustainappbility</h1>
-    <!-- <h1>Greetings Earthlings! Welcome to (Tweeter)</h1> -->
-    <!-- <h4>Crafting a green world</h4> -->
-    <!-- <h4>Be earth friendly.</h4> -->
-    <!-- <p>A platform on which to share sustainability tips, products, and information</p> -->
-    <img
-      src="@/assets/images/peace-dove.svg"
-      alt="black outline of dove holding flower"
-    />
-    <section id="nav">
-      <div v-if="!loginToken">
-        <router-link to="/login">Login/Sign-up</router-link>
+  <div id="pageContainer">
+    <div id="app">
+      <div id="titleContainer">
+        <h1>Sustainappbility</h1>
+        <img
+          id="logo"
+          src="@/assets/images/peace-dove.svg"
+          alt="black outline of dove holding flower"
+        />
       </div>
-      <div v-else-if="loginToken">
-        <router-link :to="`/profile/${currentUserInfo.userId}`">
-          My Profile</router-link
-        >
-        |
-        <router-link to="/feed">Feed</router-link>
-        |
-        <router-link to="/discover">Discover</router-link> |
-        <router-link to="/users">Users</router-link>
-      </div>
-    </section>
-    <logout-button v-if="loginToken" />
-    <router-view />
-
-    {{ loginStatus }}
+      <section id="nav">
+        <div v-if="loginToken" id="navIconsContainer">
+          <router-link to="/feed">
+            <img
+              class="navIcon"
+              src="@/assets/images/home.svg"
+              alt="group of trees - users icon"
+            />
+          </router-link>
+          <router-link :to="`/profile/${currentUserInfo.userId}`">
+            <img
+              class="navIcon"
+              src="@/assets/images/tree.svg"
+              alt="single tree - user profile icon"
+          /></router-link>
+          <router-link to="/discover"
+            ><img
+              class="navIcon"
+              src="@/assets/images/discover.svg"
+              alt="light bulb with leaves inside - discover icon"
+            />
+          </router-link>
+          <router-link to="/users">
+            <img
+              class="navIcon"
+              src="@/assets/images/trees.svg"
+              alt="group of trees - users icon"
+          /></router-link>
+        </div>
+      </section>
+      <logout-button id="logoutBtn" v-if="loginToken" />
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
@@ -38,14 +52,12 @@ export default {
   components: {
     LogoutButton,
   },
-
   data() {
     return {
-      loginStatus: "",
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
-  //try global emit toast popup
+  //try global emit toast popup for success messages?
   computed: {
     loginToken() {
       return this.$store.state.loginToken;
@@ -55,6 +67,7 @@ export default {
     },
   },
   watch: {
+    //routes to feed when link path is just /
     routePath(newValue, oldValue) {
       if (this.loginToken && newValue === "/") {
         this.$router.push({ path: `/feed` });
@@ -71,17 +84,14 @@ export default {
     notifyLogin() {
       if (!this.loginToken) {
         this.$router.push({ path: `/login` });
-        // this.loginStatus = "Please login to continue";
       }
-    },
-    navigateToProfile() {
-      this.$router.push({ path: `/profile/${this.currentUserInfo.userId}` });
     },
   },
 };
 </script>
 <style scoped>
 h1 {
+  font-size: 40px;
   font-family: "Courgette", cursive;
 }
 </style>
@@ -93,45 +103,60 @@ font-family: 'Prata', serif; */
   padding: 0;
   margin: 0;
 }
-img {
+#titleContainer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 2fr 0.5fr;
+  column-gap: 5px;
+  place-items: center;
+  margin-top: 5vh;
+}
+#logoutBtn {
+  border-radius: 4px;
+  border: 1px solid #30321c;
+  width: 55px;
+  box-shadow: 0px 1px 1px #30321c6f;
+}
+.navIcon {
+  width: 30px;
+}
+#logo {
   width: 50px;
 }
-
-.tweetCard {
+#nav {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+#navIconsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 50%;
+  margin-top: 5px;
+}
+#app {
+  color: #30321c;
+  font-size: 14px;
+  background: #efffc8;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  /* background: #94ae89; */
+}
+.tweetCard {
+  width: 80vw;
   background: #cbddbb;
   border-radius: 4px;
   box-shadow: 0 2px 2px 0;
 }
+
 body {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  text-align: center;
   background: #efffc8;
   color: #30321c;
   font-family: "Prata", serif;
-}
-/* root {
-  background: #5f9d62;
-} */
-#app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #30321c;
-  font-size: 14px;
-  /* height: 100%; */
-  background: #efffc8;
-  /* background: #94ae89; */
-}
-#nav {
-  padding: 30px;
-}
-#nav a {
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #30321c;
-}
-#nav a.router-link-exact-active {
-  color: #82ad5c;
 }
 </style>

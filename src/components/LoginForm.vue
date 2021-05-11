@@ -1,5 +1,12 @@
 <template>
   <div>
+    <h1>Greetings Earthlings! Welcome to (Tweeter)</h1>
+    <h4>Crafting a green world</h4>
+    <h4>Be earth friendly.</h4>
+    <p>
+      A platform on which to share sustainability tips, products, and
+      information
+    </p>
     Login
     <form action="javascript:void(0)">
       <input
