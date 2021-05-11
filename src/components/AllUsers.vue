@@ -4,10 +4,10 @@
       <router-link :to="`/profile/${user.userId}`">
         {{ user.username }}</router-link
       >
-      <!-- <follow-unfollow
+      <follow-unfollow
         :followId="user.userId"
         v-if="user.userId !== currentUserInfo.userId"
-      /> -->
+      />
       <br />
     </div>
   </div>
@@ -15,11 +15,11 @@
 
 <script>
 // import axios from "axios";
-// import FollowUnfollow from "./FollowUnfollow.vue";
+import FollowUnfollow from "./FollowUnfollow.vue";
 import cookies from "vue-cookies";
 export default {
   name: "all-users",
-  // components: { FollowUnfollow },
+  components: { FollowUnfollow },
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
@@ -27,14 +27,10 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("getFollowing");
-    console.log(this.followingUsers);
-    console.log(this.followingUsers);
+    this.$store.dispatch("getAllUsers");
+    // this.$store.dispatch("getFollowing");
   },
-  // mounted() {
-  //   this.$store.dispatch("getAllUsers");
-  //   // this.$store.dispatch("getFollowing");
-  // },
+
   computed: {
     allUsers() {
       return this.$store.state.allUsers;
@@ -44,10 +40,27 @@ export default {
     },
   },
   methods: {
+    // getAllUsers() {
+    //   axios
+    //     .request({
+    //       url: "https://tweeterest.ml/api/users",
+    //       // method:"GET",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       this.$store.commit("updateAllUsers", res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
     getFollowedUser() {
-      for (let i = 0; i < this.followingUsers.length; i++) {
-        this.followingUsers[i] = this.followedUser;
-      }
+      // for (let i = 0; i < this.followingUsers.length; i++) {
+      //   this.followingUsers[i] = this.followedUser;
+      // }
     },
   },
 };

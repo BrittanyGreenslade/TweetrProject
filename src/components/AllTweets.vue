@@ -1,28 +1,29 @@
 <template>
   <div>
-    <section
-      v-for="tweet in sortedAllTweets"
-      :key="tweet.tweetId"
-      :id="`tweetContainer${tweet.tweetId}`"
-      :userId="tweet.userId"
-      :tweetId="tweet.tweetId"
-    >
-      <h3>{{ tweet.username }}</h3>
-      <h5>{{ tweet.createdAt }}</h5>
-      <p>{{ tweet.content }}</p>
-      <tweet-comments :tweetId="tweet.tweetId" />
-      <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <like-tweet :tweetId="tweet.tweetId" />
-      <!-- <follow-unfollow :followId="tweet.userId" /> -->
-      <section />
-      <br /><br /><br />
-    </section>
+    <article>
+      <section
+        class="tweetCard"
+        v-for="tweet in allTweets"
+        :key="tweet.tweetId"
+        :id="`tweetContainer${tweet.tweetId}`"
+        :userId="tweet.userId"
+        :tweetId="tweet.tweetId"
+      >
+        <h3>{{ tweet.username }}</h3>
+        <h5>{{ tweet.createdAt }}</h5>
+        <p>{{ tweet.content }}</p>
+        <tweet-comments :tweetId="tweet.tweetId" />
+        <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        <like-tweet :tweetId="tweet.tweetId" />
+        <!-- <follow-unfollow :followId="tweet.userId" /> -->
+      </section>
+    </article>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import cookies from "vue-cookies";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
@@ -43,38 +44,26 @@ export default {
     return {
       loginToken: cookies.get("loginToken"),
       currentUserInfo: cookies.get("currentUserInfo"),
-      toggleLike: false,
-      followedTweets: [],
     };
   },
   mounted() {
-    this.getAllTweets();
+    this.$store.dispatch("getAllTweets");
   },
   computed: {
-    sortedAllTweets() {
-      return this.$store.getters.sortedAllTweets;
+    allTweets() {
+      return this.$store.state.allTweets;
     },
+    // sortedAllTweets() {
+    //   return this.$store.getters.sortedAllTweets;
+    // },
   },
-  methods: {
-    getAllTweets() {
-      axios
-        .request({
-          url: "https://tweeterest.ml/api/tweets",
-          // method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-          },
-        })
-        .then((res) => {
-          this.$store.commit("updateAllTweets", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+article {
+  display: grid;
+  row-gap: 10px;
+}
+</style>

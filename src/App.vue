@@ -9,11 +9,11 @@
       src="@/assets/images/peace-dove.svg"
       alt="black outline of dove holding flower"
     />
-    <div id="nav">
-      <span v-if="!loginToken">
+    <section id="nav">
+      <div v-if="!loginToken">
         <router-link to="/login">Login/Sign-up</router-link>
-      </span>
-      <span v-else-if="loginToken">
+      </div>
+      <div v-else-if="loginToken">
         <router-link :to="`/profile/${currentUserInfo.userId}`">
           My Profile</router-link
         >
@@ -22,8 +22,8 @@
         |
         <router-link to="/discover">Discover</router-link> |
         <router-link to="/users">Users</router-link>
-      </span>
-    </div>
+      </div>
+    </section>
     <logout-button v-if="loginToken" />
     <router-view />
 
@@ -50,19 +50,27 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+    routePath() {
+      return this.$route.path;
+    },
+  },
+  watch: {
+    routePath(newValue, oldValue) {
+      if (this.loginToken && newValue === "/") {
+        this.$router.push({ path: `/feed` });
+      }
+      oldValue;
+    },
   },
   mounted() {
-    this.$store.dispatch("getAllUsers");
-    this.$store.dispatch("getAllTweets");
-    // this.$store.dispatch("getFollowing");
+    if (this.loginToken && this.$route.path === "/") {
+      this.$router.push({ path: `/feed` });
+    }
   },
   methods: {
-    navigateToHome() {
-      this.$router.push({ path: "/feed" });
-    },
     notifyLogin() {
       if (!this.loginToken) {
-        this.navigateToHome();
+        this.$router.push({ path: `/login` });
         // this.loginStatus = "Please login to continue";
       }
     },
@@ -73,34 +81,57 @@ export default {
 };
 </script>
 <style scoped>
-img {
-  width: 50px;
+h1 {
+  font-family: "Courgette", cursive;
 }
 </style>
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Courgette&family=Prata&display=swap");
+/* font-family: 'Courgette', cursive;
+font-family: 'Prata', serif; */
 * {
   padding: 0;
   margin: 0;
 }
+img {
+  width: 50px;
+}
 
+.tweetCard {
+  width: 50%;
+  background: #cbddbb;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0;
+}
+body {
+  background: #efffc8;
+  color: #30321c;
+  font-family: "Prata", serif;
+}
+/* root {
+  background: #5f9d62;
+} */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #30321c;
+  font-size: 14px;
+  /* height: 100%; */
+  background: #efffc8;
+  /* background: #94ae89; */
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
+  font-size: 20px;
   font-weight: bold;
-  color: #2c3e50;
+  text-decoration: none;
+  color: #30321c;
 }
-
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #82ad5c;
 }
 </style>

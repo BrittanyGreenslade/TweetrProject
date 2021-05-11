@@ -27,15 +27,11 @@ export default new Vuex.Store({
     },
     updateFollowingTweets(state, data) {
       state.followingTweets = data;
-    }, // updateNotFollowing(state, data) {
-    //   state.notFollowing = data;
-    // },
+    },
     addUserToFollowing(state, data) {
       state.followingUsers.push(data);
     },
-    toggleFollowedUser(state, data) {
-      state.followedUser = data;
-    },
+
     //current User info Mutations
     updateCurrentUserInfo(state, data) {
       state.currentUserInfo = data;
@@ -50,7 +46,6 @@ export default new Vuex.Store({
     updateAllTweets(state, data) {
       state.allTweets = data;
     },
-
     addTweetToCurrentTweets(state, data) {
       state.currentUserTweets.push(data);
     },
@@ -78,9 +73,7 @@ export default new Vuex.Store({
           params: { userId: context.state.currentUserInfo.userId },
         })
         .then((res) => {
-          console.log(res.data);
           context.commit("updateFollowingUsers", res.data);
-          return context.state.followingUsers;
         })
         .catch((err) => {
           console.log(err);
@@ -98,6 +91,7 @@ export default new Vuex.Store({
         })
         .then((res) => {
           context.commit("updateAllTweets", res.data);
+          // return;
         })
         .catch((err) => {
           console.log(err);
@@ -131,21 +125,6 @@ export default new Vuex.Store({
     sortedAllTweets: function(state) {
       return state.allTweets.sort(function(tweet1, tweet2) {
         return tweet2.tweetId - tweet1.tweetId;
-      });
-    },
-
-    followedTweets: function(state) {
-      let followedTweets = [];
-      return state.allTweets.filter(function filterFollowedTweets() {
-        for (let i = 0; i < state.allTweets.length; i++) {
-          for (let i = 0; i < state.followingUsers.length; i++) {
-            if (state.allTweets[i].userId === state.followingUsers[i].userId) {
-              followedTweets.push(state.allTweets[i]);
-              // state.followingTweets = state.allTweets[i];
-            }
-          }
-        }
-        return followedTweets;
       });
     },
   },

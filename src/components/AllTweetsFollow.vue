@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="tweet in followingTweets" :key="tweet.tweetId">
+    <div v-for="tweet in followedTweets" :key="tweet.tweetId">
       <h3>{{ tweet.username }}</h3>
       <h4>{{ tweet.createdAt }}</h4>
       <p>{{ tweet.content }}</p>
@@ -22,23 +22,15 @@ export default {
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
-      // tweetsFollowing: [],
-      // followingUsers: [],
+      followedTweets: [],
     };
   },
   mounted() {
+    this.$store.dispatch("getAllTweets");
     this.getFollowing();
-    // this.$store.dispatch("getFollowing");
-    console.log(this.allTweets);
-    console.log(this.followedTweets);
-    console.log(this.followingUsers);
-    console.log(this.currentUserInfo.userId);
   },
 
   computed: {
-    followingTweets() {
-      return this.$store.state.followingTweets;
-    },
     followingUsers() {
       return this.$store.state.followingUsers;
     },
@@ -48,20 +40,20 @@ export default {
     allUsers() {
       return this.$store.state.allUsers;
     },
-    followedTweets() {
-      return this.$store.getters.followedTweets;
-    },
   },
+  // watch: {
+  //   //runs when computed values change
+  //   followingUsers(newValue, oldValue) {
+  //     for (let i = 0; i < newValue.length; i++) {
+  //       if (newValue[i].userId === this.followId) {
+  //         this.followedUser = true;
+  //         return;
+  //       }
+  //     }
+  //     oldValue;
+  //   },
+  // },
   methods: {
-    // getFollowedTweets() {
-    //   for (let i = 0; i < this.followingUsers.length; i++) {
-    //     for (let i = 0; i < this.allTweets.length; i++) {
-    //       if (this.followingUsers[i].userId === this.allTweets[i].userId) {
-    //         this.tweetsFollowing = this.allTweets[i];
-    //       }
-    //     }
-    //   }
-    // },
     getFollowing() {
       axios
         .request({
@@ -76,33 +68,21 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updateFollowingUsers", res.data);
-          // console.log(res.data);
-          //   this.numFollowing = res.data.length;
-          // let followingTweets = [];
-          // for (let i = 0; i < this.allTweets.length; i++) {
-          //   for (let i = 0; i < res.data.length; i++) {
-          //     if (this.allTweets[i].userId === res.data[i].userId) {
-          //       followingTweets = this.allTweets[i];
-          //     }
-          //   }
-          // }
-          // this.$store.commit("updateFollowingTweets", followingTweets);
-          // console.log(this.followingTweets);
-          // return followingTweets;
+          //whyyyyyyyyyyyyyyy this took so long to figure out
+          for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
+            for (let i = 0; i < this.followingUsers.length; i++) {
+              if (
+                this.allTweets[tweet].userId === this.followingUsers[i].userId
+              ) {
+                this.followedTweets.push(this.allTweets[tweet]);
+              }
+            }
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    // findFollwersTweets() {
-    //   for (let i = 0; i < this.allTweets.length; i++) {
-    //     for (let i = 0; i < this.followingUsers.length; i++) {
-    //       if (this.allTweets[i].userId === this.followingUsers[i].userId) {
-    //         this.tweetsFollowing = this.allTweets[i];
-    //       }
-    //     }
-    //   }
-    // },
   },
 };
 </script>

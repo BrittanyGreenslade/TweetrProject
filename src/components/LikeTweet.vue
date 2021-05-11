@@ -35,7 +35,6 @@ export default {
   },
   mounted() {
     this.viewTweetLikes();
-    console.log(this.tweetLikes);
   },
   methods: {
     viewTweetLikes() {
@@ -107,7 +106,7 @@ export default {
           // for (let i = 0; i < this.tweetLikes.length; i++) {
 
           // }
-          // this.viewTweetLikes();
+          this.viewTweetLikes();
         })
         .catch((err) => {
           console.log(err);

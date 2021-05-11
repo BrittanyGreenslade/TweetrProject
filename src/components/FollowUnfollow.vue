@@ -1,9 +1,7 @@
 <template>
   <div>
-    <button
-      v-if="followingUsers.length >= 0 && followedUser === false"
-      @click="followUser"
-    >
+    <!-- v-if="followingUsers.length >= 0 && followedUser === false" -->
+    <button v-if="followedUser === false" @click="followUser">
       Follow User
     </button>
     <button v-else @click="unfollowUser">
@@ -19,7 +17,7 @@ export default {
   name: "follow-unfollow",
   data() {
     return {
-      followedUser: undefined,
+      followedUser: false,
       // followingUsers: [],
       //   numFollowing: "",
       loginToken: cookies.get("loginToken"),
@@ -30,32 +28,25 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getFollowing");
-    for (let i = 0; i < this.followingUsers.length; i++) {
-      // for (let i = 0; i < this.allUsers.length; i++) {
-      if (this.followingUsers[i].userId === this.followId) {
-        this.followedUser = true;
-      } else {
-        this.followedUser = false;
-        // }
-      }
-    }
   },
-
-  //   // console.log(this.currentUserInfo.userId);
-  //   // this.$store.dispatch("getAllUsers");
-  // },
   computed: {
-    followedTweets() {
-      return this.$store.getters.followedTweets;
-    },
-    currentUserInfo() {
-      return this.$store.state.currentUserInfo;
-    },
     allUsers() {
       return this.$store.state.allUsers;
     },
     followingUsers() {
       return this.$store.state.followingUsers;
+    },
+  },
+  watch: {
+    //runs when computed values change
+    followingUsers(newValue, oldValue) {
+      for (let i = 0; i < newValue.length; i++) {
+        if (newValue[i].userId === this.followId) {
+          this.followedUser = true;
+          return;
+        }
+      }
+      oldValue;
     },
   },
   methods: {
@@ -73,8 +64,8 @@ export default {
     //     })
     //     .then((res) => {
     //       console.log(res.data);
-    //       // this.$store.commit("updateFollowingUsers", res.data);
-    //       //   this.numFollowing = res.data.length;
+    //       this.$store.commit("updateFollowingUsers", res.data);
+    //       // //   this.numFollowing = res.data.length;
     //       for (let i = 0; i < res.data.length; i++) {
     //         if (this.followId === res.data[i].userId) {
     //           this.followedUser = true;
@@ -102,21 +93,22 @@ export default {
         .then((res) => {
           res;
           this.followedUser = true;
-          for (let i = 0; i < this.allUsers.length; i++) {
-            for (let i = 0; i < this.followingUsers.length; i++) {
-              if (this.allUsers[i].userId === this.followingUsers[i].userId) {
-                this.$store.commit("addUserToFollowing", this.allUsers[i]);
-                this.followingUsers = this.allUsers[i];
-              }
-            }
-
-            // this.$store.commit("updateFollowingUsers", this.followingUsers);
-          }
-          console.log(this.followingUsers);
+          // for (let user = 0; user < this.allUsers.length; user++) {
+          //   for (let i = 0; i < this.followingUsers.length; i++) {
+          //     if (
+          //       this.allUsers[user].userId === this.followingUsers[i].userId
+          //     ) {
+          //       // this.followingUsers = this.allUsers[user];
+          //       this.$store.commit("addUserToFollowing", this.allUsers[i]);
+          //     }
+          //     // this.$store.commit("addUserToFollowing", this.allUsers[i]);
+          //   }
+          // }
+          // this.$store.commit("updateFollowingUsers", this.followingUsers);
         })
         .catch((err) => {
-          console.log(this.followingUsers);
-          console.log(this.allUsers);
+          // console.log(this.followingUsers);
+          // console.log(this.allUsers);
           console.log(err);
         });
     },
@@ -137,7 +129,7 @@ export default {
         .then((res) => {
           res;
           this.followedUser = false;
-          console.log(this.followingUsers);
+
           // for (let i = 0; i < this.allUsers.length; i++) {
           //   for (let i = 0; i < this.followingUsers.length; i++) {
           //     if (this.allUsers[i].userId === this.followingUsers[i].userId) {
