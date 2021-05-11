@@ -8,6 +8,7 @@
         alt="black outline of dove holding flower"
       />
     </div>
+    <!-- <router-link v-if="!loginToken" :to="`/login`">Login</router-link> -->
     <section id="nav">
       <div v-if="loginToken" id="navIconsContainer">
         <router-link to="/feed">
@@ -43,20 +44,23 @@
   </div>
 </template>
 <script>
-import cookies from "vue-cookies";
+// import cookies from "vue-cookies";
 import LogoutButton from "./components/LogoutButton.vue";
 
 export default {
   components: {
     LogoutButton,
   },
-  data() {
-    return {
-      currentUserInfo: cookies.get("currentUserInfo"),
-    };
-  },
+  // data() {
+  //   return {
+  //     currentUserInfo: cookies.get("currentUserInfo"),
+  //   };
+  // },
   //try global emit toast popup for success messages?
   computed: {
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
     loginToken() {
       return this.$store.state.loginToken;
     },
@@ -77,6 +81,7 @@ export default {
     if (this.loginToken && this.$route.path === "/") {
       this.$router.push({ path: `/feed` });
     }
+    this.notifyLogin();
   },
   methods: {
     notifyLogin() {
@@ -108,11 +113,20 @@ font-family: 'Prata', serif; */
   column-gap: 5px;
   place-items: center;
   margin-top: 5vh;
+  margin-right: 20px;
 }
-button {
+.pageContainer {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: 15px;
+}
+/* targets btns in forms */
+button,
+input[type="button"] {
   border-radius: 4px;
   border: 2px solid #30321c;
-  /* width: 55px; */
+  height: 30px;
   padding: 5px 10px;
   background: #a7b18e;
   color: #30321c;
@@ -124,9 +138,21 @@ button {
   box-shadow: none;
   /* box-shadow: 0px 1px 1px 0x #5a5d346f; */
 }
-textarea {
-  display: block;
+textarea,
+input {
+  width: 200px;
+  display: grid;
   border: 2px solid #30321c;
+  font-family: "Prata", serif;
+}
+input {
+  height: 20px;
+}
+.actionIcon {
+  width: 20px;
+}
+textarea {
+  height: 50px;
 }
 .navIcon {
   width: 30px;
@@ -159,11 +185,14 @@ textarea {
   border-radius: 4px;
   box-shadow: 0 2px 2px 0;
 }
-
+html {
+  display: grid;
+  place-items: center;
+}
 body {
   display: grid;
   place-items: center;
-  width: 100%;
+  width: 90%;
   text-align: center;
   background: #efffc8;
   color: #30321c;

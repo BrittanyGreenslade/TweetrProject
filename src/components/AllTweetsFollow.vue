@@ -1,9 +1,9 @@
 <template>
   <!-- this page doesn't load on refresh :( -->
-  <div v-if="getFollowersComplete">
+  <div v-if="getFollowersComplete" class="cardContainer">
     <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
       <h3>{{ tweet.username }}</h3>
-      <h4>{{ tweet.createdAt }}</h4>
+      <p id="createdAt">{{ tweet.createdAt }}</p>
       <p>{{ tweet.content }}</p>
       <tweet-comments :tweetId="tweet.tweetId" />
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
@@ -118,4 +118,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.cardContainer {
+  margin-top: 20px;
+  display: grid;
+  row-gap: 10px;
+}
+#createdAt {
+  font-size: 11px;
+}
+</style>

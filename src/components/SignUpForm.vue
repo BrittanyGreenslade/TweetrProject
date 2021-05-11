@@ -1,6 +1,7 @@
 <template>
   <section>
-    New here? Create an account
+    <h3>New here? Create an account</h3>
+
     <form action="javascript:void(0)">
       <input type="text" id="emailInput" placeholder="Email" required />
       <input type="text" id="usernameInput" placeholder="Username" required />
@@ -93,6 +94,10 @@ export default {
 </script>
 
 <style scoped>
+#signupBtn {
+  width: 90px;
+  justify-self: right;
+}
 section {
   display: grid;
   place-items: center;
@@ -100,6 +105,10 @@ section {
 form {
   display: grid;
   row-gap: 5px;
+}
+label {
+  justify-self: start;
+  font-size: 12px;
 }
 
 /* // does this block of code need to be accssed by just this component, or lots of 

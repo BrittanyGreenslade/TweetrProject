@@ -35,16 +35,22 @@ export default {
           this.$store.commit("updateLoginToken", "");
           cookies.remove("currentUserInfo");
           this.$store.commit("updateCurrentUserInfo", "");
+          // this.currentUserInfo = "";
           this.loginStatus = "Logging you out!";
           //use this if "didn't user res" error shows and no data sent back
           res;
         })
         .catch((err) => {
           console.log(err);
+          console.log(this.loginToken);
         });
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#logoutBtn {
+  margin-top: 5px;
+}
+</style>

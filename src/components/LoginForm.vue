@@ -1,32 +1,40 @@
 <template>
-  <div>
-    <h1>Greetings Earthlings! Welcome to (Tweeter)</h1>
-    <h4>Crafting a green world</h4>
-    <h4>Be earth friendly.</h4>
-    <p>
-      A platform on which to share sustainability tips, products, and
-      information
-    </p>
-    Login
-    <form action="javascript:void(0)">
-      <input
-        type="text"
-        id="emailInputLogin"
-        name="emailInput"
-        placeholder="Email"
-        required
-      />
+  <div class="pageContainer">
+    <div id="introInfo">
+      <h3>Crafting a green world</h3>
+      <p>
+        A platform on which to share sustainability tips, products, and
+        information
+      </p>
+    </div>
 
-      <input
-        type="password"
-        id="passwordInputLogin"
-        name="passwordInput"
-        placeholder="Password"
-        required
-      />
-      <input @click="attemptLogin" type="button" id="loginBtn" value="Login" />
-    </form>
     <h4>{{ loginStatus }}</h4>
+    <div id="loginFormContainer">
+      <h3>Login</h3>
+      <form id="loginForm" action="javascript:void(0)">
+        <input
+          type="text"
+          id="emailInputLogin"
+          name="emailInput"
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type="password"
+          id="passwordInputLogin"
+          name="passwordInput"
+          placeholder="Password"
+          required
+        />
+        <input
+          @click="attemptLogin"
+          type="button"
+          id="loginBtn"
+          value="Login"
+        />
+      </form>
+    </div>
   </div>
 </template>
 
@@ -72,14 +80,14 @@ export default {
         .request({
           url: "https://tweeterest.ml/api/login",
           method: "POST",
-          data: {
-            email: document.getElementById("emailInputLogin").value,
-            password: document.getElementById("passwordInputLogin").value,
-          },
           headers: {
             "Content-Type": "application/json",
             "X-API-Key": `${process.env.VUE_APP_API_KEY}`,
             //this process calls the .env.local file
+          },
+          data: {
+            email: document.getElementById("emailInputLogin").value,
+            password: document.getElementById("passwordInputLogin").value,
           },
         })
         .then((res) => {
@@ -91,11 +99,13 @@ export default {
           );
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
-            //navigation is chill
+            //navigation is chill thx to this
             setTimeout(this.navigateToProfile, 1500);
           this.loginStatus = "Logged in! Redirecting...";
         })
         .catch((err) => {
+          console.log(this.currentUserInfo);
+          console.log();
           console.log(err);
           this.loginStatus = "Sorry, an error occurred. Please try again";
         });
@@ -105,12 +115,27 @@ export default {
 </script>
 
 <style scoped>
-form {
+#loginForm {
   display: grid;
-  grid-auto-flow: column;
-  column-gap: 10px;
+  place-items: center;
+  row-gap: 5px;
 }
-/* input {
-  border: 1px solid black;
-} */
+#loginBtn {
+  width: 85px;
+  justify-self: right;
+}
+label {
+  justify-self: start;
+}
+p {
+  font-weight: 600;
+  font-style: italic;
+}
+#loginFormContainer {
+  margin-top: 35px;
+}
+#introInfo {
+  display: grid;
+  row-gap: 5px;
+}
 </style>

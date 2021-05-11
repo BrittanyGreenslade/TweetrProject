@@ -7,9 +7,15 @@
         {{ like.username }}
       </h2>
     </div>
-    <button v-if="tweetLiked === false" @click="likeTweet">
-      Like this tweet
-    </button>
+    <!-- <button > -->
+    <img
+      v-if="tweetLiked === false"
+      @click="likeTweet"
+      src="@/assets/images/heart.svg"
+      alt="hand drawn heart - like button"
+      class="actionIcon"
+    />
+    <!-- </button> -->
     <button v-else @click="unlikeTweet">
       Unlike tweet
     </button>
@@ -116,4 +122,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.actionIcon {
+  width: 20px;
+}
+</style>

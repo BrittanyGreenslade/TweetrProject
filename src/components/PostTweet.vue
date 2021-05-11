@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pageContainer">
     <section id="postTweetContainer">
       <h3>Post Tweet</h3>
       <textarea
@@ -9,7 +9,7 @@
         maxlength="200"
         required
       ></textarea>
-      <button @click="postTweet">Post</button>
+      <button id="postBtn" @click="postTweet">Post</button>
     </section>
   </div>
 </template>
@@ -62,4 +62,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#postBtn {
+  justify-self: right;
+  width: 90px;
+}
+#postTweetContainer {
+  display: grid;
+  place-items: center;
+}
+</style>

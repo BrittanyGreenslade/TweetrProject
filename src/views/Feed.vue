@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h1>News Feed</h1>
-    <post-tweet />
-    <section>
-      <all-tweets-follow />
-    </section>
+    <div class="pageContainer">
+      <h1>News Feed</h1>
+      <post-tweet />
+      <section>
+        <all-tweets-follow />
+      </section>
+    </div>
   </div>
 </template>
 

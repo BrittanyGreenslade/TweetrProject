@@ -1,13 +1,10 @@
 <template>
   <div>
     <h4 id="loginStatus">{{ loginStatus }}</h4>
-    <section>
+    <div id="formsContainer">
       <login-form />
-    </section>
-    <section>
       <sign-up-form />
-    </section>
-    <br /><br />
+    </div>
   </div>
 </template>
 
@@ -27,4 +24,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#formsContainer {
+  display: grid;
+  row-gap: 50px;
+}
+</style>

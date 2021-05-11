@@ -1,8 +1,15 @@
 <template>
   <div>
-    <button v-if="commentViewOn === false" @click="commentViewOn = true">
+    <!-- <button >
       Make Comment
-    </button>
+    </button> -->
+    <img
+      v-if="commentViewOn === false"
+      @click="commentViewOn = true"
+      class="actionIcon"
+      src="@/assets/images/comment.svg"
+      alt="speech bubble - makecomment icon"
+    />
     <div v-if="commentViewOn === true">
       <textarea
         name="tweetComment"
@@ -12,6 +19,7 @@
         maxlength="150"
         placeholder="max 150 characters"
       ></textarea>
+
       <button @click="postComment">Post Comment</button>
       <button @click="commentViewOn = false">Cancel</button>
     </div>
