@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 #signupBtn {
-  width: 90px;
+  width: 80px;
   justify-self: right;
 }
 section {

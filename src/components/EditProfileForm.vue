@@ -1,8 +1,15 @@
 <template>
   <section>
-    <button v-if="toggleEditOn === false" @click="toggleEditOn = true">
+    <img
+      v-if="toggleEditOn === false"
+      @click="toggleEditOn = true"
+      class="actionIcon"
+      src="@/assets/images/edit.svg"
+      alt="pencil icon - edit button"
+    />
+    <!-- <button v-if="toggleEditOn === false" @click="toggleEditOn = true">
       Edit Profile
-    </button>
+    </button> -->
     <div v-if="toggleEditOn === true">
       <form action="javascript:void(0)">
         <p>User must not update all fields if not necessary</p>
@@ -108,9 +115,5 @@ form {
   display: grid;
   row-gap: 5px;
   width: 100px;
-}
-input,
-textarea {
-  border: 1px solid black;
 }
 </style>

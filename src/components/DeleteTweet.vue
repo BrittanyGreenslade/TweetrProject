@@ -1,11 +1,17 @@
 <template>
   <div>
-    <button
+    <img
       v-if="Number(currentUserInfo.userId) === Number(userId)"
       @click="deleteTweet(tweetId)"
+      class="actionIcon"
+      src="@/assets/images/trash.svg"
+      alt="recycle bin icon - delete tweet button"
+    />
+    <!-- <button
+
     >
       Delete Tweet
-    </button>
+    </button> -->
   </div>
 </template>
 

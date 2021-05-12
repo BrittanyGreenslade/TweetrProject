@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <div>
-      <h3>{{ currentUserInfo.username }}</h3>
-      <h5>{{ currentUserInfo.bio }}</h5>
+  <div class="pageContainer">
+    <div class="profileContents">
+      <h1>Your Profile</h1>
+      <h2 class="username">{{ currentUserInfo.username }}</h2>
+      <h5>Birthdate: {{ currentUserInfo.birthdate }}</h5>
       <h5>{{ currentUserInfo.email }}</h5>
-      <h4>{{ currentUserInfo.birthdate }}</h4>
+      <p class="bio">{{ currentUserInfo.bio }}</p>
+      <div id="iconsContainer">
+        <edit-profile-form />
+        <delete-profile />
+      </div>
     </div>
-    <edit-profile-form />
-    <delete-profile />
-    <br /><br /><br />
-    <!-- <user-following :userId="currentUserInfo.userId" /> -->
+
     <post-tweet />
     <current-user-tweets />
   </div>
@@ -42,7 +44,23 @@ export default {
 </script>
 
 <style scoped>
-button {
-  border: 1px solid black;
+.profileContents {
+  display: grid;
+  row-gap: 3px;
+  padding: 15px;
+  text-align: center;
+  margin-top: -10px;
+}
+h5 {
+  font-size: 14px;
+}
+#iconsContainer {
+  display: grid;
+  grid-auto-flow: column;
+  width: 30%;
+  place-self: center;
+}
+.bio {
+  font-style: italic;
 }
 </style>

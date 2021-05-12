@@ -1,33 +1,39 @@
 <template>
-  <div>
-    <h3>Your Tweets</h3>
-    <section class="userTweetContainer">
-      <!-- help plz if user tweets is empty, tell them to go post a thing -->
-      <!-- <h4 v-if="currentUserTweets === null">
-        No tweets posted by you yet! Post in "Feed"
-      </h4> -->
-      <section>
-        <div
-          v-for="tweet in sortedCurrentTweets"
-          :key="tweet.tweetId"
-          :id="`tweetContainer${tweet.tweetId}`"
-        >
-          <h3>
-            {{ tweet.username }}
-          </h3>
-          <p>{{ tweet.content }}</p>
-          <p>{{ tweet.createdAt }}</p>
-          <h1>{{ tweet.tweetId }}</h1>
-          <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
-          <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
-          <tweet-comments :tweetId="tweet.tweetId" />
-          <br />
-          <like-tweet :tweetId="tweet.tweetId" />
+  <div class="pageContainer">
+    <h3>Your Posts</h3>
+    <article class="tweetCardContainer">
+      <h4 v-if="sortedCurrentTweets.length === 0">
+        Get started with your first post!
+      </h4>
+      <div
+        class="cardContainer"
+        v-for="tweet in sortedCurrentTweets"
+        :key="tweet.tweetId"
+        :id="`tweetContainer${tweet.tweetId}`"
+      >
+        <div class="tweetCard">
+          <h2
+            class="username"
+            v-if="$route.path !== `/profile/${currentUserInfo.userId}`"
+          >
+            <router-link :to="`/profile/${currentUserInfo.userId}`">
+              {{ tweet.username }}
+            </router-link>
+          </h2>
+          <h2 class="username" v-else>{{ tweet.username }}</h2>
+          <p class="createdAt">{{ tweet.createdAt }}</p>
+          <p class="content">{{ tweet.content }}</p>
+          <!-- <div>{{tweet.imageUrl}}</div> -->
+
+          <div class="tweetActionsContainer">
+            <like-tweet :tweetId="tweet.tweetId" />
+            <tweet-comments :tweetId="tweet.tweetId" />
+            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+            <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+          </div>
         </div>
-        <br /><br />
-        <!-- <div>{{tweet.imageUrl}}</div> -->
-      </section>
-    </section>
+      </div>
+    </article>
   </div>
 </template>
 
@@ -88,9 +94,11 @@ export default {
 </script>
 
 <style scoped>
-textarea,
-button,
-.userTweetContainer {
-  border: 1px solid black;
-}
+/* .tweetContentContainer {
+  justify-self: start;
+  display: grid;
+  margin-top: 10px;
+  width: 90%;
+  text-align: start;
+} */
 </style>

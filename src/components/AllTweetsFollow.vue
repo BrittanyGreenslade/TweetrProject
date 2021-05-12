@@ -1,9 +1,11 @@
 <template>
-  <!-- this page doesn't load on refresh :( -->
   <div v-if="getFollowersComplete" class="cardContainer">
+    <h4 v-if="followedTweets.length === 0">
+      Go to the discover page to follow some users!
+    </h4>
     <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
       <h3>{{ tweet.username }}</h3>
-      <p id="createdAt">{{ tweet.createdAt }}</p>
+      <p class="createdAt">{{ tweet.createdAt }}</p>
       <p>{{ tweet.content }}</p>
       <tweet-comments :tweetId="tweet.tweetId" />
       <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
@@ -40,7 +42,6 @@ export default {
   },
   mounted() {
     // this.$store.dispatch("getFollowing");
-    this.getFollowing();
     this.$store.dispatch("getAllTweets");
   },
 
@@ -55,7 +56,25 @@ export default {
       return this.$store.state.allUsers;
     },
   },
+  watch: {
+    allTweets(newValue, oldValue) {
+      this.getFollowing();
+      newValue;
+      oldValue;
+    },
+  },
   methods: {
+    filterFollowing() {
+      let tempArray = [];
+      for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
+        for (let i = 0; i < this.followingUsers.length; i++) {
+          if (this.allTweets[tweet].userId === this.followingUsers[i].userId) {
+            tempArray.push(this.allTweets[tweet]);
+          }
+        }
+      }
+      this.followedTweets = tempArray;
+    },
     getFollowing() {
       axios
         .request({
@@ -71,15 +90,7 @@ export default {
         .then((res) => {
           this.$store.commit("updateFollowingUsers", res.data);
           //whyyyyyyyyyyyyyyy this took so long to figure out0
-          for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
-            for (let i = 0; i < this.followingUsers.length; i++) {
-              if (
-                this.allTweets[tweet].userId === this.followingUsers[i].userId
-              ) {
-                this.followedTweets.push(this.allTweets[tweet]);
-              }
-            }
-          }
+          this.filterFollowing();
           this.getFollowersComplete = true;
         })
         .catch((err) => {
@@ -95,8 +106,5 @@ export default {
   margin-top: 20px;
   display: grid;
   row-gap: 10px;
-}
-#createdAt {
-  font-size: 11px;
 }
 </style>

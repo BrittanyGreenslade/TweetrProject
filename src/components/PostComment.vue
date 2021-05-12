@@ -1,28 +1,16 @@
 <template>
   <div>
-    <!-- <button >
-      Make Comment
-    </button> -->
-    <img
-      v-if="commentViewOn === false"
-      @click="commentViewOn = true"
-      class="actionIcon"
-      src="@/assets/images/comment.svg"
-      alt="speech bubble - makecomment icon"
-    />
-    <div v-if="commentViewOn === true">
-      <textarea
-        name="tweetComment"
-        :id="`makeComment${commentId}`"
-        cols="30"
-        rows="5"
-        maxlength="150"
-        placeholder="max 150 characters"
-      ></textarea>
+    <textarea
+      name="tweetComment"
+      :id="`makeComment${commentId}`"
+      cols="30"
+      rows="5"
+      maxlength="150"
+      minlength="1"
+      placeholder="max 150 characters"
+    ></textarea>
 
-      <button @click="postComment">Post Comment</button>
-      <button @click="commentViewOn = false">Cancel</button>
-    </div>
+    <button @click="postComment">Post Comment</button>
   </div>
 </template>
 

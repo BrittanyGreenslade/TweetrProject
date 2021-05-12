@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Discover</h1>
     <all-tweets />
     <!-- <all-tweets-dont-follow /> -->
   </div>

@@ -1,35 +1,34 @@
 <template>
   <section>
-    <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
-      Delete Profile
-    </button>
-
+    <img
+      v-if="toggleDeleteOn === false"
+      @click="toggleDeleteOn = true"
+      class="actionIcon"
+      src="@/assets/images/trash.svg"
+      alt="recycle bin icon - delete tweet button"
+    />
     <div v-if="toggleDeleteOn === true">
-      Enter your email & password to delete your profile:
-      <form action="javascript:void(0)">
-        <input
-          type="text"
-          id="emailInputDelete"
-          name="emailInput"
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          id="passwordInputDelete"
-          name="passwordInput"
-          placeholder="Password"
-          required
-        />
-        <input
-          @click="deleteProfile"
-          type="text"
-          id="deleteBtn"
-          value="Delete Account"
-        />
-      </form>
-
-      <button @click="toggleDeleteOn = false">Cancel</button>
+      Confirm password to delete profile:
+      <input
+        type="password"
+        id="passwordInputDelete"
+        name="passwordInput"
+        placeholder="Password"
+        required
+      />
+      <img
+        class="actionIcon"
+        src="@/assets/images/confirm.svg"
+        alt="checkmark icon - confirm button"
+        @click="toggleDeleteOn = false"
+      />
+      <img src="" alt="" />
+      <img
+        @click="toggleDeleteOn = false"
+        class="actionIcon"
+        src="@/assets/images/close.svg"
+        alt="black x - cancel icon"
+      />
     </div>
     <h4>{{ loginStatus }}</h4>
   </section>
@@ -97,9 +96,9 @@ form {
   row-gap: 5px;
   width: 100px;
 }
-input,
-textarea,
-button {
-  border: 1px solid black;
+#deleteBtn {
+  margin-top: 5px;
+  /* justify-self: right; */
+  width: 75px;
 }
 </style>

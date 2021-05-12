@@ -1,14 +1,19 @@
 <template>
   <div>
-    <button v-if="commentViewOn === false" @click="getComments">
-      View Comments
-    </button>
-    <post-comment
-      :tweetId="this.tweetId"
-      @newlyPostedComment="handlePostUpdate"
+    <img
+      v-if="commentViewOn === false"
+      @click="getComments"
+      class="actionIcon"
+      src="@/assets/images/comment.svg"
+      alt="speech bubble - makecomment icon"
     />
+    <!-- <button v-if="commentViewOn === false" @click="getComments">
+      View Comments
+    </button> -->
+    <!-- @newlyPostedComment="handlePostUpdate" -->
+    <!-- <post-comment :tweetId="this.tweetId" /> -->
     <div v-if="commentViewOn === true" class="tweetCommentsContainer">
-      <h2 v-if="tweetComments === null">No comments yet!</h2>
+      <!-- <h2 v-if="tweetComments === null">No comments yet!</h2> -->
       <div v-for="comment in tweetComments" :key="comment.commentId">
         <h3>{{ comment.username }}</h3>
         <h4>{{ comment.createdAt }}</h4>
@@ -29,6 +34,7 @@
         />
         <like-comment :commentId="comment.commentId" />
       </div>
+      <post-comment :tweetId="this.tweetId" />
       <button @click="commentViewOn = false">Hide Comments</button>
     </div>
   </div>
@@ -60,16 +66,11 @@ export default {
   props: {
     tweetId: Number,
   },
-  computed: {
-    // tweetComments() {
-    //   return this.$store.state.tweetComments;
-    // },
-  },
 
   methods: {
-    handlePostUpdate(data) {
-      this.tweetComments.push(data);
-    },
+    // handlePostUpdate(data) {
+    //   this.tweetComments.push(data);
+    // },
     handleEditUpdate(data) {
       for (let i = 0; i < this.tweetComments.length; i++) {
         if (this.tweetComments[i].commentId === data.commentId) {

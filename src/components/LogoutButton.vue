@@ -25,6 +25,11 @@ export default {
         .request({
           url: "https://tweeterest.ml/api/login",
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": `${process.env.VUE_APP_API_KEY}`,
+            //this process calls the .env.local file
+          },
           data: {
             loginToken: this.loginToken,
           },

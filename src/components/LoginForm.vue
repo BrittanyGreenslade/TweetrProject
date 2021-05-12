@@ -8,9 +8,9 @@
       </p>
     </div>
 
-    <h4>{{ loginStatus }}</h4>
     <div id="loginFormContainer">
       <h3>Login</h3>
+      <h4>{{ loginStatus }}</h4>
       <form id="loginForm" action="javascript:void(0)">
         <input
           type="text"
@@ -121,7 +121,7 @@ export default {
   row-gap: 5px;
 }
 #loginBtn {
-  width: 85px;
+  width: 75px;
   justify-self: right;
 }
 label {

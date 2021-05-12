@@ -1,23 +1,32 @@
 <template>
-  <div>
-    <article>
-      <section
-        class="tweetCard"
+  <div class="pageContainer">
+    <h1>Discover</h1>
+    <article class="tweetCardContainer">
+      <div
+        class="cardContainer"
         v-for="tweet in sortedAllTweets"
         :key="tweet.tweetId"
         :id="`tweetContainer${tweet.tweetId}`"
         :userId="tweet.userId"
         :tweetId="tweet.tweetId"
       >
-        <h3>{{ tweet.username }}</h3>
-        <h5>{{ tweet.createdAt }}</h5>
-        <p>{{ tweet.content }}</p>
-        <tweet-comments :tweetId="tweet.tweetId" />
-        <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-        <like-tweet :tweetId="tweet.tweetId" />
-        <!-- <follow-unfollow :followId="tweet.userId" /> -->
-      </section>
+        <div class="tweetCard">
+          <h2>
+            <router-link class="username" :to="`/profile/${tweet.userId}`">
+              {{ tweet.username }}
+            </router-link>
+          </h2>
+          <!-- <h3 class="username">{{ tweet.username }}</h3> -->
+          <h5 class="createdAt">{{ tweet.createdAt }}</h5>
+          <p class="content">{{ tweet.content }}</p>
+          <div class="tweetActionsContainer">
+            <like-tweet :tweetId="tweet.tweetId" />
+            <tweet-comments :tweetId="tweet.tweetId" />
+            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+            <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+          </div>
+        </div>
+      </div>
     </article>
   </div>
 </template>
@@ -60,9 +69,4 @@ export default {
 };
 </script>
 
-<style scoped>
-article {
-  display: grid;
-  row-gap: 10px;
-}
-</style>
+<style scoped></style>

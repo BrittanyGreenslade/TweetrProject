@@ -1,7 +1,17 @@
 <template>
   <div>
     <!-- <h2>{{ successMsg }}</h2> -->
-    <button
+    <img
+      v-if="
+        toggleEditOn === false &&
+          Number(currentUserInfo.userId) === Number(userId)
+      "
+      @click="toggleEditOn = true"
+      class="actionIcon"
+      src="@/assets/images/edit.svg"
+      alt="pencil icon - edit button"
+    />
+    <!-- <button
       v-if="
         toggleEditOn === false &&
           Number(currentUserInfo.userId) === Number(userId)
@@ -9,12 +19,18 @@
       @click="toggleEditOn = true"
     >
       Edit Tweet
-    </button>
+    </button> -->
     <section v-if="toggleEditOn === true">
       <textarea name="editTweet" id="editTweet"></textarea>
       <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
-      <button @click="editTweet">Post Edited Tweet</button>
-      <button @click="toggleEditOn = !toggleEditOn">Cancel</button>
+      <button @click="editTweet">Edit</button>
+      <img
+        class="actionIcon"
+        @click="toggleEditOn = !toggleEditOn"
+        src="@/assets/images/close.svg"
+        alt="black x - cancel icon"
+      />
+      <!-- <button @click="toggleEditOn = !toggleEditOn">Cancel</button> -->
     </section>
   </div>
 </template>
