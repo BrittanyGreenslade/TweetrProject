@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <all-users />
+  <div class="pageContainer">
+    <h1>All Users</h1>
+    <all-users id="allUsers" />
   </div>
 </template>
 
@@ -15,4 +16,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+h1 {
+  margin-bottom: 20px;
+}
+</style>

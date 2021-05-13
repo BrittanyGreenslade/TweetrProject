@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.pageContainer {
+/* .pageContainer {
   align-self: start;
-}
+} */
 </style>

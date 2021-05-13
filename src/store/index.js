@@ -41,6 +41,9 @@ export default new Vuex.Store({
     updateLoginToken(state, data) {
       state.loginToken = data;
     },
+    addCurrentToFollowing(state) {
+      state.followingUsers.push(state.currentUserInfo);
+    },
     //tweet mutations
     updateCurrentUserTweets(state, data) {
       state.currentUserTweets = data;

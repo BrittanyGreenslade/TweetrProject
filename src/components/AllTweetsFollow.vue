@@ -4,13 +4,26 @@
       Go to the discover page to follow some users!
     </h4>
     <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
-      <h3>{{ tweet.username }}</h3>
+      <h3 class="username">{{ tweet.username }}</h3>
       <p class="createdAt">{{ tweet.createdAt }}</p>
-      <p>{{ tweet.content }}</p>
-      <tweet-comments :tweetId="tweet.tweetId" />
-      <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-      <like-tweet :tweetId="tweet.tweetId" />
+      <p class="content">{{ tweet.content }}</p>
+      <!-- v-if="tweet.userId === currentUserInfo.userId" -->
+      <div
+        v-if="tweet.userId === currentUserInfo.userId"
+        class="tweetActionsContainer"
+      >
+        <like-tweet :tweetId="tweet.tweetId" />
+        <tweet-comments :tweetId="tweet.tweetId" />
+        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+      </div>
+      <div
+        v-else-if="tweet.userId !== currentUserInfo.userId"
+        class="otherUserTweetActions"
+      >
+        <like-tweet :tweetId="tweet.tweetId" />
+        <tweet-comments :tweetId="tweet.tweetId" />
+      </div>
       <!-- <follow-unfollow :followId="tweet.userId" /> -->
     </div>
   </div>
@@ -73,7 +86,14 @@ export default {
           }
         }
       }
+      //making the most recent tweets go to the top
+      this.sortedFollowedTweets(tempArray);
       this.followedTweets = tempArray;
+    },
+    sortedFollowedTweets(tempArray) {
+      return tempArray.sort(function(tweet1, tweet2) {
+        return tweet2.tweetId - tweet1.tweetId;
+      });
     },
     getFollowing() {
       axios
@@ -89,6 +109,7 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updateFollowingUsers", res.data);
+          this.$store.commit("addCurrentToFollowing");
           //whyyyyyyyyyyyyyyy this took so long to figure out0
           this.filterFollowing();
           this.getFollowersComplete = true;

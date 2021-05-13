@@ -1,13 +1,13 @@
 <template>
   <div class="pageContainer">
     <div id="introInfo">
-      <h3>Crafting a green world</h3>
+      <h3>Crafting a greener world</h3>
       <p>
         A platform on which to share sustainability tips, products, and
         information
       </p>
     </div>
-
+    <div id="successContainer"></div>
     <div id="loginFormContainer">
       <h3>Login</h3>
       <h4>{{ loginStatus }}</h4>
@@ -41,7 +41,7 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
-// import lottie from "lottie-web";
+import lottie from "lottie-web";
 export default {
   name: "login-form",
 
@@ -59,22 +59,21 @@ export default {
     };
   },
   methods: {
-    navigateToProfile() {
+    navigateToFeed() {
       this.$router.push({
-        // path: `/profile/${this.currentUserInfo.userId}`,
         path: "/feed",
       });
     },
-    // loginSuccess() {
-    //   lottie.loadAnimation({
-    //     container: document.getElementById("successContainer"),
-    //     path: "@/assets/animations/success.json",
-    //     loop: false,
-    //     autoplay: true,
-    //     renderer: "svg",
-    //     name: "success",
-    //   });
-    // },
+    loginSuccess() {
+      lottie.loadAnimation({
+        container: document.getElementById("successContainer"),
+        path: "@/assets/animations/success.json",
+        loop: false,
+        autoplay: true,
+        renderer: "svg",
+        name: "success",
+      });
+    },
     attemptLogin() {
       axios
         .request({
@@ -100,13 +99,13 @@ export default {
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
             //navigation is chill thx to this
-            setTimeout(this.navigateToProfile, 1500);
+            setTimeout(this.navigateToFeed, 1500);
           this.loginStatus = "Logged in! Redirecting...";
+          this.loginSuccess();
         })
         .catch((err) => {
-          console.log(this.currentUserInfo);
-          console.log();
           console.log(err);
+          console.log(this.currentUserInfo);
           this.loginStatus = "Sorry, an error occurred. Please try again";
         });
     },
@@ -132,7 +131,7 @@ p {
   font-style: italic;
 }
 #loginFormContainer {
-  margin-top: 35px;
+  margin-top: 45px;
 }
 #introInfo {
   display: grid;

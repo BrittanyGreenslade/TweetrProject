@@ -1,7 +1,7 @@
 <template>
   <section>
     <h3>New here? Create an account</h3>
-
+    <h4>{{ loginStatus }}</h4>
     <form action="javascript:void(0)">
       <input type="text" id="emailInput" placeholder="Email" required />
       <input type="text" id="usernameInput" placeholder="Username" required />
@@ -27,8 +27,6 @@
       />
       <input @click="userSignup" type="button" id="signupBtn" value="Sign Up" />
     </form>
-
-    <h4>{{ loginStatus }}</h4>
   </section>
 </template>
 
@@ -84,8 +82,7 @@ export default {
           this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {
-          this.loginStatus =
-            "Sorry, a user with that username or email already exists. Please try again.";
+          this.loginStatus = "Sorry, signup was incomplete. Please try again.";
           console.log(err);
         });
     },

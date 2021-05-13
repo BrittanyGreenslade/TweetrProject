@@ -14,6 +14,7 @@
         <div v-if="loginToken" id="navIconsContainer">
           <router-link to="/feed">
             <img
+              id="feedNav"
               class="navIcon"
               src="@/assets/images/home.svg"
               alt="group of trees - users icon"
@@ -112,19 +113,20 @@ font-family: 'Prata', serif; */
   padding: 0;
   margin: 0;
 }
+#logo {
+  width: 50px;
+}
 #titleContainer {
   display: grid;
-  width: 100%;
+  width: 90%;
   grid-template-columns: 2fr 0.5fr;
   column-gap: 5px;
   place-items: center;
   margin-top: 5vh;
-  /* margin-left: 5%; */
 }
 .pageContainer {
   display: grid;
   place-items: center;
-  /* margin-left: 5%; */
   width: 90vw;
   margin-top: 15px;
   margin-bottom: 20px;
@@ -141,13 +143,8 @@ input[type="button"] {
   box-shadow: 0px 1px 2px 1px #30321c6f;
   font-weight: 700;
 }
-#logoutBtn:active {
-  border-bottom: 1px solid 35a5d346f;
-  box-shadow: none;
-  /* box-shadow: 0px 1px 1px 0x #5a5d346f; */
-}
 textarea,
-input [type="text"] {
+input {
   background: #f5f1e3;
   width: 200px;
   display: grid;
@@ -158,35 +155,26 @@ input [type="text"] {
 }
 textarea {
   resize: vertical;
+  height: 50px;
 }
-input {
-  height: 20px;
+
+#logoutBtn:active {
+  border-bottom: 1px solid 35a5d346f;
+  box-shadow: none;
+  /* box-shadow: 0px 1px 1px 0x #5a5d346f; */
 }
 .actionIcon {
   width: 20px;
 }
-textarea {
-  height: 50px;
-}
 .navIcon {
   width: 30px;
 }
-#logo {
-  width: 50px;
-}
 .content {
-  font-size: 17px;
+  font-size: 15px;
 }
 .createdAt {
-  font-size: 11px;
+  font-size: 10px;
 }
-/* a.router-link-exact-active.router-link-active {
-  text-decoration: none;
-  color: #30321c;
-}
-a.router-link-exact-active.router-link-active:hover {
-  color: #909929;
-} */
 .username {
   color: #30331c;
   text-decoration: none;
@@ -194,7 +182,27 @@ a.router-link-exact-active.router-link-active:hover {
 .username:hover {
   color: #909929;
 }
-
+/* used break-all here to break tweet if it's too long and breaks out of the container */
+.createdAt,
+.content,
+.username {
+  overflow-wrap: anywhere;
+  justify-self: start;
+}
+.profileContents {
+  display: grid;
+  row-gap: 3px;
+  text-align: center;
+}
+.bio {
+  font-style: italic;
+}
+.navUserProf {
+  text-decoration: none;
+  color: #909929;
+  font-weight: 500;
+  font-size: 14px;
+}
 #nav {
   width: 100%;
   display: grid;
@@ -204,16 +212,15 @@ a.router-link-exact-active.router-link-active:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 50%;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 #app {
   color: #30321c;
   font-size: 14px;
-  width: 100%;
+  width: 90%;
   display: grid;
   place-items: center;
   height: 100vh;
-  /* background: #94ae89; */
 }
 .tweetCard {
   overflow-wrap: break-word;
@@ -226,8 +233,10 @@ a.router-link-exact-active.router-link-active:hover {
   box-shadow: 0 2px 2px 0;
   text-align: start;
 }
+/* is it normal to have to style html in vue? */
 html {
   height: 100vh;
+  width: 100vw;
   display: grid;
   place-items: center;
 }
@@ -235,30 +244,26 @@ body {
   height: 100vh;
   display: grid;
   place-items: center;
-  width: 100%;
+  width: 100vw;
   text-align: center;
   background: #efffc8;
   color: #30321c;
   font-family: "Prata", serif;
 }
-.tweetActionsContainer {
+.tweetActionsContainer,
+.otherUserTweetActions {
   place-self: end;
   margin-top: 10px;
   width: 40%;
-  max-width: 100%;
   display: grid;
   grid-auto-flow: column;
+}
+.otherUserTweetActions {
+  width: 20%;
 }
 .tweetCardContainer {
   display: grid;
   row-gap: 10px;
   margin-top: 10px;
-}
-/* used break-all here to break tweet if it's too long and breaks out of the container */
-.createdAt,
-.content,
-.username {
-  overflow-wrap: anywhere;
-  justify-self: start;
 }
 </style>

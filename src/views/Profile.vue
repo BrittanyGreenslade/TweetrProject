@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pageContainer">
     <current-user v-if="Number(paramId) === Number(currentUserInfo.userId)" />
     <other-user-profile :userId="Number(paramId)" v-else />
   </div>

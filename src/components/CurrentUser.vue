@@ -2,7 +2,7 @@
   <div class="pageContainer">
     <div class="profileContents">
       <h1>Your Profile</h1>
-      <h2 class="username">{{ currentUserInfo.username }}</h2>
+      <h2>{{ currentUserInfo.username }}</h2>
       <h5>Birthdate: {{ currentUserInfo.birthdate }}</h5>
       <h5>{{ currentUserInfo.email }}</h5>
       <p class="bio">{{ currentUserInfo.bio }}</p>
@@ -49,7 +49,7 @@ export default {
   row-gap: 3px;
   padding: 15px;
   text-align: center;
-  margin-top: -10px;
+  /* margin-top: px; */
 }
 h5 {
   font-size: 14px;
@@ -57,10 +57,13 @@ h5 {
 #iconsContainer {
   display: grid;
   grid-auto-flow: column;
-  width: 30%;
+  width: 20%;
   place-self: center;
 }
 .bio {
   font-style: italic;
+}
+h2 {
+  margin-top: 10px;
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- ignore for now -->
   <div><h2>This user is followed by:</h2></div>
 </template>
 

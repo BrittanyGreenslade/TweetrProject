@@ -20,7 +20,7 @@
               {{ tweet.username }}
             </router-link>
           </h2>
-          <h2 class="username" v-else>{{ tweet.username }}</h2>
+          <h3 class="username" v-else>{{ tweet.username }}</h3>
           <p class="createdAt">{{ tweet.createdAt }}</p>
           <p class="content">{{ tweet.content }}</p>
           <!-- <div>{{tweet.imageUrl}}</div> -->
@@ -28,8 +28,8 @@
           <div class="tweetActionsContainer">
             <like-tweet :tweetId="tweet.tweetId" />
             <tweet-comments :tweetId="tweet.tweetId" />
-            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
             <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>
@@ -93,12 +93,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .tweetContentContainer {
-  justify-self: start;
-  display: grid;
-  margin-top: 10px;
-  width: 90%;
-  text-align: start;
-} */
-</style>
+<style scoped></style>

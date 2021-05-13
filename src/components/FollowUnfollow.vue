@@ -1,12 +1,20 @@
 <template>
   <div>
-    <!-- v-if="followingUsers.length >= 0 && followedUser === false" -->
-    <button v-if="followedUser === false" @click="followUser">
-      Follow User
-    </button>
-    <button v-else @click="unfollowUser">
-      Unfollow User
-    </button>
+    <img
+      class="actionIcon"
+      v-if="followedUser === false"
+      @click="followUser"
+      src="@/assets/images/follow.svg"
+      alt="follow user icon"
+    />
+
+    <img
+      class="actionIcon"
+      v-else
+      @click="unfollowUser"
+      src="@/assets/images/unfollow.svg"
+      alt="unfollow user icon"
+    />
   </div>
 </template>
 
@@ -50,10 +58,6 @@ export default {
       }
       oldValue;
     },
-    // allTweets(newValue, oldValue) {
-    //   this.$store.commit("updateAllTweets", newValue);
-    //   oldValue;
-    // },
   },
   methods: {
     followUser() {
@@ -75,10 +79,9 @@ export default {
           this.followedUser = true;
 
           this.$store.commit("addUserToFollowing", this.user);
-          console.log(this.followingUsers);
         })
         .catch((err) => {
-          console.log(err.response);
+          console.log(err);
         });
     },
     unfollowUser() {
@@ -103,9 +106,7 @@ export default {
               this.$store.commit("removeUserFromFollowing", i);
             }
           }
-
           this.$store.commit("updateFollowingUsers", this.followingUsers);
-          console.log(this.followingUsers);
         })
         .catch((err) => {
           console.log(err);
@@ -115,4 +116,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* .actionIcon {
+  width: 40px;
+} */
+</style>

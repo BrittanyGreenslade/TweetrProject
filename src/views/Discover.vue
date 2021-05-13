@@ -1,17 +1,20 @@
 <template>
   <div>
-    <all-tweets />
-    <!-- <all-tweets-dont-follow /> -->
+    <div class="pageContainer">
+      <h1>Discover</h1>
+      <post-tweet />
+      <all-tweets />
+    </div>
   </div>
 </template>
 
 <script>
 import AllTweets from "../components/AllTweets.vue";
-// import AllTweetsDontFollow from "../components/AllTweetsDontFollow.vue";
+import PostTweet from "../components/PostTweet.vue";
 export default {
   components: {
     AllTweets,
-    // AllTweetsDontFollow,
+    PostTweet,
   },
   data() {
     return {

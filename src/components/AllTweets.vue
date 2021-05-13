@@ -1,6 +1,5 @@
 <template>
   <div class="pageContainer">
-    <h1>Discover</h1>
     <article class="tweetCardContainer">
       <div
         class="cardContainer"
@@ -11,13 +10,13 @@
         :tweetId="tweet.tweetId"
       >
         <div class="tweetCard">
-          <h2>
+          <h3>
             <router-link class="username" :to="`/profile/${tweet.userId}`">
               {{ tweet.username }}
             </router-link>
-          </h2>
+          </h3>
           <!-- <h3 class="username">{{ tweet.username }}</h3> -->
-          <h5 class="createdAt">{{ tweet.createdAt }}</h5>
+          <p class="createdAt">{{ tweet.createdAt }}</p>
           <p class="content">{{ tweet.content }}</p>
           <div class="tweetActionsContainer">
             <like-tweet :tweetId="tweet.tweetId" />

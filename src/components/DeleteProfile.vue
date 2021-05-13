@@ -20,9 +20,9 @@
         class="actionIcon"
         src="@/assets/images/confirm.svg"
         alt="checkmark icon - confirm button"
-        @click="toggleDeleteOn = false"
+        @click="deleteProfile"
       />
-      <img src="" alt="" />
+
       <img
         @click="toggleDeleteOn = false"
         class="actionIcon"

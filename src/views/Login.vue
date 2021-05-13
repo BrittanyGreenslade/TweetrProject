@@ -27,6 +27,6 @@ export default {
 <style scoped>
 #formsContainer {
   display: grid;
-  row-gap: 50px;
+  row-gap: 30px;
 }
 </style>

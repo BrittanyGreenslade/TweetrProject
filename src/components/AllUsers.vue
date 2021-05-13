@@ -1,9 +1,13 @@
 <template>
   <div>
     <div v-for="user in allUsers" :key="user.userId">
-      <router-link :to="`/profile/${user.userId}`">
-        {{ user.username }}</router-link
-      >
+      <h3 class="username">
+        {{ user.username }}
+        <router-link class="navUserProf" :to="`/profile/${user.userId}`">
+          <p>View user's profile</p></router-link
+        >
+      </h3>
+
       <follow-unfollow
         :user="user"
         v-if="user.userId !== currentUserInfo.userId"
@@ -29,7 +33,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getAllUsers");
-    // this.$store.dispatch("getFollowing");
   },
 
   computed: {
@@ -40,31 +43,14 @@ export default {
       return this.$store.state.followingUsers;
     },
   },
-  methods: {
-    // getAllUsers() {
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/users",
-    //       // method:"GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.$store.commit("updateAllUsers", res.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
-    getFollowedUser() {
-      // for (let i = 0; i < this.followingUsers.length; i++) {
-      //   this.followingUsers[i] = this.followedUser;
-      // }
-    },
-  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#navUserProf:hover {
+  color: #30331c;
+}
+.username:hover {
+  color: #30331c;
+}
+</style>
