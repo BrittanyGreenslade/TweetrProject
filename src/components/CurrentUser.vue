@@ -44,13 +44,6 @@ export default {
 </script>
 
 <style scoped>
-.profileContents {
-  display: grid;
-  row-gap: 3px;
-  padding: 15px;
-  text-align: center;
-  /* margin-top: px; */
-}
 h5 {
   font-size: 14px;
 }
@@ -60,8 +53,8 @@ h5 {
   width: 20%;
   place-self: center;
 }
-.bio {
-  font-style: italic;
+.pageContainer {
+  margin-top: 0;
 }
 h2 {
   margin-top: 10px;

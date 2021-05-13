@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div id="inApp">
       <div id="titleContainer">
         <h1>Sustainappbility</h1>
         <img
@@ -97,8 +97,12 @@ export default {
 };
 </script>
 <style scoped>
+#inApp {
+  display: grid;
+  place-items: center;
+}
 h1 {
-  font-size: 40px;
+  font-size: 36px;
   font-family: "Courgette", cursive;
 }
 div {
@@ -114,15 +118,16 @@ font-family: 'Prata', serif; */
   margin: 0;
 }
 #logo {
-  width: 50px;
+  width: 40px;
 }
 #titleContainer {
   display: grid;
-  width: 90%;
-  grid-template-columns: 2fr 0.5fr;
+  width: 85%;
+  grid-template-columns: 2fr 1.25fr;
   column-gap: 5px;
   place-items: center;
   margin-top: 5vh;
+  margin-right: 3%;
 }
 .pageContainer {
   display: grid;
