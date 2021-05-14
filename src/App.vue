@@ -40,7 +40,7 @@
               alt="group of trees - users icon"
           /></router-link>
         </div>
-        <logout-button id="logoutBtn" />
+        <logout-button v-if="loginToken" id="logoutBtn" />
       </section>
 
       <router-view />
@@ -125,7 +125,6 @@ font-family: 'Prata', serif; */
   width: 85%;
   grid-template-columns: 2fr 1.25fr;
   column-gap: 5px;
-  place-items: center;
   margin-top: 5vh;
   margin-right: 5%;
 }
@@ -215,6 +214,7 @@ textarea {
 }
 #navIconsContainer {
   display: grid;
+  place-items: center;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 50%;
   margin-top: 10px;

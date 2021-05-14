@@ -101,11 +101,10 @@ export default {
             //navigation is chill thx to this
             setTimeout(this.navigateToFeed, 1500);
           this.loginStatus = "Logged in! Redirecting...";
-          this.loginSuccess();
+          // this.loginSuccess();
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.currentUserInfo);
           this.loginStatus = "Sorry, an error occurred. Please try again";
         });
     },
