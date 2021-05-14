@@ -7,12 +7,10 @@
       src="@/assets/images/edit.svg"
       alt="pencil icon - edit button"
     />
-    <!-- <button v-if="toggleEditOn === false" @click="toggleEditOn = true">
-      Edit Profile
-    </button> -->
-    <div v-if="toggleEditOn === true">
+
+    <div class="tweetCard" v-if="toggleEditOn === true">
       <form action="javascript:void(0)">
-        <p>User must not update all fields if not necessary</p>
+        <p>All fields not required</p>
         <input
           type="text"
           id="editUsername"
@@ -43,15 +41,23 @@
           name="birthdateInput"
           placeholder="YYYY/MM/DD"
         />
-        <input
-          @click="editUserProfile"
-          type="text"
-          id="updateBtn"
-          value="Save"
-        />
-        <button @click="toggleEditOn = false">Cancel</button>
-        <!-- /#/profile/988:1 Form submission canceled because the form is not
-        connected -->
+        <!-- does putting this div in here mess with the accessibility stuff
+        for the form? -->
+        <div id="btnsContainer">
+          <img
+            @click="toggleEditOn = false"
+            class="actionIcon"
+            src="@/assets/images/close.svg"
+            alt="black x - cancel icon"
+          />
+          <input
+            @click="editUserProfile"
+            type="button"
+            id="updateBtn"
+            value="Save"
+          />
+        </div>
+        <!-- <button @click="toggleEditOn = false">Cancel</button> -->
       </form>
     </div>
     <h4>{{ loginStatus }}</h4>
@@ -111,9 +117,32 @@ export default {
 </script>
 
 <style scoped>
+#btnsContainer {
+  display: grid;
+  grid-auto-flow: column;
+  width: 45%;
+  place-items: center;
+  justify-self: end;
+}
+.tweetCard {
+  position: relative;
+  margin-bottom: 20px;
+  right: 100px;
+  font-style: italic;
+}
+input,
+textarea {
+  width: 95%;
+}
+
 form {
   display: grid;
   row-gap: 5px;
-  width: 100px;
+}
+#updateBtn {
+  margin-top: 2px;
+  justify-self: right;
+  width: 70px;
+  margin-right: 5px;
 }
 </style>

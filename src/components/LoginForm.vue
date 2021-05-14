@@ -41,7 +41,7 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
-import lottie from "lottie-web";
+// import lottie from "lottie-web";
 export default {
   name: "login-form",
 
@@ -64,16 +64,16 @@ export default {
         path: "/feed",
       });
     },
-    loginSuccess() {
-      lottie.loadAnimation({
-        container: document.getElementById("successContainer"),
-        path: "@/assets/animations/success.json",
-        loop: false,
-        autoplay: true,
-        renderer: "svg",
-        name: "success",
-      });
-    },
+    // loginSuccess() {
+    //   lottie.loadAnimation({
+    //     container: document.getElementById("successContainer"),
+    //     path: "@/assets/animations/success.json",
+    //     loop: false,
+    //     autoplay: true,
+    //     renderer: "svg",
+    //     name: "success",
+    //   });
+    // },
     attemptLogin() {
       axios
         .request({

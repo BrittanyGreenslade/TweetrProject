@@ -7,7 +7,7 @@
       src="@/assets/images/trash.svg"
       alt="recycle bin icon - delete tweet button"
     />
-    <div v-if="toggleDeleteOn === true">
+    <div class="tweetCard" v-if="toggleDeleteOn === true">
       Confirm password to delete profile:
       <input
         type="password"
@@ -16,19 +16,15 @@
         placeholder="Password"
         required
       />
-      <img
-        class="actionIcon"
-        src="@/assets/images/confirm.svg"
-        alt="checkmark icon - confirm button"
-        @click="deleteProfile"
-      />
-
-      <img
-        @click="toggleDeleteOn = false"
-        class="actionIcon"
-        src="@/assets/images/close.svg"
-        alt="black x - cancel icon"
-      />
+      <div id="btnsContainer">
+        <img
+          @click="toggleDeleteOn = false"
+          class="actionIcon"
+          src="@/assets/images/close.svg"
+          alt="black x - cancel icon"
+        />
+        <button id="deleteBtn" @click="deleteProfile">Confirm</button>
+      </div>
     </div>
     <h4>{{ loginStatus }}</h4>
   </section>
@@ -98,7 +94,27 @@ form {
 }
 #deleteBtn {
   margin-top: 5px;
-  /* justify-self: right; */
-  width: 75px;
+  width: 80px;
+  margin-right: 2px;
+}
+.tweetCard {
+  display: grid;
+  position: relative;
+  margin-bottom: 20px;
+
+  right: 120px;
+  font-style: italic;
+  row-gap: 5px;
+  width: 68vw;
+}
+input {
+  width: 95%;
+}
+#btnsContainer {
+  display: grid;
+  grid-auto-flow: column;
+  width: 45%;
+  place-items: center;
+  justify-self: end;
 }
 </style>
