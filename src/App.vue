@@ -102,7 +102,7 @@ export default {
   place-items: center;
 }
 h1 {
-  font-size: 36px;
+  font-size: 33px;
   font-family: "Courgette", cursive;
 }
 div {
@@ -118,7 +118,7 @@ font-family: 'Prata', serif; */
   margin: 0;
 }
 #logo {
-  width: 40px;
+  width: 35px;
 }
 #titleContainer {
   display: grid;
