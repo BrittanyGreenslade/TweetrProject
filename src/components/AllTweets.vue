@@ -18,11 +18,21 @@
           <!-- <h3 class="username">{{ tweet.username }}</h3> -->
           <p class="createdAt">{{ tweet.createdAt }}</p>
           <p class="content">{{ tweet.content }}</p>
-          <div class="tweetActionsContainer">
+          <div
+            class="tweetActionsContainer"
+            v-if="tweet.userId === currentUserInfo.userId"
+          >
             <like-tweet :tweetId="tweet.tweetId" />
             <tweet-comments :tweetId="tweet.tweetId" />
             <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
             <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+          </div>
+          <div
+            class="otherUserTweetActions"
+            v-else-if="tweet.userId !== currentUserInfo.userId"
+          >
+            <like-tweet :tweetId="tweet.tweetId" />
+            <tweet-comments :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>

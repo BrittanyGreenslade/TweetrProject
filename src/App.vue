@@ -127,7 +127,7 @@ font-family: 'Prata', serif; */
   column-gap: 5px;
   place-items: center;
   margin-top: 5vh;
-  margin-right: 3%;
+  margin-right: 5%;
 }
 .pageContainer {
   display: grid;
@@ -255,16 +255,21 @@ body {
   color: #30321c;
   font-family: "Prata", serif;
 }
-.tweetActionsContainer,
-.otherUserTweetActions {
-  place-self: end;
+.tweetActionsContainer {
+  align-self: end;
   margin-top: 10px;
-  width: 40%;
+  width: 100%;
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
+  place-items: center;
 }
 .otherUserTweetActions {
-  width: 20%;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+  margin-top: 10px;
+  justify-self: end;
+  place-items: center;
+  width: 100%;
 }
 .tweetCardContainer {
   display: grid;

@@ -1,25 +1,27 @@
 <template>
-  <div>
-    <div class="likesContainer">
-      <h2 v-if="this.tweetLikes.length >= 1">Tweet Likes ({{ numLikes }}):</h2>
-
-      <h2 v-for="like in tweetLikes" :key="like.userId">
+  <div class="likesContainer">
+    <!-- <div class="likesContainer"> -->
+    <p v-if="this.tweetLikes.length >= 1">Likes: {{ numLikes }}</p>
+    <p v-else></p>
+    <!-- <h2 v-for="like in tweetLikes" :key="like.userId">
         {{ like.username }}
-      </h2>
-    </div>
-    <!-- <button > -->
+      </h2> -->
     <img
       v-if="tweetLiked === false"
       @click="likeTweet"
       src="@/assets/images/heart.svg"
-      alt="hand drawn heart - like button"
+      alt="hand drawn heart dark green - like button"
       class="actionIcon"
     />
-    <!-- </button> -->
-    <button v-else @click="unlikeTweet">
-      Unlike tweet
-    </button>
+    <img
+      class="actionIcon"
+      v-else
+      @click="unlikeTweet"
+      src="@/assets/images/unlike.svg"
+      alt="hand drawn heart light green - unlike btn"
+    />
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -122,4 +124,23 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+p {
+  font-size: 12px;
+  align-self: end;
+}
+.likesContainer {
+  display: grid;
+  width: 100%;
+  margin-bottom: 3px;
+  grid-template-columns: 5fr 1.5fr;
+  place-self: end;
+  justify-items: start;
+
+  /* grid-template-columns: 3fr, 1fr; */
+}
+.actionIcon {
+  justify-self: end;
+  margin-right: 3px;
+}
+</style>
