@@ -97,15 +97,22 @@ form {
   width: 80px;
   margin-right: 2px;
 }
+/* .tweetCard {
+
+  height: 300px;
+  right: 10%;
+  width: 75%;
+  font-style: italic;
+} */
 .tweetCard {
   display: grid;
-  position: relative;
-  margin-bottom: 20px;
-
-  right: 120px;
+  position: absolute;
+  z-index: 10px;
+  right: 12%;
+  height: 120px;
   font-style: italic;
   row-gap: 5px;
-  width: 68vw;
+  width: 70%;
 }
 input {
   width: 95%;

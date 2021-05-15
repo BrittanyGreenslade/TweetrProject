@@ -125,9 +125,11 @@ export default {
   justify-self: end;
 }
 .tweetCard {
-  position: relative;
-  margin-bottom: 20px;
-  right: 100px;
+  position: absolute;
+  z-index: 10px;
+  height: 300px;
+  right: 10%;
+  width: 75%;
   font-style: italic;
 }
 input,
