@@ -1,8 +1,6 @@
 <template>
   <div class="likesContainer">
     <!-- <div class="likesContainer"> -->
-    <p v-if="this.tweetLikes.length >= 1">Likes: {{ numLikes }}</p>
-    <p v-else></p>
     <!-- <h2 v-for="like in tweetLikes" :key="like.userId">
         {{ like.username }}
       </h2> -->
@@ -20,6 +18,8 @@
       src="@/assets/images/unlike.svg"
       alt="hand drawn heart light green - unlike btn"
     />
+    <p v-if="this.tweetLikes.length >= 1">Likes: {{ numLikes }}</p>
+    <p v-else></p>
   </div>
   <!-- </div> -->
 </template>
@@ -131,9 +131,9 @@ p {
 }
 .likesContainer {
   display: grid;
-  width: 100%;
+  width: 30vw;
   margin-bottom: 3px;
-  grid-template-columns: 5fr 1.5fr;
+  grid-template-columns: 1.5fr 5fr;
   place-self: end;
   justify-items: start;
 
@@ -142,5 +142,6 @@ p {
 .actionIcon {
   justify-self: end;
   margin-right: 3px;
+  margin-bottom: 3px;
 }
 </style>

@@ -50,14 +50,8 @@
             src="@/assets/images/close.svg"
             alt="black x - cancel icon"
           />
-          <input
-            @click="editUserProfile"
-            type="button"
-            id="updateBtn"
-            value="Save"
-          />
+          <button @click="editUserProfile" id="updateBtn">Save</button>
         </div>
-        <!-- <button @click="toggleEditOn = false">Cancel</button> -->
       </form>
     </div>
     <h4>{{ loginStatus }}</h4>

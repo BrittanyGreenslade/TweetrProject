@@ -1,13 +1,32 @@
 <template>
   <div>
-    <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
+    <img
+      v-if="toggleDeleteOn === false"
+      @click="toggleDeleteOn = true"
+      class="actionIcon"
+      src="@/assets/images/trash.svg"
+      alt="recycle bin icon - delete tweet button"
+    />
+    <!-- <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
       Delete Comment
-    </button>
+    </button> -->
 
     <div v-if="toggleDeleteOn === true">
       <h4>Are you sure?</h4>
-      <button @click="deleteComment">Confirm Delete</button>
-      <button @click="toggleDeleteOn = false">Cancel</button>
+      <img
+        class="actionIcon"
+        @click="toggleDeleteOn = false"
+        src="@/assets/images/close.svg"
+        alt="black x - cancel icon"
+      />
+      <img
+        src="@/assets/images/confirm.svg"
+        alt="black checkmark - confirm"
+        class="actionIcon"
+        @click="deleteComment"
+      />
+
+      <!-- <button >Cancel</button> -->
     </div>
   </div>
 </template>

@@ -27,12 +27,9 @@
           placeholder="Password"
           required
         />
-        <input
-          @click="attemptLogin"
-          type="button"
-          id="loginBtn"
-          value="Login"
-        />
+        <button @click="attemptLogin" id="loginBtn">
+          Login
+        </button>
       </form>
     </div>
   </div>

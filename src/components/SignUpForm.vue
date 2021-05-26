@@ -25,7 +25,7 @@
         placeholder="YYYY/MM/DD"
         required
       />
-      <input @click="userSignup" type="button" id="signupBtn" value="Sign Up" />
+      <button @click="userSignup" id="signupBtn">Sign Up</button>
     </form>
   </section>
 </template>

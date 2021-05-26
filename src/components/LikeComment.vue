@@ -9,12 +9,20 @@
         {{ like.username }}
       </h2>
     </div>
-    <button v-if="commentLiked === false" @click="likeComment">
-      Like this comment
-    </button>
-    <button v-else @click="unlikeComment">
-      Unlike Comment
-    </button>
+    <img
+      v-if="commentLiked === false"
+      @click="likeComment"
+      src="@/assets/images/heart.svg"
+      alt="hand drawn heart dark green - like button"
+      class="actionIcon"
+    />
+    <img
+      class="actionIcon"
+      v-else
+      @click="unlikeComment"
+      src="@/assets/images/unlike.svg"
+      alt="hand drawn heart light green - unlike btn"
+    />
   </div>
 </template>
 
@@ -33,7 +41,6 @@ export default {
       currentUserInfo: cookies.get("currentUserInfo"),
       commentLikes: [],
       numLikes: "",
-      commentLikesOn: false,
     };
   },
   mounted() {

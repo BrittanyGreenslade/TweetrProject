@@ -135,9 +135,8 @@ font-family: 'Prata', serif; */
   margin-top: 15px;
   margin-bottom: 20px;
 }
-/* targets btns in forms */
-button,
-input[type="button"] {
+
+button {
   border-radius: 4px;
   border: 2px solid #30321c;
   height: 30px;
@@ -256,9 +255,9 @@ body {
   font-family: "Prata", serif;
 }
 .tweetActionsContainer {
-  align-self: end;
+  /* justify-self: end; */
   margin-top: 10px;
-  width: 100%;
+  width: 35%;
   display: grid;
   grid-template-columns: 6fr 1fr 1fr 1fr;
   place-items: center;
@@ -267,13 +266,27 @@ body {
   display: grid;
   grid-template-columns: 8fr 1fr;
   margin-top: 10px;
-  justify-self: end;
   place-items: center;
-  width: 100%;
+  width: 20%;
 }
 .tweetCardContainer {
   display: grid;
   row-gap: 10px;
   margin-top: 10px;
+}
+.editContainer,
+.postContainer {
+  margin-top: 10px;
+  display: grid;
+  margin-bottom: 10px;
+}
+#btnsContainer {
+  display: grid;
+  grid-auto-flow: column;
+  width: 35%;
+  place-self: end;
+  place-items: center;
+  margin-top: 2px;
+  margin-right: 1%;
 }
 </style>

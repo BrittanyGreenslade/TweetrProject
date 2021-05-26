@@ -7,11 +7,6 @@
       src="@/assets/images/trash.svg"
       alt="recycle bin icon - delete tweet button"
     />
-    <!-- <button
-
-    >
-      Delete Tweet
-    </button> -->
   </div>
 </template>
 

@@ -26,10 +26,10 @@
           <!-- <div>{{tweet.imageUrl}}</div> -->
 
           <div class="tweetActionsContainer">
-            <like-tweet :tweetId="tweet.tweetId" />
             <tweet-comments :tweetId="tweet.tweetId" />
             <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
             <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+            <like-tweet :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>

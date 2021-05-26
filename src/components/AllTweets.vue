@@ -22,17 +22,17 @@
             class="tweetActionsContainer"
             v-if="tweet.userId === currentUserInfo.userId"
           >
-            <like-tweet :tweetId="tweet.tweetId" />
             <tweet-comments :tweetId="tweet.tweetId" />
-            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
             <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+            <like-tweet :tweetId="tweet.tweetId" />
           </div>
           <div
             class="otherUserTweetActions"
             v-else-if="tweet.userId !== currentUserInfo.userId"
           >
-            <like-tweet :tweetId="tweet.tweetId" />
             <tweet-comments :tweetId="tweet.tweetId" />
+            <like-tweet :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>

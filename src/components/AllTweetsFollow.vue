@@ -1,7 +1,7 @@
 <template>
   <div v-if="getFollowersComplete" class="cardContainer">
     <h4 v-if="followedTweets.length === 0">
-      Go to the discover page to follow some users!
+      Go to the users page to follow some users!
     </h4>
     <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
       <h3 class="username">{{ tweet.username }}</h3>
@@ -12,10 +12,10 @@
         v-if="tweet.userId === currentUserInfo.userId"
         class="tweetActionsContainer"
       >
-        <like-tweet :tweetId="tweet.tweetId" />
         <tweet-comments :tweetId="tweet.tweetId" />
         <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        <like-tweet :tweetId="tweet.tweetId" />
       </div>
       <div
         v-else-if="tweet.userId !== currentUserInfo.userId"

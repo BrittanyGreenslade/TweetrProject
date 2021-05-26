@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="postCommentContainer">
     <textarea
       name="tweetComment"
       :id="`makeComment${commentId}`"
@@ -9,8 +9,7 @@
       minlength="1"
       placeholder="max 150 characters"
     ></textarea>
-
-    <button @click="postComment">Post Comment</button>
+    <button id="postBtn" @click="postComment">Post</button>
   </div>
 </template>
 
@@ -51,6 +50,7 @@ export default {
         })
         .then((res) => {
           this.$emit("newlyPostedComment", res.data);
+          document.getElementById("makeComment" + this.commentId).value = "";
         })
         .catch((err) => {
           console.log(err);
@@ -60,4 +60,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#postBtn {
+  margin-top: 5px;
+  justify-self: right;
+  width: 70px;
+  margin-right: 10px;
+}
+#postCommentContainer {
+  display: grid;
+  margin-top: 10px;
+  width: 100%;
+}
+textarea {
+  margin-left: 10px;
+  width: 90%;
+}
+</style>

@@ -1,16 +1,25 @@
 <template>
   <div>
-    <button v-if="editViewOn === false" @click="editViewOn = true">
-      Edit Comment
-    </button>
+    <img
+      v-if="editViewOn === false"
+      @click="editViewOn = true"
+      alt="pencil icon - edit button"
+      src="@/assets/images/edit.svg"
+      class="actionIcon"
+    />
     <div v-if="editViewOn === true">
       <textarea
         name="editComment"
         :id="`editComment${commentId}`"
         placeholder="max 150 characters"
       ></textarea>
-      <button @click="editComment">Post Edited Comment</button>
-      <button @click="editViewOn = false">Cancel</button>
+      <img
+        class="actionIcon"
+        @click="editViewOn = false"
+        src="@/assets/images/close.svg"
+        alt="black x - cancel icon"
+      />
+      <button @click="editComment">Post</button>
     </div>
   </div>
 </template>
