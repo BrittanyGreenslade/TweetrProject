@@ -1,8 +1,9 @@
 <template>
   <div id="postCommentContainer">
+    <!-- :id="`makeComment${commentId}`" -->
     <textarea
       name="tweetComment"
-      :id="`makeComment${commentId}`"
+      id="makeComment"
       cols="30"
       rows="5"
       maxlength="150"
@@ -21,7 +22,6 @@ export default {
   data() {
     return {
       loginToken: cookies.get("loginToken"),
-
       commentViewOn: false,
     };
   },
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     postComment() {
-      this.commentViewOn = false;
+      // this.commentViewOn = false;
       axios
         .request({
           url: "https://tweeterest.ml/api/comments",
@@ -44,13 +44,15 @@ export default {
           data: {
             loginToken: this.loginToken,
             tweetId: this.tweetId,
-            content: document.getElementById("makeComment" + this.commentId)
-              .value,
+            content: document.getElementById("makeComment").value,
+            //             content: document.getElementById("makeComment" + this.commentId)
+            // .value,
           },
         })
         .then((res) => {
+          // this.$store.commit("tweetComments", res.data);
           this.$emit("newlyPostedComment", res.data);
-          document.getElementById("makeComment" + this.commentId).value = "";
+          document.getElementById("makeComment").value = "";
         })
         .catch((err) => {
           console.log(err);
@@ -73,7 +75,7 @@ export default {
   width: 100%;
 }
 textarea {
-  margin-left: 10px;
+  place-self: center;
   width: 90%;
 }
 </style>

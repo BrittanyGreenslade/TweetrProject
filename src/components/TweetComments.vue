@@ -1,49 +1,28 @@
 <template>
-  <!-- this is ugly but the way I setup my app, the toggle doesn't work very well -->
-  <div>
-    <img
-      v-if="commentViewOn === false"
-      @click="getComments"
-      class="actionIcon"
-      src="@/assets/images/comment.svg"
-      alt="speech bubble - makecomment icon"
-    />
-    <div v-if="commentViewOn === true" class="tweetCommentsContainer">
-      <div
-        class="comments"
-        v-for="comment in tweetComments"
-        :key="comment.commentId"
-      >
-        <h3>{{ comment.username }}</h3>
-        <h4>{{ comment.createdAt }}</h4>
-        <p>{{ comment.content }}</p>
-        <div class="commentActionsContainer">
-          <like-comment :commentId="comment.commentId" />
-          <edit-comment
-            @newlyEditedComment="handleEditUpdate"
-            :commentId="comment.commentId"
-          />
-          <delete-comment
-            @commentsAfterDelete="handleDeleteComment"
-            :tweetComments="tweetComments"
-            :commentId="comment.commentId"
-          />
-        </div>
-      </div>
-      <div id="postCancel">
-        <post-comment
-          @newlyPostedComment="handleNewComment"
-          :tweetId="this.tweetId"
+  <div class="tweetCommentsContainer">
+    <div
+      class="comments"
+      v-for="comment in tweetComments"
+      :key="comment.commentId"
+    >
+      <h3 class="username">{{ comment.username }}</h3>
+      <p class="createdAt">{{ comment.createdAt }}</p>
+      <p class="content">{{ comment.content }}</p>
+      <div class="commentActionsContainer">
+        <like-comment :commentId="comment.commentId" />
+        <edit-comment
+          @newlyEditedComment="handleEditUpdate"
+          :commentId="comment.commentId"
         />
-        <img
-          class="actionIcon"
-          @click="commentViewOn = false"
-          src="@/assets/images/close.svg"
-          alt="black x - cancel icon"
+        <delete-comment
+          @commentsAfterDelete="handleDeleteComment"
+          :tweetComments="tweetComments"
+          :commentId="comment.commentId"
         />
       </div>
-      <!-- <button @click="commentViewOn = false">Hide Comments</button> -->
     </div>
+    <post-comment @newlyPostedComment="handleNewComment" :tweetId="tweetId" />
+    <!-- <button @click="commentViewOn = false">Hide Comments</button> -->
   </div>
 </template>
 
@@ -74,6 +53,9 @@ export default {
     tweetId: Number,
   },
 
+  mounted() {
+    this.getComments();
+  },
   methods: {
     handleNewComment(data) {
       this.tweetComments.push(data);
@@ -115,27 +97,17 @@ export default {
 </script>
 
 <style scoped>
-.comments {
-  margin-left: 10px;
-  margin-top: 10px;
-}
-.tweetCommentsContainer {
-  background: #f1e9c8;
-  border-radius: 5px;
-  width: 70%;
-  right: 15%;
-  position: absolute;
-  min-height: 100px;
-  display: grid;
-}
 .commentActionsContainer {
   display: grid;
   grid-auto-flow: column;
-  width: 40%;
-  place-self: end;
+  width: 20%;
 }
-.actionIcon {
-  margin-left: 2px;
-  margin-bottom: 2px;
+.tweetCommentsContainer {
+  place-self: center;
+  width: 95%;
+  margin-top: 10px;
+  display: grid;
+  row-gap: 10px;
+  margin-bottom: 10px;
 }
 </style>

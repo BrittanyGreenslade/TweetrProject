@@ -255,11 +255,11 @@ body {
   font-family: "Prata", serif;
 }
 .tweetActionsContainer {
-  /* justify-self: end; */
   margin-top: 10px;
-  width: 35%;
+  width: 55%;
+  column-gap: 5px;
   display: grid;
-  grid-template-columns: 6fr 1fr 1fr 1fr;
+  grid-auto-flow: column;
   place-items: center;
 }
 .otherUserTweetActions {
@@ -288,5 +288,23 @@ body {
   place-items: center;
   margin-top: 2px;
   margin-right: 1%;
+}
+#cancel {
+  justify-self: end;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.cmtContain {
+  display: grid;
+  place-self: center;
+  background: #f1e9c8;
+  border-radius: 5px;
+  width: 90%;
+  margin-top: 10px;
+}
+.cardContainer {
+  margin-top: 20px;
+  display: grid;
+  row-gap: 10px;
 }
 </style>

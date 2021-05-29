@@ -7,12 +7,28 @@
       <h3 class="username">{{ tweet.username }}</h3>
       <p class="createdAt">{{ tweet.createdAt }}</p>
       <p class="content">{{ tweet.content }}</p>
+      <div class="cmtContain" v-if="commentViewOn === true">
+        <img
+          id="cancel"
+          class="actionIcon"
+          @click="commentViewOn = false"
+          src="@/assets/images/close.svg"
+          alt="black x - cancel icon"
+        />
+        <tweet-comments :tweetId="tweet.tweetId" />
+      </div>
       <!-- v-if="tweet.userId === currentUserInfo.userId" -->
       <div
         v-if="tweet.userId === currentUserInfo.userId"
         class="tweetActionsContainer"
       >
-        <tweet-comments :tweetId="tweet.tweetId" />
+        <img
+          v-if="commentViewOn === false"
+          @click="commentViewOn = true"
+          class="actionIcon"
+          src="@/assets/images/comment.svg"
+          alt="speech bubble - makecomment icon"
+        />
         <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <like-tweet :tweetId="tweet.tweetId" />
@@ -51,6 +67,7 @@ export default {
       currentUserInfo: cookies.get("currentUserInfo"),
       followedTweets: [],
       getFollowersComplete: false,
+      commentViewOn: false,
     };
   },
   mounted() {
@@ -122,10 +139,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.cardContainer {
-  margin-top: 20px;
-  display: grid;
-  row-gap: 10px;
-}
-</style>
+<style scoped></style>

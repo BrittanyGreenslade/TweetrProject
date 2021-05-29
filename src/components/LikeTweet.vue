@@ -131,7 +131,7 @@ p {
 }
 .likesContainer {
   display: grid;
-  width: 30vw;
+  /* width: 30vw; */
   margin-bottom: 3px;
   grid-template-columns: 1.5fr 5fr;
   place-self: end;
@@ -142,6 +142,6 @@ p {
 .actionIcon {
   justify-self: end;
   margin-right: 3px;
-  margin-bottom: 3px;
+  /* margin-bottom: 3px; */
 }
 </style>
