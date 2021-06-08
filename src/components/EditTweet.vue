@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img
+    <!-- <img
       v-if="
         toggleEditOn === false &&
           Number(currentUserInfo.userId) === Number(userId)
@@ -9,7 +9,17 @@
       class="actionIcon"
       src="@/assets/images/edit.svg"
       alt="pencil icon - edit button"
-    />
+    /> -->
+    <p
+      v-if="
+        toggleEditOn === false &&
+          Number(currentUserInfo.userId) === Number(userId)
+      "
+      @click="toggleEditOn = true"
+      id="viewCmt"
+    >
+      Edit Post
+    </p>
     <section v-if="toggleEditOn === true">
       <textarea name="editTweet" id="editTweet"></textarea>
       <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
@@ -95,4 +105,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.actionIcon {
+  width: 20px;
+}
+</style>

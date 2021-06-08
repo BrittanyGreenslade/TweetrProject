@@ -73,6 +73,7 @@ export default {
   display: grid;
   margin-top: 10px;
   width: 100%;
+  margin-bottom: 10px;
 }
 textarea {
   place-self: center;

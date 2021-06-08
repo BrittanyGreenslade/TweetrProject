@@ -12,22 +12,24 @@
         :id="`tweetContainer${tweet.tweetId}`"
       >
         <div class="tweetCard">
-          <h2
+          <h3
             class="username"
             v-if="$route.path !== `/profile/${currentUserInfo.userId}`"
           >
             <router-link :to="`/profile/${currentUserInfo.userId}`">
               {{ tweet.username }}
             </router-link>
-          </h2>
+          </h3>
           <h3 class="username" v-else>{{ tweet.username }}</h3>
-          <p class="createdAt">{{ tweet.createdAt }}</p>
-          <p class="content">{{ tweet.content }}</p>
-          <!-- <div>{{tweet.imageUrl}}</div> -->
 
-          <div class="tweetActionsContainer">
+          <p class="createdAt">{{ tweet.createdAt }}</p>
+          <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+          <p class="content">{{ tweet.content }}</p>
+
+          <div class="cmtContain">
             <tweet-comments :tweetId="tweet.tweetId" />
-            <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+          </div>
+          <div class="tweetActionsContainer">
             <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
             <like-tweet :tweetId="tweet.tweetId" />
           </div>

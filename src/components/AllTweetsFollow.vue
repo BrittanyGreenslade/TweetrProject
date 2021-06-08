@@ -3,45 +3,37 @@
     <h4 v-if="followedTweets.length === 0">
       Go to the users page to follow some users!
     </h4>
-    <div class="tweetCard" v-for="tweet in followedTweets" :key="tweet.tweetId">
-      <h3 class="username">{{ tweet.username }}</h3>
-      <p class="createdAt">{{ tweet.createdAt }}</p>
-      <p class="content">{{ tweet.content }}</p>
-      <div class="cmtContain" v-if="commentViewOn === true">
-        <img
-          id="cancel"
-          class="actionIcon"
-          @click="commentViewOn = false"
-          src="@/assets/images/close.svg"
-          alt="black x - cancel icon"
-        />
-        <tweet-comments :tweetId="tweet.tweetId" />
-      </div>
-      <!-- v-if="tweet.userId === currentUserInfo.userId" -->
+    <article class="tweetCardContainer">
       <div
-        v-if="tweet.userId === currentUserInfo.userId"
-        class="tweetActionsContainer"
+        class="tweetCard"
+        v-for="tweet in followedTweets"
+        :key="tweet.tweetId"
       >
-        <img
-          v-if="commentViewOn === false"
-          @click="commentViewOn = true"
-          class="actionIcon"
-          src="@/assets/images/comment.svg"
-          alt="speech bubble - makecomment icon"
-        />
-        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-        <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-        <like-tweet :tweetId="tweet.tweetId" />
+        <h3 class="username">{{ tweet.username }}</h3>
+        <p class="createdAt">{{ tweet.createdAt }}</p>
+        <p class="content">{{ tweet.content }}</p>
+        <div v-if="tweet.userId === currentUserInfo.userId">
+          <div class="cmtContain">
+            <tweet-comments :tweetId="tweet.tweetId" />
+          </div>
+          <div class="tweetActionsContainer">
+            <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+            <like-tweet :tweetId="tweet.tweetId" />
+          </div>
+        </div>
+
+        <div v-if="tweet.userId !== currentUserInfo.userId">
+          <div class="cmtContain">
+            <tweet-comments :tweetId="tweet.tweetId" />
+          </div>
+          <div class="otherUserTweetActions">
+            <like-tweet :tweetId="tweet.tweetId" />
+          </div>
+        </div>
+        <!-- <follow-unfollow :followId="tweet.userId" /> -->
       </div>
-      <div
-        v-else-if="tweet.userId !== currentUserInfo.userId"
-        class="otherUserTweetActions"
-      >
-        <like-tweet :tweetId="tweet.tweetId" />
-        <tweet-comments :tweetId="tweet.tweetId" />
-      </div>
-      <!-- <follow-unfollow :followId="tweet.userId" /> -->
-    </div>
+    </article>
   </div>
 </template>
 
@@ -67,7 +59,6 @@ export default {
       currentUserInfo: cookies.get("currentUserInfo"),
       followedTweets: [],
       getFollowersComplete: false,
-      commentViewOn: false,
     };
   },
   mounted() {

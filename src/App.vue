@@ -263,11 +263,12 @@ body {
   place-items: center;
 }
 .otherUserTweetActions {
-  display: grid;
-  grid-template-columns: 8fr 1fr;
   margin-top: 10px;
+  width: 35%;
+  column-gap: 5px;
+  display: grid;
+  grid-auto-flow: column;
   place-items: center;
-  width: 20%;
 }
 .tweetCardContainer {
   display: grid;
@@ -297,14 +298,25 @@ body {
 .cmtContain {
   display: grid;
   place-self: center;
-  background: #f1e9c8;
-  border-radius: 5px;
-  width: 90%;
+
+  width: 100%;
   margin-top: 10px;
 }
 .cardContainer {
   margin-top: 20px;
   display: grid;
   row-gap: 10px;
+}
+#viewCmt {
+  border: none;
+  color: #30321c;
+  background: none;
+  font-size: 13px;
+  /* text-decoration: underline; */
+  font-style: italic;
+  font-weight: bold;
+}
+#viewCmt:hover {
+  color: #909929;
 }
 </style>
