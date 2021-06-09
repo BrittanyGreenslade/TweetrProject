@@ -254,22 +254,22 @@ body {
   color: #30321c;
   font-family: "Prata", serif;
 }
-.tweetActionsContainer {
+/* .tweetActionsContainer {
   margin-top: 10px;
   width: 55%;
   column-gap: 5px;
   display: grid;
   grid-auto-flow: column;
   place-items: center;
-}
-.otherUserTweetActions {
+} */
+/* .otherUserTweetActions {
   margin-top: 10px;
   width: 35%;
   column-gap: 5px;
   display: grid;
   grid-auto-flow: column;
   place-items: center;
-}
+} */
 .tweetCardContainer {
   display: grid;
   row-gap: 10px;
@@ -279,6 +279,18 @@ body {
 .postContainer {
   margin-top: 10px;
   display: grid;
+  margin-bottom: 10px;
+}
+#sectContain {
+  display: grid;
+  grid-auto-flow: column;
+  width: 50%;
+  align-items: center;
+}
+#postCommentContainer {
+  display: grid;
+  margin-top: 10px;
+  width: 100%;
   margin-bottom: 10px;
 }
 #btnsContainer {
@@ -317,6 +329,7 @@ body {
   font-weight: bold;
 }
 #viewCmt:hover {
-  color: #909929;
+  /* color: #909929; */
+  font-size: 14px;
 }
 </style>

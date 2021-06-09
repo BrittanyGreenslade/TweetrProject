@@ -15,7 +15,11 @@
             {{ tweet.username }}
           </router-link>
         </h3>
-        <p class="createdAt">{{ tweet.createdAt }}</p>
+        <div id="sectContain">
+          <p class="createdAt">{{ tweet.createdAt }}</p>
+          <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        </div>
+        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <p class="content">{{ tweet.content }}</p>
         <div v-if="tweet.userId === currentUserInfo.userId">
           <div class="cmtContain">
@@ -28,8 +32,8 @@
             /> -->
             <tweet-comments :tweetId="tweet.tweetId" />
           </div>
-          <div class="tweetActionsContainer">
-            <!-- <img
+          <!-- <div class="tweetActionsContainer"> -->
+          <!-- <img
               v-if="commentViewOn === false"
               @click="commentViewOn = true"
               class="actionIcon"
@@ -37,19 +41,17 @@
               alt="speech bubble - makecomment icon"
             /> -->
 
-            <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-            <like-tweet :tweetId="tweet.tweetId" />
-          </div>
+          <like-tweet :tweetId="tweet.tweetId" />
+          <!-- </div> -->
         </div>
 
         <div v-if="tweet.userId !== currentUserInfo.userId">
           <div class="cmtContain">
             <tweet-comments :tweetId="tweet.tweetId" />
           </div>
-          <div class="otherUserTweetActions">
-            <like-tweet :tweetId="tweet.tweetId" />
-          </div>
+          <!-- <div class="otherUserTweetActions"> -->
+          <like-tweet :tweetId="tweet.tweetId" />
+          <!-- </div> -->
         </div>
       </div>
     </article>

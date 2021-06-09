@@ -1,7 +1,7 @@
 <template>
   <div id="pageContainer">
     <p id="viewCmt" v-if="commentViewOn == false" @click="getComments">
-      View Comments
+      Comments
     </p>
     <!-- <img
       class="actionIcon"

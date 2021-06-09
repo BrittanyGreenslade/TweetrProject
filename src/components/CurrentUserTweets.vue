@@ -21,8 +21,10 @@
             </router-link>
           </h3>
           <h3 class="username" v-else>{{ tweet.username }}</h3>
-
-          <p class="createdAt">{{ tweet.createdAt }}</p>
+          <div id="sectContain">
+            <p class="createdAt">{{ tweet.createdAt }}</p>
+            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+          </div>
           <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           <p class="content">{{ tweet.content }}</p>
 

@@ -80,4 +80,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.actionIcon {
+  width: 17px;
+}
+</style>

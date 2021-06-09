@@ -20,16 +20,18 @@
     >
       Edit Post
     </p>
-    <section v-if="toggleEditOn === true">
+    <section id="postCommentContainer" v-if="toggleEditOn === true">
       <textarea name="editTweet" id="editTweet"></textarea>
       <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
-      <button @click="editTweet">Edit</button>
-      <img
-        class="actionIcon"
-        @click="toggleEditOn = !toggleEditOn"
-        src="@/assets/images/close.svg"
-        alt="black x - cancel icon"
-      />
+      <div id="btnsContainer">
+        <button @click="editTweet">Edit</button>
+        <img
+          class="actionIcon"
+          @click="toggleEditOn = !toggleEditOn"
+          src="@/assets/images/close.svg"
+          alt="black x - cancel icon"
+        />
+      </div>
     </section>
   </div>
 </template>
@@ -106,7 +108,22 @@ export default {
 </script>
 
 <style scoped>
-.actionIcon {
+/* .actionIcon {
   width: 20px;
+} */
+#viewCmt {
+  color: #909929;
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+#viewCmt:hover {
+  font-size: 12px;
+}
+#editTweet {
+  margin-top: 5px;
+}
+textarea {
+  place-self: center;
+  width: 90%;
 }
 </style>

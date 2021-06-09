@@ -10,15 +10,17 @@
         :key="tweet.tweetId"
       >
         <h3 class="username">{{ tweet.username }}</h3>
-        <p class="createdAt">{{ tweet.createdAt }}</p>
+        <div id="sectContain">
+          <p class="createdAt">{{ tweet.createdAt }}</p>
+          <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+        </div>
+        <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <p class="content">{{ tweet.content }}</p>
         <div v-if="tweet.userId === currentUserInfo.userId">
           <div class="cmtContain">
             <tweet-comments :tweetId="tweet.tweetId" />
           </div>
           <div class="tweetActionsContainer">
-            <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
             <like-tweet :tweetId="tweet.tweetId" />
           </div>
         </div>
