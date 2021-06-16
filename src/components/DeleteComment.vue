@@ -1,33 +1,15 @@
 <template>
-  <div>
+  <div id="deleteTweetCont">
     <img
-      v-if="toggleDeleteOn === false"
-      @click="toggleDeleteOn = true"
+      v-if="
+        toggleDeleteOn === false &&
+          Number(currentUserInfo.userId) === Number(userId)
+      "
+      @click="deleteComment"
       class="actionIcon"
       src="@/assets/images/trash.svg"
       alt="recycle bin icon - delete tweet button"
     />
-    <!-- <button v-if="toggleDeleteOn === false" @click="toggleDeleteOn = true">
-      Delete Comment
-    </button> -->
-
-    <div v-if="toggleDeleteOn === true">
-      <h4>Are you sure?</h4>
-      <img
-        class="actionIcon"
-        @click="toggleDeleteOn = false"
-        src="@/assets/images/close.svg"
-        alt="black x - cancel icon"
-      />
-      <img
-        src="@/assets/images/confirm.svg"
-        alt="black checkmark - confirm"
-        class="actionIcon"
-        @click="deleteComment"
-      />
-
-      <!-- <button >Cancel</button> -->
-    </div>
   </div>
 </template>
 
@@ -40,9 +22,11 @@ export default {
     return {
       toggleDeleteOn: false,
       loginToken: cookies.get("loginToken"),
+      currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
   props: {
+    userId: Number,
     tweetComments: Array,
     commentId: Number,
   },
@@ -78,30 +62,12 @@ export default {
           console.log(err);
         });
     },
-    //     deleteComment(commentId) {
-    //   this.$store.commit("updateCommentId", commentId);
-    //   axios
-    //     .request({
-    //       url: "https://tweeterest.ml/api/comments",
-    //       method: "DELETE",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-    //       },
-    //       data: {
-    //         loginToken: this.loginToken,
-    //         commentId: commentId,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#deleteTweetCont {
+  margin-right: 10px;
+}
+</style>

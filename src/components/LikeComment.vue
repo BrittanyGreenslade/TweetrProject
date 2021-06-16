@@ -1,14 +1,5 @@
 <template>
-  <div>
-    <div class="commentsContainer">
-      <h2 v-if="this.commentLikes.length >= 1">
-        Comment Likes ({{ numLikes }}):
-      </h2>
-
-      <h2 v-for="like in commentLikes" :key="like.userId">
-        {{ like.username }}
-      </h2>
-    </div>
+  <div class="likesContainer">
     <img
       v-if="commentLiked === false"
       @click="likeComment"
@@ -23,6 +14,11 @@
       src="@/assets/images/unlike.svg"
       alt="hand drawn heart light green - unlike btn"
     />
+    <p v-if="this.commentLikes.length >= 1">Likes: {{ numLikes }}</p>
+
+    <!-- <h2 v-for="like in commentLikes" :key="like.userId">
+        {{ like.username }}
+      </h2> -->
   </div>
 </template>
 
@@ -123,4 +119,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.likesContainer {
+  width: 50%;
+}
+p {
+  font-size: 12px;
+  align-self: end;
+  margin-bottom: 3px;
+  margin-left: 3px;
+}
+</style>

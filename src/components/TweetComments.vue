@@ -24,16 +24,24 @@
         >
           <h3 class="username">{{ comment.username }}</h3>
           <p class="createdAt">{{ comment.createdAt }}</p>
+          <edit-comment
+            @newlyEditedComment="handleEditUpdate"
+            :commentId="comment.commentId"
+            :userId="comment.userId"
+          />
           <p class="content">{{ comment.content }}</p>
-          <div class="commentActionsContainer">
+          <!-- <div class="tweetActionsContainer">
+            <like-tweet :tweetId="tweet.tweetId" />
+            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
+          </div> -->
+          <div class="tweetActionsContainer">
             <like-comment :commentId="comment.commentId" />
-            <edit-comment
-              @newlyEditedComment="handleEditUpdate"
-              :commentId="comment.commentId"
-            />
+
+            <!-- :tweetComments="tweetComments" -->
             <delete-comment
               @commentsAfterDelete="handleDeleteComment"
               :tweetComments="tweetComments"
+              :userId="comment.userId"
               :commentId="comment.commentId"
             />
           </div>

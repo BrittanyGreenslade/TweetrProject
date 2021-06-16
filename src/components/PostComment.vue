@@ -1,6 +1,11 @@
 <template>
   <div id="postCommentContainer">
+    <!-- && currentUserInfo.userId === userId -->
+    <!-- <p v-if="commentViewOn === false" @click="editViewOn = true" id="viewCmt">
+      Post comment
+    </p> -->
     <!-- :id="`makeComment${commentId}`" -->
+    <p id="postHeader">Post a comment:</p>
     <textarea
       name="tweetComment"
       id="makeComment"

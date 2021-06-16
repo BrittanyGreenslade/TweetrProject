@@ -1,9 +1,5 @@
 <template>
   <div class="likesContainer">
-    <!-- <div class="likesContainer"> -->
-    <!-- <h2 v-for="like in tweetLikes" :key="like.userId">
-        {{ like.username }}
-      </h2> -->
     <img
       v-if="tweetLiked === false"
       @click="likeTweet"
@@ -19,9 +15,7 @@
       alt="hand drawn heart light green - unlike btn"
     />
     <p v-if="this.tweetLikes.length >= 1">Likes: {{ numLikes }}</p>
-    <p v-else></p>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -129,16 +123,16 @@ p {
   font-size: 12px;
   align-self: end;
 }
-.likesContainer {
+/* .likesContainer {
   display: grid;
   width: 40%;
   margin-bottom: 3px;
   grid-template-columns: 1.5fr 5fr;
   /* place-self: end; */
-  justify-items: start;
+/* justify-items: start; */
 
-  /* grid-template-columns: 3fr, 1fr; */
-}
+/* grid-template-columns: 3fr, 1fr; */
+/* } */
 .actionIcon {
   justify-self: end;
   margin-right: 3px;

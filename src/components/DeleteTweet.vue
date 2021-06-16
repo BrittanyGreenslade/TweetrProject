@@ -84,9 +84,9 @@ export default {
 /* .actionIcon {
   width: 17px;
 } */
-#deleteTweetCont {
+/* #deleteTweetCont {
   justify-self: end;
   margin-right: 5px;
   align-self: center;
-}
+} */
 </style>

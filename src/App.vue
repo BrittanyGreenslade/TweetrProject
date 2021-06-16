@@ -271,6 +271,16 @@ body {
   display: grid;
   grid-auto-flow: column;
 }
+.likesContainer {
+  display: grid;
+  width: 40%;
+  margin-bottom: 3px;
+  grid-template-columns: 1.5fr 5fr;
+  /* place-self: end; */
+  justify-items: start;
+
+  /* grid-template-columns: 3fr, 1fr; */
+}
 .otherUserTweetActions {
   margin-top: 5px;
   /* width: 35%;
@@ -296,6 +306,11 @@ body {
   width: 50%;
   align-items: center;
 }
+#deleteTweetCont {
+  justify-self: end;
+  margin-right: 5px;
+  align-self: center;
+}
 #postCommentContainer {
   display: grid;
   margin-top: 10px;
@@ -315,6 +330,10 @@ body {
   justify-self: end;
   margin-right: 10px;
   margin-top: 10px;
+}
+#postHeader {
+  margin-left: 10px;
+  font-weight: bold;
 }
 .cmtContain {
   display: grid;
