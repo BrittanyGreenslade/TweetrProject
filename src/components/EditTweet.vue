@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cmtContain">
     <!-- <img
       v-if="
         toggleEditOn === false &&
@@ -10,6 +10,7 @@
       src="@/assets/images/edit.svg"
       alt="pencil icon - edit button"
     /> -->
+
     <p
       v-if="
         toggleEditOn === false &&
@@ -20,19 +21,27 @@
     >
       Edit Post
     </p>
-    <section id="postCommentContainer" v-if="toggleEditOn === true">
-      <textarea name="editTweet" id="editTweet"></textarea>
-      <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
-      <div id="btnsContainer">
-        <button @click="editTweet">Edit</button>
-        <img
-          class="actionIcon"
-          @click="toggleEditOn = !toggleEditOn"
-          src="@/assets/images/close.svg"
-          alt="black x - cancel icon"
-        />
+
+    <div class="tweetCommentsContainer" v-if="toggleEditOn === true">
+      <img
+        id="cancel"
+        class="actionIcon"
+        @click="toggleEditOn = !toggleEditOn"
+        src="@/assets/images/close.svg"
+        alt="black x - cancel icon"
+      />
+      <div id="postCommentContainer">
+        <textarea
+          name="editTweet"
+          id="editTweet"
+          placeholder="max 200 characters"
+        ></textarea>
+        <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
+        <div id="btnsContainer">
+          <button id="postBtn" @click="editTweet">Edit</button>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -108,19 +117,11 @@ export default {
 </script>
 
 <style scoped>
-/* .actionIcon {
-  width: 20px;
-} */
-#viewCmt {
-  color: #909929;
-  margin-bottom: 5px;
-  font-size: 11px;
-}
-#viewCmt:hover {
-  font-size: 12px;
-}
-#editTweet {
+#postBtn {
   margin-top: 5px;
+  justify-self: right;
+  width: 70px;
+  margin-right: 10px;
 }
 textarea {
   place-self: center;

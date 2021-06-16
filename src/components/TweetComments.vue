@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+#viewCmt {
+  margin-bottom: 5px;
+}
 .cmtInfo {
   margin-left: 10px;
 }
@@ -127,7 +130,7 @@ export default {
   grid-auto-flow: column;
   width: 20%;
 }
-.tweetCommentsContainer {
+/* .tweetCommentsContainer {
   background: #f1e9c8;
   border-radius: 5px;
   place-self: center;
@@ -135,5 +138,5 @@ export default {
   display: grid;
   row-gap: 10px;
   margin-bottom: 10px;
-}
+} */
 </style>

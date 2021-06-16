@@ -160,6 +160,15 @@ textarea {
   resize: vertical;
   height: 50px;
 }
+.tweetCommentsContainer {
+  background: #f1e9c8;
+  border-radius: 5px;
+  place-self: center;
+  width: 95%;
+  display: grid;
+  row-gap: 10px;
+  margin-bottom: 10px;
+}
 
 #logoutBtn:active {
   border-bottom: 1px solid 35a5d346f;
@@ -174,6 +183,7 @@ textarea {
 }
 .content {
   font-size: 15px;
+  margin-bottom: 5px;
 }
 .createdAt {
   font-size: 10px;
@@ -254,22 +264,21 @@ body {
   color: #30321c;
   font-family: "Prata", serif;
 }
-/* .tweetActionsContainer {
-  margin-top: 10px;
-  width: 55%;
+.tweetActionsContainer {
+  margin-top: 5px;
+  width: 100%;
   column-gap: 5px;
   display: grid;
   grid-auto-flow: column;
-  place-items: center;
-} */
-/* .otherUserTweetActions {
-  margin-top: 10px;
-  width: 35%;
+}
+.otherUserTweetActions {
+  margin-top: 5px;
+  /* width: 35%;
   column-gap: 5px;
   display: grid;
   grid-auto-flow: column;
-  place-items: center;
-} */
+  place-items: center; */
+}
 .tweetCardContainer {
   display: grid;
   row-gap: 10px;
@@ -310,26 +319,24 @@ body {
 .cmtContain {
   display: grid;
   place-self: center;
-
   width: 100%;
-  margin-top: 10px;
 }
 .cardContainer {
   margin-top: 20px;
   display: grid;
   row-gap: 10px;
 }
-#viewCmt {
-  border: none;
+
+#viewCmt:hover {
+  font-size: 12px;
   color: #30321c;
-  background: none;
-  font-size: 13px;
-  /* text-decoration: underline; */
+}
+#viewCmt {
+  color: #909929;
+  font-size: 11px;
+  /* border: none; */
+  /* background: none; */
   font-style: italic;
   font-weight: bold;
-}
-#viewCmt:hover {
-  /* color: #909929; */
-  font-size: 14px;
 }
 </style>

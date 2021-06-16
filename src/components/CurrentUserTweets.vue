@@ -23,17 +23,17 @@
           <h3 class="username" v-else>{{ tweet.username }}</h3>
           <div id="sectContain">
             <p class="createdAt">{{ tweet.createdAt }}</p>
-            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
+            <!-- <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" /> -->
           </div>
           <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
-          <p class="content">{{ tweet.content }}</p>
-
           <div class="cmtContain">
             <tweet-comments :tweetId="tweet.tweetId" />
           </div>
+          <p class="content">{{ tweet.content }}</p>
+
           <div class="tweetActionsContainer">
-            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
             <like-tweet :tweetId="tweet.tweetId" />
+            <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>

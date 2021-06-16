@@ -131,10 +131,10 @@ p {
 }
 .likesContainer {
   display: grid;
-  width: 30%;
+  width: 40%;
   margin-bottom: 3px;
   grid-template-columns: 1.5fr 5fr;
-  place-self: end;
+  /* place-self: end; */
   justify-items: start;
 
   /* grid-template-columns: 3fr, 1fr; */

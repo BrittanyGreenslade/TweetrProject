@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="deleteTweetCont">
     <img
       v-if="Number(currentUserInfo.userId) === Number(userId)"
       @click="deleteTweet(tweetId)"
@@ -81,7 +81,12 @@ export default {
 </script>
 
 <style scoped>
-.actionIcon {
+/* .actionIcon {
   width: 17px;
+} */
+#deleteTweetCont {
+  justify-self: end;
+  margin-right: 5px;
+  align-self: center;
 }
 </style>

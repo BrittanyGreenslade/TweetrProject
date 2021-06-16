@@ -69,12 +69,6 @@ export default {
   width: 70px;
   margin-right: 10px;
 }
-/* #postCommentContainer {
-  display: grid;
-  margin-top: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-} */
 textarea {
   place-self: center;
   width: 90%;
