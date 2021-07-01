@@ -12,14 +12,12 @@
         :user="user"
         v-if="user.userId !== currentUserInfo.userId"
       />
-      <!-- :followId="user.userId" -->
       <br />
     </div>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
 import FollowUnfollow from "./FollowUnfollow.vue";
 import cookies from "vue-cookies";
 export default {

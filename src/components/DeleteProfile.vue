@@ -57,11 +57,10 @@ export default {
     deleteProfile() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: `${process.env.VUE_APP_API_URL}/users`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -97,13 +96,6 @@ form {
   width: 80px;
   margin-right: 2px;
 }
-/* .tweetCard {
-
-  height: 300px;
-  right: 10%;
-  width: 75%;
-  font-style: italic;
-} */
 .tweetCard {
   display: grid;
   position: absolute;

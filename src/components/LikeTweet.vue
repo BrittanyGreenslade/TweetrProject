@@ -35,18 +35,16 @@ export default {
   props: {
     tweetId: Number,
   },
-  mounted() {
-    this.viewTweetLikes();
-  },
+  // mounted() {
+  //   this.viewTweetLikes();
+  // },
   methods: {
     viewTweetLikes() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweet-likes",
-          // method: "GET",
+          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
             tweetId: this.tweetId,
@@ -69,11 +67,10 @@ export default {
       this.tweetLiked = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweet-likes",
+          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -89,14 +86,12 @@ export default {
         });
     },
     unlikeTweet() {
-      this.tweetLiked = false;
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweet-likes",
+          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -104,11 +99,15 @@ export default {
           },
         })
         .then((res) => {
+          this.tweetLiked = false;
+          this.numLikes -= 1;
+          //this works because i is the index NUMBER and need to put index number into splice
+          for (let i = 0; i < this.tweetLikes.length; i++) {
+            if (this.tweetLikes[i].userId === this.currentUserInfo.userId) {
+              this.tweetLikes.splice(i, 1);
+            }
+          }
           res;
-          // for (let i = 0; i < this.tweetLikes.length; i++) {
-
-          // }
-          this.viewTweetLikes();
         })
         .catch((err) => {
           console.log(err);
@@ -123,19 +122,8 @@ p {
   font-size: 12px;
   align-self: end;
 }
-/* .likesContainer {
-  display: grid;
-  width: 40%;
-  margin-bottom: 3px;
-  grid-template-columns: 1.5fr 5fr;
-  /* place-self: end; */
-/* justify-items: start; */
-
-/* grid-template-columns: 3fr, 1fr; */
-/* } */
 .actionIcon {
   justify-self: end;
   margin-right: 3px;
-  /* margin-bottom: 3px; */
 }
 </style>

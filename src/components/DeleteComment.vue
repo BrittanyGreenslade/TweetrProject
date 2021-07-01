@@ -35,11 +35,10 @@ export default {
     deleteComment() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
+          url: `${process.env.VUE_APP_API_URL}/comments`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -50,7 +49,7 @@ export default {
           res;
           for (let i = 0; i < this.tweetComments.length; i++) {
             if (this.tweetComments[i].commentId === this.commentId) {
-              //at index [i] (where tweetId = commentID)
+              //at index [i] (where tweet comment id = commentID)
               this.tweetComments.splice(i, 1);
               this.$emit("commentsAfterDelete", this.tweetComments);
             }

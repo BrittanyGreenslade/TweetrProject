@@ -14,11 +14,11 @@ export default {
     getFollowers() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/followers",
+          url: `${process.env.VUE_APP_API_URL}/follows`,
           // method:"GET",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+            //   "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             userId: this.userId,

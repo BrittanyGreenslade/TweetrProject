@@ -37,18 +37,17 @@ export default {
     },
   },
   methods: {
-    emptySubmitStatus() {
-      this.submitStatus = "";
-    },
+    // emptySubmitStatus() {
+    //   this.submitStatus = "";
+    // },
     postTweet() {
       if (document.getElementById("postTweet").value !== "") {
         axios
           .request({
-            url: "https://tweeterest.ml/api/tweets",
+            url: `${process.env.VUE_APP_API_URL}/tweets`,
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
             },
             data: {
               loginToken: this.loginToken,
@@ -58,11 +57,11 @@ export default {
           .then((res) => {
             this.$store.commit("addTweetToCurrentTweets", res.data);
             this.$store.commit("addTweetToAllTweets", res.data);
-            this.$store.commit(
-              "updateCurrentUserTweets",
-              this.currentUserTweets
-            );
-            this.$store.commit("updateAllTweets", this.allTweets);
+            // this.$store.commit(
+            //   "updateCurrentUserTweets",
+            //   this.currentUserTweets
+            // );
+            // this.$store.commit("updateAllTweets", this.allTweets);
             document.getElementById("postTweet").value = "";
             this.submitStatus = "";
           })
@@ -90,6 +89,6 @@ textarea {
   display: grid;
   place-items: center;
   width: 60vw;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 </style>

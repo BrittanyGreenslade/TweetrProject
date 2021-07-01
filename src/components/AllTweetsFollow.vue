@@ -19,9 +19,6 @@
         </div>
         <p class="content">{{ tweet.content }}</p>
         <div v-if="tweet.userId === currentUserInfo.userId">
-          <!-- <div class="cmtContain">
-            <tweet-comments :tweetId="tweet.tweetId" />
-          </div> -->
           <div class="tweetActionsContainer">
             <like-tweet :tweetId="tweet.tweetId" />
             <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
@@ -29,14 +26,10 @@
         </div>
 
         <div v-if="tweet.userId !== currentUserInfo.userId">
-          <!-- <div class="cmtContain">
-            <tweet-comments :tweetId="tweet.tweetId" />
-          </div> -->
           <div class="otherUserTweetActions">
             <like-tweet :tweetId="tweet.tweetId" />
           </div>
         </div>
-        <!-- <follow-unfollow :followId="tweet.userId" /> -->
       </div>
     </article>
   </div>
@@ -49,7 +42,6 @@ import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
 import LikeTweet from "./LikeTweet.vue";
-// import FollowUnfollow from "./FollowUnfollow.vue";
 export default {
   name: "all-tweets-follow",
   components: {
@@ -57,7 +49,6 @@ export default {
     EditTweet,
     TweetComments,
     LikeTweet,
-    // FollowUnfollow,
   },
   data() {
     return {
@@ -67,8 +58,10 @@ export default {
     };
   },
   mounted() {
-    // this.$store.dispatch("getFollowing");
-    this.$store.dispatch("getAllTweets");
+    this.getFollowing();
+    // this.$store.dispatch("getAllTweets");
+    // this.usersFollowing();
+    // this.filterFollowing();
   },
 
   computed: {
@@ -90,6 +83,21 @@ export default {
     },
   },
   methods: {
+    usersFollowing() {
+      for (let i = 0; i < this.followingUsers.length; i++) {
+        return this.followingUsers[i].userId;
+      }
+    },
+    filterFollowingTweets() {
+      let tempArray = [];
+      let followUsersId = this.usersFollowing();
+      for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
+        if (this.allTweets[tweet].userId === followUsersId) {
+          tempArray.push(this.allTweets[tweet]);
+        }
+      }
+      this.followedTweets = tempArray;
+    },
     filterFollowing() {
       let tempArray = [];
       for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
@@ -99,23 +107,23 @@ export default {
           }
         }
       }
+      console.log(this.tempArray);
       //making the most recent tweets go to the top
-      this.sortedFollowedTweets(tempArray);
+      // this.sortedFollowedTweets(tempArray);
       this.followedTweets = tempArray;
     },
-    sortedFollowedTweets(tempArray) {
-      return tempArray.sort(function(tweet1, tweet2) {
-        return tweet2.tweetId - tweet1.tweetId;
-      });
-    },
+    // sortedFollowedTweets(tempArray) {
+    //   return tempArray.sort(function(tweet1, tweet2) {
+    //     return tweet2.tweetId - tweet1.tweetId;
+    //   });
+    // },
     getFollowing() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: `${process.env.VUE_APP_API_URL}/follows`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           //this is the userId of the follower
           params: { userId: this.currentUserInfo.userId },
@@ -123,11 +131,12 @@ export default {
         .then((res) => {
           this.$store.commit("updateFollowingUsers", res.data);
           this.$store.commit("addCurrentToFollowing");
-          //whyyyyyyyyyyyyyyy this took so long to figure out0
-          this.filterFollowing();
+          this.filterFollowingTweets();
+          // this.filterFollowing();
           this.getFollowersComplete = true;
         })
         .catch((err) => {
+          console.log(this.currentUserInfo.userId);
           console.log(err);
         });
     },

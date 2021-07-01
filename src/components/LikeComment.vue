@@ -15,10 +15,6 @@
       alt="hand drawn heart light green - unlike btn"
     />
     <p v-if="this.commentLikes.length >= 1">Likes: {{ numLikes }}</p>
-
-    <!-- <h2 v-for="like in commentLikes" :key="like.userId">
-        {{ like.username }}
-      </h2> -->
   </div>
 </template>
 
@@ -46,11 +42,9 @@ export default {
     viewCommentLikes() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/comment-likes",
-          // method:"GET",
+          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
             commentId: this.commentId,
@@ -73,11 +67,10 @@ export default {
       this.commentLiked = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comment-likes",
+          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -96,11 +89,10 @@ export default {
       this.commentLiked = false;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comment-likes",
+          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,

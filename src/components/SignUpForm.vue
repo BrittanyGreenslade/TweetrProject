@@ -22,7 +22,7 @@
         type="text"
         id="userBirthdate"
         name="birthdateInput"
-        placeholder="YYYY/MM/DD"
+        placeholder="YYYY-MM-DD"
         required
       />
       <button @click="userSignup" id="signupBtn">Sign Up</button>
@@ -54,13 +54,13 @@ export default {
     userSignup() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: `${process.env.VUE_APP_API_URL}/users`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
-            //this process calls the .env.local file that's storing our api key so github
-            //can't see it - for ~safety~
+            //   "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
+            //   //this process calls the .env.local file that's storing our api key so github
+            //   //can't see it - for ~safety~
           },
           data: {
             email: document.getElementById("emailInput").value,
@@ -71,6 +71,7 @@ export default {
           },
         })
         .then((res) => {
+          console.log(res.data);
           setTimeout(this.navigateToProfile, 1500);
           cookies.set("currentUserInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
@@ -102,12 +103,10 @@ section {
 form {
   display: grid;
   row-gap: 5px;
+  margin-bottom: 10px;
 }
 label {
   justify-self: start;
   font-size: 12px;
 }
-
-/* // does this block of code need to be accssed by just this component, or lots of 
-// components? */
 </style>

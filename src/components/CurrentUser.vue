@@ -23,14 +23,12 @@ import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
 import PostTweet from "./PostTweet.vue";
-// import UserFollowing from "./UserFollowing.vue";
 export default {
   components: {
     EditProfileForm,
     DeleteProfile,
     CurrentUserTweets,
     PostTweet,
-    // UserFollowing,
   },
   name: "current-user",
   data() {

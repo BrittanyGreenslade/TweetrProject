@@ -55,11 +55,6 @@ export default {
   components: {
     LogoutButton,
   },
-  // data() {
-  //   return {
-  //     currentUserInfo: cookies.get("currentUserInfo"),
-  //   };
-  // },
   //try global emit toast popup for success messages?
   computed: {
     currentUserInfo() {
@@ -82,6 +77,7 @@ export default {
     },
   },
   mounted() {
+    // this.$router.push({ path: `/login` });
     if (this.loginToken && this.$route.path === "/") {
       this.$router.push({ path: `/feed` });
     }
@@ -174,6 +170,13 @@ textarea {
   border-bottom: 1px solid 35a5d346f;
   box-shadow: none;
   /* box-shadow: 0px 1px 1px 0x #5a5d346f; */
+}
+#btnContain {
+  display: grid;
+  grid-auto-flow: column;
+  width: 45%;
+  place-self: end;
+  column-gap: 5px;
 }
 .actionIcon {
   width: 20px;
@@ -276,18 +279,10 @@ body {
   width: 40%;
   margin-bottom: 3px;
   grid-template-columns: 1.5fr 5fr;
-  /* place-self: end; */
   justify-items: start;
-
-  /* grid-template-columns: 3fr, 1fr; */
 }
 .otherUserTweetActions {
   margin-top: 5px;
-  /* width: 35%;
-  column-gap: 5px;
-  display: grid;
-  grid-auto-flow: column;
-  place-items: center; */
 }
 .tweetCardContainer {
   display: grid;
@@ -341,7 +336,7 @@ body {
   width: 100%;
 }
 .cardContainer {
-  margin-top: 20px;
+  margin-top: 10px;
   display: grid;
   row-gap: 10px;
 }
@@ -353,8 +348,6 @@ body {
 #viewCmt {
   color: #909929;
   font-size: 11px;
-  /* border: none; */
-  /* background: none; */
   font-style: italic;
   font-weight: bold;
 }

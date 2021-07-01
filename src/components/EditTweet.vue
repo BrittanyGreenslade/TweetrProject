@@ -1,16 +1,5 @@
 <template>
   <div class="cmtContain">
-    <!-- <img
-      v-if="
-        toggleEditOn === false &&
-          Number(currentUserInfo.userId) === Number(userId)
-      "
-      @click="toggleEditOn = true"
-      class="actionIcon"
-      src="@/assets/images/edit.svg"
-      alt="pencil icon - edit button"
-    /> -->
-
     <p
       v-if="
         toggleEditOn === false &&
@@ -36,7 +25,6 @@
           id="editTweet"
           placeholder="max 200 characters"
         ></textarea>
-        <!-- OMG DYNAMIC BINDING TWEET ID fun  -->
         <div id="btnsContainer">
           <button id="postBtn" @click="editTweet">Edit</button>
         </div>
@@ -75,17 +63,15 @@ export default {
       this.toggleEditOn = false;
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweets",
+          url: `${process.env.VUE_APP_API_URL}/tweets`,
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
             tweetId: this.tweetId,
             content: document.getElementById("editTweet").value,
-            // content: document.getElementById("editTweet" + this.tweetId).value,
           },
         })
         .then((res) => {

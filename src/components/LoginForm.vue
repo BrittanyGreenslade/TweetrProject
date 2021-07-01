@@ -38,7 +38,6 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
-// import lottie from "lottie-web";
 export default {
   name: "login-form",
 
@@ -61,25 +60,15 @@ export default {
         path: "/feed",
       });
     },
-    // loginSuccess() {
-    //   lottie.loadAnimation({
-    //     container: document.getElementById("successContainer"),
-    //     path: "@/assets/animations/success.json",
-    //     loop: false,
-    //     autoplay: true,
-    //     renderer: "svg",
-    //     name: "success",
-    //   });
-    // },
     attemptLogin() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/login",
+          url: `${process.env.VUE_APP_API_URL}/login`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-API-Key": `${process.env.VUE_APP_API_KEY}`,
-            //this process calls the .env.local file
+            //   "X-API-Key": `${process.env.VUE_APP_API_KEY}`,
+            //   //this process calls the .env.local file
           },
           data: {
             email: document.getElementById("emailInputLogin").value,
@@ -95,10 +84,10 @@ export default {
           );
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
-            //navigation is chill thx to this
-            setTimeout(this.navigateToFeed, 1500);
+            this.navigateToFeed();
+          // setTimeout(this.navigateToFeed, 1500);
+          //shouldn't put timeout here because axios tall takes varying amt of time
           this.loginStatus = "Logged in! Redirecting...";
-          // this.loginSuccess();
         })
         .catch((err) => {
           console.log(err);

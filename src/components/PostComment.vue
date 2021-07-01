@@ -1,10 +1,5 @@
 <template>
   <div id="postCommentContainer">
-    <!-- && currentUserInfo.userId === userId -->
-    <!-- <p v-if="commentViewOn === false" @click="editViewOn = true" id="viewCmt">
-      Post comment
-    </p> -->
-    <!-- :id="`makeComment${commentId}`" -->
     <p id="postHeader">Post a comment:</p>
     <textarea
       name="tweetComment"
@@ -37,25 +32,20 @@ export default {
 
   methods: {
     postComment() {
-      // this.commentViewOn = false;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
+          url: `${process.env.VUE_APP_API_URL}/comments`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
             tweetId: this.tweetId,
             content: document.getElementById("makeComment").value,
-            //             content: document.getElementById("makeComment" + this.commentId)
-            // .value,
           },
         })
         .then((res) => {
-          // this.$store.commit("tweetComments", res.data);
           this.$emit("newlyPostedComment", res.data);
           document.getElementById("makeComment").value = "";
         })

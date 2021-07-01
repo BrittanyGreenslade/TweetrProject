@@ -3,9 +3,7 @@
     <div class="pageContainer">
       <h1>News Feed</h1>
       <post-tweet />
-      <section>
-        <all-tweets-follow />
-      </section>
+      <all-tweets-follow />
     </div>
   </div>
 </template>
@@ -21,8 +19,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .pageContainer {
-  align-self: start;
-} */
-</style>
+<style scoped></style>

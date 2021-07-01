@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="pageContainer"> -->
   <div class="cardContainer">
     <article class="tweetCardContainer">
       <div
@@ -20,26 +19,11 @@
         </div>
         <edit-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
         <div class="cmtContain">
-          <!-- <img
-              id="cancel"
-              class="actionIcon"
-              @click="commentViewOn = false"
-              src="@/assets/images/close.svg"
-              alt="black x - cancel icon"
-            /> -->
           <tweet-comments :tweetId="tweet.tweetId" />
         </div>
         <p class="content">{{ tweet.content }}</p>
         <div v-if="tweet.userId === currentUserInfo.userId">
           <div class="tweetActionsContainer">
-            <!-- <img
-              v-if="commentViewOn === false"
-              @click="commentViewOn = true"
-              class="actionIcon"
-              src="@/assets/images/comment.svg"
-              alt="speech bubble - makecomment icon"
-            /> -->
-
             <like-tweet :tweetId="tweet.tweetId" />
             <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
           </div>
@@ -47,24 +31,20 @@
 
         <div v-if="tweet.userId !== currentUserInfo.userId">
           <div class="otherUserTweetActions">
-            <!-- <div class="otherUserTweetActions"> -->
             <like-tweet :tweetId="tweet.tweetId" />
           </div>
         </div>
       </div>
     </article>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-// import axios from "axios";
 import cookies from "vue-cookies";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
 import LikeTweet from "./LikeTweet.vue";
-// import FollowUnfollow from "./FollowUnfollow.vue";
 export default {
   name: "all-tweets",
 
@@ -73,7 +53,6 @@ export default {
     EditTweet,
     TweetComments,
     LikeTweet,
-    // FollowUnfollow,
   },
   data() {
     return {

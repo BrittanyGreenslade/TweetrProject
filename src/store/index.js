@@ -68,11 +68,10 @@ export default new Vuex.Store({
     getFollowing: function(context) {
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: `${process.env.VUE_APP_API_URL}/follows`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           //this is the userId of the follower
           params: { userId: context.state.currentUserInfo.userId },
@@ -87,16 +86,13 @@ export default new Vuex.Store({
     getAllTweets(context) {
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweets",
-          // method: "GET",
+          url: `${process.env.VUE_APP_API_URL}/tweets`,
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
         })
         .then((res) => {
           context.commit("updateAllTweets", res.data);
-          // return;
         })
         .catch((err) => {
           console.log(err);
@@ -105,8 +101,7 @@ export default new Vuex.Store({
     getAllUsers(context) {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
-          // method:"GET",
+          url: `${process.env.VUE_APP_API_URL}/users`,
           headers: {
             "Content-Type": "application/json",
             "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,

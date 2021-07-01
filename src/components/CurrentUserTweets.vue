@@ -1,6 +1,5 @@
 <template>
   <div class="pageContainer">
-    <h3>Your Posts</h3>
     <article class="tweetCardContainer">
       <h4 v-if="sortedCurrentTweets.length === 0">
         Get started with your first post!
@@ -23,7 +22,6 @@
           <h3 class="username" v-else>{{ tweet.username }}</h3>
           <div id="sectContain">
             <p class="createdAt">{{ tweet.createdAt }}</p>
-            <!-- <delete-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" /> -->
           </div>
           <edit-tweet :userId="tweet.userId" :tweetId="tweet.tweetId" />
           <div class="cmtContain">
@@ -76,11 +74,10 @@ export default {
     viewMyTweets() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweets",
-          //  method:"GET",
+          url: `${process.env.VUE_APP_API_URL}/tweets`,
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
             userId: this.currentUserInfo.userId,

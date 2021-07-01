@@ -29,21 +29,20 @@
           name="passwordInput"
           placeholder="Update Password"
         />
+        <input
+          type="text"
+          id="editBirthdate"
+          name="birthdateInput"
+          placeholder="Update Birthdate (YYYY/MM/DD)"
+        />
         <textarea
           name="bioInput"
           id="editBio"
           placeholder="Update Bio"
         ></textarea>
-        <label for="birthdateInput">Update Birthdate:</label>
-        <input
-          type="text"
-          id="editBirthdate"
-          name="birthdateInput"
-          placeholder="YYYY/MM/DD"
-        />
         <!-- does putting this div in here mess with the accessibility stuff
         for the form? -->
-        <div id="btnsContainer">
+        <div id="btnContain">
           <img
             @click="toggleEditOn = false"
             class="actionIcon"
@@ -79,11 +78,10 @@ export default {
     editUserProfile() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/users",
+          url: `${process.env.VUE_APP_API_URL}/users`,
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             username: document.getElementById("editUsername").value,
@@ -111,13 +109,10 @@ export default {
 </script>
 
 <style scoped>
-#btnsContainer {
-  display: grid;
-  grid-auto-flow: column;
-  width: 45%;
-  place-items: center;
-  justify-self: end;
+#btnContain {
+  width: 38%;
 }
+
 .tweetCard {
   position: absolute;
   z-index: 10px;

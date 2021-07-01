@@ -17,7 +17,6 @@ export default {
   },
   data() {
     return {
-      // paramId: this.$route.params.userId,
       currentUserInfo: cookies.get("currentUserInfo"),
     };
   },
@@ -32,6 +31,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* key tells vue whether to reload component if stg changes  */
-</style>
+<style scoped></style>

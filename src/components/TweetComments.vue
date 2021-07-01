@@ -3,11 +3,6 @@
     <p id="viewCmt" v-if="commentViewOn == false" @click="getComments">
       Comments
     </p>
-    <!-- <img
-      class="actionIcon"
-      src="@/assets/images/comment.svg"
-      alt="speech bubble - make comment icon"
-    /> -->
     <div class="cmtContain" v-else>
       <div class="tweetCommentsContainer">
         <img
@@ -30,14 +25,8 @@
             :userId="comment.userId"
           />
           <p class="content">{{ comment.content }}</p>
-          <!-- <div class="tweetActionsContainer">
-            <like-tweet :tweetId="tweet.tweetId" />
-            <delete-tweet :tweetId="tweet.tweetId" :userId="tweet.userId" />
-          </div> -->
           <div class="tweetActionsContainer">
             <like-comment :commentId="comment.commentId" />
-
-            <!-- :tweetComments="tweetComments" -->
             <delete-comment
               @commentsAfterDelete="handleDeleteComment"
               :tweetComments="tweetComments"
@@ -50,7 +39,6 @@
           @newlyPostedComment="handleNewComment"
           :tweetId="tweetId"
         />
-        <!-- <button @click="commentViewOn = false">Hide Comments</button> -->
       </div>
     </div>
   </div>
@@ -82,10 +70,6 @@ export default {
   props: {
     tweetId: Number,
   },
-
-  // mounted() {
-  //   this.getComments();
-  // },
   methods: {
     handleNewComment(data) {
       this.tweetComments.push(data);
@@ -104,11 +88,9 @@ export default {
       this.commentViewOn = true;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
-          method: "GET",
+          url: `${process.env.VUE_APP_API_URL}/comments`,
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           params: {
             tweetId: this.tweetId,
@@ -119,7 +101,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          console.log(this.tweetId);
         });
     },
   },
@@ -138,13 +119,4 @@ export default {
   grid-auto-flow: column;
   width: 20%;
 }
-/* .tweetCommentsContainer {
-  background: #f1e9c8;
-  border-radius: 5px;
-  place-self: center;
-  width: 95%;
-  display: grid;
-  row-gap: 10px;
-  margin-bottom: 10px;
-} */
 </style>

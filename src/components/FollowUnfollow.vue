@@ -26,14 +26,11 @@ export default {
   data() {
     return {
       followedUser: false,
-      // followingUsers: [],
-      //   numFollowing: "",
       loginToken: cookies.get("loginToken"),
     };
   },
   props: {
     user: Object,
-    followId: Number,
   },
   mounted() {
     this.$store.dispatch("getFollowing");
@@ -48,7 +45,7 @@ export default {
     },
   },
   watch: {
-    //runs when computed values change
+    //watch runs when computed values change
     followingUsers(newValue, oldValue) {
       for (let i = 0; i < newValue.length; i++) {
         if (newValue[i].userId === this.user.userId) {
@@ -63,11 +60,10 @@ export default {
     followUser() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: `${process.env.VUE_APP_API_URL}/follows`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -77,21 +73,22 @@ export default {
         .then((res) => {
           res;
           this.followedUser = true;
-
           this.$store.commit("addUserToFollowing", this.user);
         })
         .catch((err) => {
+          console.log(this.user.userId);
+          console.log(this.loginToken);
+          console.log(this.user);
           console.log(err);
         });
     },
     unfollowUser() {
       axios
         .request({
-          url: "https://tweeterest.ml/api/follows",
+          url: `${process.env.VUE_APP_API_URL}/follows`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -116,8 +113,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .actionIcon {
-  width: 40px;
-} */
-</style>
+<style scoped></style>

@@ -43,11 +43,10 @@ export default {
     deleteTweet(tweetId) {
       axios
         .request({
-          url: "https://tweeterest.ml/api/tweets",
+          url: `${process.env.VUE_APP_API_URL}/tweets`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -56,9 +55,7 @@ export default {
         })
         .then((res) => {
           res;
-          //not much collab but Shawn helped me with this splice business. v nice
           //this works because i is the index NUMBER and need to put index number into splice
-          //
           for (let i = 0; i < this.sortedCurrentTweets.length; i++) {
             if (this.sortedCurrentTweets[i].tweetId === tweetId) {
               this.sortedCurrentTweets.splice(i, 1);

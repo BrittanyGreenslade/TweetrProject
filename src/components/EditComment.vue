@@ -7,13 +7,6 @@
     >
       Edit Comment
     </p>
-    <!-- <img
-      v-if="editViewOn === false && currentUserInfo.userId === userId"
-      @click="editViewOn = true"
-      alt="pencil icon - edit button"
-      src="@/assets/images/edit.svg"
-      class="actionIcon"
-    /> -->
     <div id="postCommentContainer" v-if="editViewOn === true">
       <p id="editHeader">Edit comment:</p>
       <textarea
@@ -56,11 +49,10 @@ export default {
       this.editViewOn = false;
       axios
         .request({
-          url: "https://tweeterest.ml/api/comments",
+          url: `${process.env.VUE_APP_API_URL}/comments`,
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
           data: {
             loginToken: this.loginToken,
@@ -84,13 +76,6 @@ export default {
 </script>
 
 <style scoped>
-#btnContain {
-  display: grid;
-  grid-auto-flow: column;
-  width: 45%;
-  place-self: end;
-  column-gap: 5px;
-}
 .actionIcon {
   margin-top: 10px;
 }
