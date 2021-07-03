@@ -64,7 +64,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(this.userId);
           this.$emit("newlyEditedComment", res.data);
         })
         .catch((err) => {

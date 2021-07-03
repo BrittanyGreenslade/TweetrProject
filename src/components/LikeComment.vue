@@ -101,7 +101,7 @@ export default {
         })
         .then((res) => {
           this.viewCommentLikes();
-          console.log(res);
+          res;
         })
         .catch((err) => {
           console.log(err);

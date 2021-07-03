@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import cookies from "vue-cookies";
+// import cookies from "vue-cookies";
 import EditProfileForm from "./EditProfileForm.vue";
 import DeleteProfile from "./DeleteProfile.vue";
 import CurrentUserTweets from "./CurrentUserTweets.vue";
@@ -34,9 +34,13 @@ export default {
   data() {
     return {
       toggleDeleteOn: false,
-      currentUserInfo: cookies.get("currentUserInfo"),
       toggleEditOn: false,
     };
+  },
+  computed: {
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
   },
 };
 </script>
@@ -50,6 +54,7 @@ h5 {
   grid-auto-flow: column;
   width: 20%;
   place-self: center;
+  margin-right: 10px;
 }
 .pageContainer {
   margin-top: 0;

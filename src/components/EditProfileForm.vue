@@ -33,7 +33,7 @@
           type="text"
           id="editBirthdate"
           name="birthdateInput"
-          placeholder="Update Birthdate (YYYY/MM/DD)"
+          placeholder="Update Birthdate (YYYY-MM-DD)"
         />
         <textarea
           name="bioInput"
@@ -93,12 +93,12 @@ export default {
           },
         })
         .then((res) => {
+          res;
           this.loginStatus = "Profile updated!";
           cookies.set("currentUserInfo", res.data);
-          this.$store.commit(
-            "updateCurrentUserInfo",
-            cookies.get("currentUserInfo")
-          );
+          this.$store.commit("updateCurrentUserInfo", res.data);
+          // cookies.get("currentUserInfo")
+          this.toggleEditOn = false;
         })
         .catch((err) => {
           console.log(err);

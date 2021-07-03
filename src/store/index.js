@@ -37,6 +37,7 @@ export default new Vuex.Store({
     //current User info Mutations
     updateCurrentUserInfo(state, data) {
       state.currentUserInfo = data;
+      cookies.set("currentUserInfo", data);
     },
     updateLoginToken(state, data) {
       state.loginToken = data;
@@ -104,7 +105,6 @@ export default new Vuex.Store({
           url: `${process.env.VUE_APP_API_URL}/users`,
           headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": `${process.env.VUE_APP_API_KEY}`,
           },
         })
         .then((res) => {

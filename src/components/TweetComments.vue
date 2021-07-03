@@ -82,7 +82,8 @@ export default {
       }
     },
     handleDeleteComment(data) {
-      console.log(data);
+      data;
+      // console.log(data);
     },
     getComments() {
       this.commentViewOn = true;

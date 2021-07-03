@@ -44,6 +44,9 @@ export default {
     currentUserInfo() {
       return this.$store.state.currentUserInfo;
     },
+    // loginToken() {
+    // //   return this.$store.state.loginToken;
+    // },
   },
   methods: {
     navigateToProfile() {
@@ -79,7 +82,7 @@ export default {
             "updateCurrentUserInfo",
             cookies.get("currentUserInfo")
           );
-          this.$store.commit("updateLoginToken", cookies.get("loginToken"));
+          this.$store.commit("updateLoginToken", res.data.loginToken);
           this.loginStatus = "You've signed up! Logging you in...";
         })
         .catch((err) => {

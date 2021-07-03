@@ -3,8 +3,16 @@
     <div v-for="user in allUsers" :key="user.userId">
       <h3 class="username">
         {{ user.username }}
-        <router-link class="navUserProf" :to="`/profile/${user.userId}`">
-          <p>View user's profile</p></router-link
+        <router-link
+          v-if="user.userId === currentUserInfo.userId"
+          class="navUserProf"
+          :to="`/profile/${user.userId}`"
+        >
+          <p>View your profile</p>
+        </router-link>
+        <router-link v-else class="navUserProf" :to="`/profile/${user.userId}`">
+          <p v-if="user.userId === currentUserInfo.userId">View your profile</p>
+          <p v-else>View user's profile</p></router-link
         >
       </h3>
 
@@ -19,13 +27,13 @@
 
 <script>
 import FollowUnfollow from "./FollowUnfollow.vue";
-import cookies from "vue-cookies";
+// import cookies from "vue-cookies";
 export default {
   name: "all-users",
   components: { FollowUnfollow },
   data() {
     return {
-      currentUserInfo: cookies.get("currentUserInfo"),
+      // currentUserInfo: cookies.get("currentUserInfo"),
       followedUser: {},
     };
   },
@@ -34,6 +42,9 @@ export default {
   },
 
   computed: {
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
     allUsers() {
       return this.$store.state.allUsers;
     },

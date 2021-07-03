@@ -272,7 +272,7 @@ body {
   width: 100%;
   column-gap: 5px;
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: 2fr 1fr;
 }
 .likesContainer {
   display: grid;

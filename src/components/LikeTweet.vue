@@ -35,9 +35,9 @@ export default {
   props: {
     tweetId: Number,
   },
-  // mounted() {
-  //   this.viewTweetLikes();
-  // },
+  mounted() {
+    this.viewTweetLikes();
+  },
   methods: {
     viewTweetLikes() {
       axios

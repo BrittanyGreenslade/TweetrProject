@@ -58,8 +58,8 @@ export default {
     };
   },
   mounted() {
-    this.getFollowing();
-    // this.$store.dispatch("getAllTweets");
+    // this.getFollowing();
+    this.$store.dispatch("getAllTweets");
     // this.usersFollowing();
     // this.filterFollowing();
   },
@@ -83,39 +83,31 @@ export default {
     },
   },
   methods: {
-    usersFollowing() {
-      for (let i = 0; i < this.followingUsers.length; i++) {
-        return this.followingUsers[i].userId;
-      }
-    },
     filterFollowingTweets() {
-      let tempArray = [];
-      let followUsersId = this.usersFollowing();
-      for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
-        if (this.allTweets[tweet].userId === followUsersId) {
-          tempArray.push(this.allTweets[tweet]);
-        }
-      }
-      this.followedTweets = tempArray;
-    },
-    filterFollowing() {
       let tempArray = [];
       for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
         for (let i = 0; i < this.followingUsers.length; i++) {
-          if (this.allTweets[tweet].userId === this.followingUsers[i].userId) {
+          if (this.allTweets[tweet].userId == this.followingUsers[i].userId) {
             tempArray.push(this.allTweets[tweet]);
           }
         }
       }
-      console.log(this.tempArray);
-      //making the most recent tweets go to the top
-      // this.sortedFollowedTweets(tempArray);
+
       this.followedTweets = tempArray;
     },
-    // sortedFollowedTweets(tempArray) {
-    //   return tempArray.sort(function(tweet1, tweet2) {
-    //     return tweet2.tweetId - tweet1.tweetId;
-    //   });
+    // filterFollowing() {
+    //   let tempArray = [];
+    //   for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
+    //     for (let i = 0; i < this.followingUsers.length; i++) {
+    //       if (this.allTweets[tweet].userId === this.followingUsers[i].userId) {
+    //         tempArray.push(this.allTweets[tweet]);
+    //       }
+    //     }
+    //   }
+    //   console.log(this.tempArray);
+    //   //making the most recent tweets go to the top
+    //   // this.sortedFollowedTweets(tempArray);
+    //   this.followedTweets = tempArray;
     // },
     getFollowing() {
       axios
@@ -130,13 +122,11 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updateFollowingUsers", res.data);
-          this.$store.commit("addCurrentToFollowing");
+          this.$store.commit("addCurrentToFollowing", this.currentUserInfo);
           this.filterFollowingTweets();
-          // this.filterFollowing();
           this.getFollowersComplete = true;
         })
         .catch((err) => {
-          console.log(this.currentUserInfo.userId);
           console.log(err);
         });
     },

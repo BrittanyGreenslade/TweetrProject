@@ -9,11 +9,18 @@ export default {
   name: "logout-button",
   data() {
     return {
-      currentUserInfo: cookies.get("currentUserInfo"),
-      loginToken: cookies.get("loginToken"),
+      // currentUserInfo: cookies.get("currentUserInfo"),
+      // loginToken: cookies.get("loginToken"),
     };
   },
-  computed: {},
+  computed: {
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
+    },
+    loginToken() {
+      return this.$store.state.loginToken;
+    },
+  },
   methods: {
     //called in logout fn
     navigateToLogin() {
