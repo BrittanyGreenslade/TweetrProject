@@ -1,12 +1,12 @@
 <template>
   <div class="pageContainer">
     <article class="tweetCardContainer">
-      <h4 v-if="sortedCurrentTweets.length === 0">
+      <h4 v-if="currentUserTweets === undefined">
         Get started with your first post!
       </h4>
       <div
         class="cardContainer"
-        v-for="tweet in sortedCurrentTweets"
+        v-for="tweet in currentUserTweets"
         :key="tweet.tweetId"
         :id="`tweetContainer${tweet.tweetId}`"
       >
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import cookies from "vue-cookies";
 import EditTweet from "./EditTweet.vue";
 import DeleteTweet from "./DeleteTweet.vue";
@@ -62,34 +62,36 @@ export default {
     };
   },
   mounted() {
-    this.viewMyTweets();
+    if (this.currentUserTweets === undefined) {
+      this.$store.dispatch("viewMyTweets");
+    }
   },
   computed: {
-    sortedCurrentTweets() {
-      return this.$store.getters.sortedCurrentTweets;
+    currentUserTweets() {
+      return this.$store.state.currentUserTweets;
     },
   },
 
   methods: {
-    viewMyTweets() {
-      axios
-        .request({
-          url: `${process.env.VUE_APP_API_URL}/tweets`,
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          params: {
-            userId: this.currentUserInfo.userId,
-          },
-        })
-        .then((res) => {
-          this.$store.commit("updateCurrentUserTweets", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    // viewMyTweets() {
+    //   axios
+    //     .request({
+    //       url: `${process.env.VUE_APP_API_URL}/tweets`,
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       params: {
+    //         userId: this.currentUserInfo.userId,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       this.$store.commit("updateCurrentUserTweets", res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   },
 };
 </script>

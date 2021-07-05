@@ -1,12 +1,12 @@
 <template>
-  <div v-if="getFollowersComplete" class="cardContainer">
-    <h4 v-if="followedTweets.length === 0">
+  <div class="cardContainer">
+    <h4 v-if="currentAndFollowing.length === 0">
       Go to the users page to follow some users!
     </h4>
     <article class="tweetCardContainer">
       <div
         class="tweetCard"
-        v-for="tweet in followedTweets"
+        v-for="tweet in currentAndFollowing"
         :key="tweet.tweetId"
       >
         <h3 class="username">{{ tweet.username }}</h3>
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import cookies from "vue-cookies";
-import axios from "axios";
+// import cookies from "vue-cookies";
+// import axios from "axios";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
@@ -52,84 +52,72 @@ export default {
   },
   data() {
     return {
-      currentUserInfo: cookies.get("currentUserInfo"),
-      followedTweets: [],
-      getFollowersComplete: false,
+      currentAndFollowing: [],
     };
   },
   mounted() {
-    // this.getFollowing();
-    this.$store.dispatch("getAllTweets");
-    // this.usersFollowing();
-    // this.filterFollowing();
-  },
-
-  computed: {
-    followingUsers() {
-      return this.$store.state.followingUsers;
-    },
-    allTweets() {
-      return this.$store.state.allTweets;
-    },
-    allUsers() {
-      return this.$store.state.allUsers;
-    },
+    if (this.$store.state.followingTweets === undefined) {
+      this.$store.dispatch("getFollowingTweets");
+    } else {
+      this.addToCurrentAndFollowing(this.followingTweets);
+    }
+    if (this.$store.state.currentUserTweets === undefined) {
+      this.$store.dispatch("viewMyTweets");
+    } else {
+      this.addToCurrentAndFollowing(this.currentUserTweets);
+    }
+    this.sortCurrentAndFollowing(this.currentAndFollowing);
   },
   watch: {
-    allTweets(newValue, oldValue) {
-      this.getFollowing();
-      newValue;
+    currentUserTweets(newValue, oldValue) {
+      this.addToCurrentAndFollowing(this.currentUserTweets);
+      this.sortCurrentAndFollowing(this.currentAndFollowing);
       oldValue;
+      newValue;
+    },
+    followingTweets(newValue, oldValue) {
+      this.addToCurrentAndFollowing(this.followingTweets);
+      this.sortCurrentAndFollowing(this.currentAndFollowing);
+      oldValue;
+      newValue;
+    },
+  },
+  computed: {
+    followingTweets() {
+      return this.$store.state.followingTweets;
+    },
+    currentUserTweets() {
+      return this.$store.state.currentUserTweets;
+    },
+    currentUserInfo() {
+      return this.$store.state.currentUserInfo;
     },
   },
   methods: {
-    filterFollowingTweets() {
-      let tempArray = [];
-      for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
-        for (let i = 0; i < this.followingUsers.length; i++) {
-          if (this.allTweets[tweet].userId == this.followingUsers[i].userId) {
-            tempArray.push(this.allTweets[tweet]);
-          }
-        }
-      }
-
-      this.followedTweets = tempArray;
+    sortCurrentAndFollowing() {
+      return this.currentAndFollowing.sort(function(tweet1, tweet2) {
+        return tweet2.tweetId - tweet1.tweetId;
+      });
     },
-    // filterFollowing() {
+    addToCurrentAndFollowing(tweets) {
+      for (let i = 0; i < tweets.length; i++) {
+        this.currentAndFollowing.push(tweets[i]);
+      }
+    },
+
+    // filterFollowingTweets() {
     //   let tempArray = [];
+    //   console.log(this.allTweets);
     //   for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
     //     for (let i = 0; i < this.followingUsers.length; i++) {
-    //       if (this.allTweets[tweet].userId === this.followingUsers[i].userId) {
+    //       if (this.allTweets[tweet].userId == this.followingUsers[i].userId) {
+    //         console.log(this.allTweets[tweet]);
     //         tempArray.push(this.allTweets[tweet]);
     //       }
     //     }
     //   }
-    //   console.log(this.tempArray);
-    //   //making the most recent tweets go to the top
-    //   // this.sortedFollowedTweets(tempArray);
     //   this.followedTweets = tempArray;
     // },
-    getFollowing() {
-      axios
-        .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          //this is the userId of the follower
-          params: { userId: this.currentUserInfo.userId },
-        })
-        .then((res) => {
-          this.$store.commit("updateFollowingUsers", res.data);
-          this.$store.commit("addCurrentToFollowing", this.currentUserInfo);
-          this.filterFollowingTweets();
-          this.getFollowersComplete = true;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
   },
 };
 </script>

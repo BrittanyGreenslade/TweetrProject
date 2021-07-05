@@ -33,7 +33,7 @@ export default {
     user: Object,
   },
   mounted() {
-    this.$store.dispatch("getFollowing");
+    this.$store.dispatch("getFollowingUsers");
     this.$store.dispatch("getAllUsers");
   },
   computed: {
@@ -76,9 +76,6 @@ export default {
           this.$store.commit("addUserToFollowing", this.user);
         })
         .catch((err) => {
-          console.log(this.user.userId);
-          console.log(this.loginToken);
-          console.log(this.user);
           console.log(err);
         });
     },

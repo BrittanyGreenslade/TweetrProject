@@ -73,7 +73,7 @@ export default {
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
           cookies.remove("currentUserInfo");
-          this.$store.commit("updateCurrentUserInfo", "");
+          this.$store.commit("updateCurrentUserInfo", undefined);
           this.loginStatus = "Profile deleted! Redirecting...";
         })
         .catch((err) => {

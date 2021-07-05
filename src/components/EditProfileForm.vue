@@ -97,7 +97,6 @@ export default {
           this.loginStatus = "Profile updated!";
           cookies.set("currentUserInfo", res.data);
           this.$store.commit("updateCurrentUserInfo", res.data);
-          // cookies.get("currentUserInfo")
           this.toggleEditOn = false;
         })
         .catch((err) => {

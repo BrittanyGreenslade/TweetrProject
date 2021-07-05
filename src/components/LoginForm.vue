@@ -78,10 +78,7 @@ export default {
         .then((res) => {
           this.loginStatus = "Logging in...";
           cookies.set("currentUserInfo", res.data);
-          this.$store.commit(
-            "updateCurrentUserInfo",
-            cookies.get("currentUserInfo")
-          );
+          this.$store.commit("updateCurrentUserInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
           this.$store.commit("updateLoginToken", cookies.get("loginToken")),
             this.navigateToFeed();

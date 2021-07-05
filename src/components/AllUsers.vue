@@ -27,24 +27,29 @@
 
 <script>
 import FollowUnfollow from "./FollowUnfollow.vue";
-// import cookies from "vue-cookies";
+import cookies from "vue-cookies";
 export default {
   name: "all-users",
   components: { FollowUnfollow },
   data() {
     return {
-      // currentUserInfo: cookies.get("currentUserInfo"),
+      currentUserInfo: cookies.get("currentUserInfo"),
       followedUser: {},
     };
   },
   mounted() {
-    this.$store.dispatch("getAllUsers");
+    if (this.allUsers === undefined) {
+      this.$store.dispatch("getAllUsers");
+    }
+    if (this.followingUsers === undefined) {
+      this.$store.dispatch("getFollowingUsers");
+    }
   },
 
   computed: {
-    currentUserInfo() {
-      return this.$store.state.currentUserInfo;
-    },
+    // currentUserInfo() {
+    //   return this.$store.state.currentUserInfo;
+    // },
     allUsers() {
       return this.$store.state.allUsers;
     },

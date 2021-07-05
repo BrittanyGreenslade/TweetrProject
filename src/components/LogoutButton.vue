@@ -46,13 +46,14 @@ export default {
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
           cookies.remove("currentUserInfo");
-          this.$store.commit("updateCurrentUserInfo", "");
+          this.$store.commit("updateCurrentUserInfo", undefined);
 
           this.loginStatus = "Logging you out!";
           //use this if "didn't use res" error shows and no data sent back
           res;
         })
         .catch((err) => {
+          console.log(this.loginToken);
           console.log(err);
         });
     },

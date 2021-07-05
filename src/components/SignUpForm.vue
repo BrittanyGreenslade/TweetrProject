@@ -78,10 +78,7 @@ export default {
           setTimeout(this.navigateToProfile, 1500);
           cookies.set("currentUserInfo", res.data);
           cookies.set("loginToken", res.data.loginToken);
-          this.$store.commit(
-            "updateCurrentUserInfo",
-            cookies.get("currentUserInfo")
-          );
+          this.$store.commit("updateCurrentUserInfo", res.data);
           this.$store.commit("updateLoginToken", res.data.loginToken);
           this.loginStatus = "You've signed up! Logging you in...";
         })
