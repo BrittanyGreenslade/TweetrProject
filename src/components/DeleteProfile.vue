@@ -1,5 +1,6 @@
 <template>
   <section>
+    <h4>{{ loginStatus }}</h4>
     <img
       v-if="toggleDeleteOn === false"
       @click="toggleDeleteOn = true"
@@ -26,7 +27,6 @@
         <button id="deleteBtn" @click="deleteProfile">Confirm</button>
       </div>
     </div>
-    <h4>{{ loginStatus }}</h4>
   </section>
 </template>
 

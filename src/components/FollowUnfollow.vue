@@ -1,8 +1,9 @@
 <template>
   <div>
+    <p v-if="followedUser === undefined">...</p>
     <img
       class="actionIcon"
-      v-if="followedUser === false"
+      v-else-if="followedUser === false"
       @click="followUser"
       src="@/assets/images/follow.svg"
       alt="follow user icon"
@@ -10,7 +11,7 @@
 
     <img
       class="actionIcon"
-      v-else
+      v-else-if="followedUser === true"
       @click="unfollowUser"
       src="@/assets/images/unfollow.svg"
       alt="unfollow user icon"
@@ -25,39 +26,82 @@ export default {
   name: "follow-unfollow",
   data() {
     return {
-      followedUser: false,
+      currentUserInfo: cookies.get("currentUserInfo"),
+      followedUser: undefined,
       loginToken: cookies.get("loginToken"),
     };
   },
   props: {
-    user: Object,
+    userId: Number,
   },
   mounted() {
-    this.$store.dispatch("getFollowingUsers");
-    this.$store.dispatch("getAllUsers");
+    if (this.followingUsers === undefined) {
+      this.getFollowingUsers();
+    } else {
+      this.checkUserFollowed(this.userId);
+    }
   },
   computed: {
-    allUsers() {
-      return this.$store.state.allUsers;
-    },
     followingUsers() {
       return this.$store.state.followingUsers;
     },
   },
-  watch: {
-    //watch runs when computed values change
-    followingUsers(newValue, oldValue) {
-      for (let i = 0; i < newValue.length; i++) {
-        if (newValue[i].userId === this.user.userId) {
-          this.followedUser = true;
-          return;
-        }
-      }
-      oldValue;
-    },
-  },
+  //leaving this here as reference for watch if I need later on
+  // watch: {
+  //   //watch runs when computed values change
+  //   followingUsers(newValue, oldValue) {
+  //     for (let i = 0; i < newValue.length; i++) {
+  //       if (newValue[i].userId === this.user.userId) {
+  //         this.followedUser = true;
+  //         return;
+  //       }
+  //     }
+  //     oldValue;
+  //   },
+  // },
   methods: {
+    checkUserFollowed(userId) {
+      for (let i = 0; i < this.followingUsers.length; i++) {
+        if (Number(userId) == Number(this.followingUsers[i].userId)) {
+          this.followedUser = true;
+          break;
+        }
+        if (this.followedUser === undefined) {
+          this.followedUser = false;
+        }
+        // if(this.followedUser === true){
+
+        // }
+        //
+        //  else if (Number(userId) !== Number(this.followingUsers[i].userId)) {
+        //   this.followedUser = false;
+        // }
+        // } else {
+        //   this.followedUser = "...";
+        // }
+      }
+    },
+    getFollowingUsers() {
+      axios
+        .request({
+          url: `${process.env.VUE_APP_API_URL}/follows`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          //this is the userId of the follower
+          params: { userId: this.currentUserInfo.userId },
+        })
+        .then((res) => {
+          this.$store.commit("updateFollowingUsers", res.data);
+          this.$store.commit("addCurrentToFollowing", this.currentUserInfo);
+          this.checkUserFollowed(this.userId);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     followUser() {
+      this.followedUser = true;
       axios
         .request({
           url: `${process.env.VUE_APP_API_URL}/follows`,
@@ -67,13 +111,16 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            followId: this.user.userId,
+            followId: this.userId,
           },
         })
         .then((res) => {
           res;
-          this.followedUser = true;
-          this.$store.commit("addUserToFollowing", this.user);
+          console.log(this.followingUsers);
+          this.$store.commit("addUserToFollowing", res.data);
+          console.log(this.followingUsers);
+          this.checkUserFollowed(this.userId);
+          //dispatch followed users' tweets or get tweets by their id
         })
         .catch((err) => {
           console.log(err);
@@ -89,18 +136,22 @@ export default {
           },
           data: {
             loginToken: this.loginToken,
-            followId: this.user.userId,
+            followId: this.userId,
           },
         })
         .then((res) => {
           res;
+          //filter out unfollowed users tweets
           this.followedUser = false;
+          console.log(this.followingUsers);
           for (let i = 0; i < this.followingUsers.length; i++) {
-            if (this.user.userId === this.followingUsers[i].userId) {
+            if (this.userId === this.followingUsers[i].userId) {
               this.$store.commit("removeUserFromFollowing", i);
             }
           }
-          this.$store.commit("updateFollowingUsers", this.followingUsers);
+          console.log(this.followingUsers);
+          this.checkUserFollowed();
+          // this.$store.commit("updateFollowingUsers", this.followingUsers);
         })
         .catch((err) => {
           console.log(err);

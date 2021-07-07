@@ -10,6 +10,10 @@
         :key="tweet.tweetId"
       >
         <h3 class="username">{{ tweet.username }}</h3>
+        <!-- <follow-unfollow
+          :userId="tweet.userId"
+          v-if="tweet.userId !== currentUserInfo.userId"
+        /> -->
         <div id="sectContain">
           <p class="createdAt">{{ tweet.createdAt }}</p>
         </div>
@@ -40,6 +44,7 @@ import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
 import LikeTweet from "./LikeTweet.vue";
+// import FollowUnfollow from "./FollowUnfollow.vue";
 export default {
   name: "all-tweets-follow",
   components: {
@@ -47,6 +52,7 @@ export default {
     EditTweet,
     TweetComments,
     LikeTweet,
+    // FollowUnfollow,
   },
   mounted() {
     if (this.$store.state.followingTweets === undefined) {
@@ -55,9 +61,9 @@ export default {
     if (this.$store.state.currentUserTweets === undefined) {
       this.$store.dispatch("viewMyTweets");
     }
-    if (this.$store.state.allTweets === undefined) {
-      this.$store.dispatch("getAllTweets");
-    }
+    // if (this.$store.state.allTweets === undefined) {
+    //   this.$store.dispatch("getAllTweets");
+    // }
   },
   computed: {
     currentAndFollowing() {

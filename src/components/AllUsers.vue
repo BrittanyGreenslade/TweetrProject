@@ -17,7 +17,7 @@
       </h3>
 
       <follow-unfollow
-        :user="user"
+        :userId="user.userId"
         v-if="user.userId !== currentUserInfo.userId"
       />
       <br />
@@ -41,9 +41,9 @@ export default {
     if (this.allUsers === undefined) {
       this.$store.dispatch("getAllUsers");
     }
-    if (this.followingUsers === undefined) {
-      this.$store.dispatch("getFollowingUsers");
-    }
+    // if (this.followingUsers === undefined) {
+    //   this.$store.dispatch("getFollowingUsers");
+    // }
   },
 
   computed: {

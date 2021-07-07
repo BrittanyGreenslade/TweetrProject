@@ -29,7 +29,13 @@ export default new Vuex.Store({
       state.followingTweets = data;
     },
     addUserToFollowing(state, data) {
-      state.followingUsers.push(data);
+      if (state.followingUsers !== undefined) {
+        state.followingUsers.push(data);
+      } else {
+        let followingUsers = [];
+        followingUsers.push(data);
+        state.followingUsers = followingUsers;
+      }
     },
     removeUserFromFollowing(state, data) {
       state.followingUsers.splice(data, 1);
@@ -160,27 +166,27 @@ export default new Vuex.Store({
         });
     },
 
-    getFollowingUsers(context) {
-      axios
-        .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          //this is the userId of the follower
-          params: { userId: context.state.currentUserInfo.userId },
-        })
-        .then((res) => {
-          context.commit("updateFollowingUsers", res.data);
-          context.commit(
-            "addCurrentToFollowing",
-            context.state.currentUserInfo
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    // getFollowingUsers(context) {
+    //   axios
+    //     .request({
+    //       url: `${process.env.VUE_APP_API_URL}/follows`,
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       //this is the userId of the follower
+    //       params: { userId: context.state.currentUserInfo.userId },
+    //     })
+    //     .then((res) => {
+    //       context.commit("updateFollowingUsers", res.data);
+    //       context.commit(
+    //         "addCurrentToFollowing",
+    //         context.state.currentUserInfo
+    //       );
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
 
     getAllTweets(context) {
       axios
