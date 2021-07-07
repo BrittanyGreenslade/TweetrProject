@@ -3,7 +3,7 @@
     <article class="tweetCardContainer">
       <div
         class="tweetCard"
-        v-for="tweet in allTweets"
+        v-for="tweet in sortedAllTweets"
         :key="tweet.tweetId"
         :id="`tweetContainer${tweet.tweetId}`"
         :userId="tweet.userId"
@@ -61,13 +61,19 @@ export default {
     };
   },
   mounted() {
-    if (this.allTweets === undefined) {
+    if (this.$store.state.allTweets === undefined) {
       this.$store.dispatch("getAllTweets");
     }
   },
   computed: {
     allTweets() {
       return this.$store.state.allTweets;
+    },
+    sortedAllTweets() {
+      return this.$store.getters.sortedAllTweets;
+    },
+    tweetLikes() {
+      return this.$store.state.tweetLikes;
     },
   },
 };

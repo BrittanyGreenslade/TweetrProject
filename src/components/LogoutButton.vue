@@ -42,13 +42,12 @@ export default {
           },
         })
         .then((res) => {
-          setTimeout(this.navigateToLogin, 1500);
           cookies.remove("loginToken");
           this.$store.commit("updateLoginToken", "");
           cookies.remove("currentUserInfo");
           this.$store.commit("updateCurrentUserInfo", undefined);
-
           this.loginStatus = "Logging you out!";
+          this.navigateToLogin();
           //use this if "didn't use res" error shows and no data sent back
           res;
         })

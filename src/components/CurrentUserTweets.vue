@@ -6,7 +6,7 @@
       </h4>
       <div
         class="cardContainer"
-        v-for="tweet in currentUserTweets"
+        v-for="tweet in sortedCurrentTweets"
         :key="tweet.tweetId"
         :id="`tweetContainer${tweet.tweetId}`"
       >
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import cookies from "vue-cookies";
 import EditTweet from "./EditTweet.vue";
 import DeleteTweet from "./DeleteTweet.vue";
@@ -58,40 +57,23 @@ export default {
   data() {
     return {
       currentUserInfo: cookies.get("currentUserInfo"),
-      loginToken: cookies.get("loginToken"),
     };
   },
   mounted() {
-    if (this.currentUserTweets === undefined) {
+    if (this.$store.state.currentUserTweets === undefined) {
       this.$store.dispatch("viewMyTweets");
     }
   },
   computed: {
+    sortedCurrentTweets() {
+      return this.$store.getters.sortedCurrentTweets;
+    },
     currentUserTweets() {
       return this.$store.state.currentUserTweets;
     },
-  },
-
-  methods: {
-    // viewMyTweets() {
-    //   axios
-    //     .request({
-    //       url: `${process.env.VUE_APP_API_URL}/tweets`,
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       params: {
-    //         userId: this.currentUserInfo.userId,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       this.$store.commit("updateCurrentUserTweets", res.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
+    tweetLikes() {
+      return this.$store.state.tweetLikes;
+    },
   },
 };
 </script>

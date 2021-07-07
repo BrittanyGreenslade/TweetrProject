@@ -14,7 +14,7 @@
       src="@/assets/images/unlike.svg"
       alt="hand drawn heart light green - unlike btn"
     />
-    <p v-if="this.tweetLikes.length >= 1">Likes: {{ numLikes }}</p>
+    <p>Likes: {{ this.numLikes }}</p>
   </div>
 </template>
 
@@ -26,20 +26,40 @@ export default {
   data() {
     return {
       loginToken: cookies.get("loginToken"),
-      tweetLiked: false,
       currentUserInfo: cookies.get("currentUserInfo"),
-      tweetLikes: [],
-      numLikes: "",
+      tweetLiked: false,
+      numLikes: 0,
     };
   },
   props: {
     tweetId: Number,
   },
+  computed: {
+    tweetLikes() {
+      return this.$store.state.tweetLikes;
+    },
+  },
   mounted() {
-    this.viewTweetLikes();
+    if (this.tweetLikes[this.tweetId] === undefined) {
+      this.viewTweetLikes(this.tweetId);
+    } else {
+      this.checkTweetLiked();
+      this.numLikes = this.tweetLikes[this.tweetId].length;
+    }
   },
   methods: {
-    viewTweetLikes() {
+    checkTweetLiked() {
+      for (let i = 0; i < this.tweetLikes[this.tweetId].length; i++) {
+        if (
+          this.currentUserInfo.userId ===
+            this.tweetLikes[this.tweetId][i].userId &&
+          this.tweetLikes[this.tweetId][i].tweetId === this.tweetId
+        ) {
+          this.tweetLiked = true;
+        }
+      }
+    },
+    viewTweetLikes(tweetId) {
       axios
         .request({
           url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
@@ -47,17 +67,16 @@ export default {
             "Content-Type": "application/json",
           },
           params: {
-            tweetId: this.tweetId,
+            tweetId: tweetId,
           },
         })
         .then((res) => {
-          this.tweetLikes = res.data;
-          this.numLikes = res.data.length;
-          for (let i = 0; i < res.data.length; i++) {
-            if (this.currentUserInfo.userId === res.data[i].userId) {
-              this.tweetLiked = true;
-            }
-          }
+          this.$store.commit("addLikeToTweetLikes", {
+            tweetId: this.tweetId,
+            likes: res.data,
+          });
+          this.checkTweetLiked();
+          this.numLikes = this.tweetLikes[this.tweetId].length;
         })
         .catch((err) => {
           console.log(err);
@@ -78,14 +97,18 @@ export default {
           },
         })
         .then((res) => {
-          this.viewTweetLikes();
-          res;
+          this.numLikes += 1;
+          this.$store.commit("likeTweet", {
+            tweetId: this.tweetId,
+            like: res.data,
+          });
         })
         .catch((err) => {
           console.log(err);
         });
     },
     unlikeTweet() {
+      this.tweetLiked = false;
       axios
         .request({
           url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
@@ -99,15 +122,17 @@ export default {
           },
         })
         .then((res) => {
-          this.tweetLiked = false;
           this.numLikes -= 1;
-          //this works because i is the index NUMBER and need to put index number into splice
-          for (let i = 0; i < this.tweetLikes.length; i++) {
-            if (this.tweetLikes[i].userId === this.currentUserInfo.userId) {
-              this.tweetLikes.splice(i, 1);
-            }
-          }
-          res;
+          this.$store.commit("removeLikeFromTweetLikes", {
+            tweetId: this.tweetId,
+            like: res.data,
+          });
+          //this works for splice because i is the index NUMBER and need to put index number into splice
+          // for (let i = 0; i < this.thisTweetLikes.length; i++) {
+          //   if (this.thisTweetLikes[i].tweetId === this.tweetId) {
+          //     this.thisTweetLikes.splice(i, 1);
+          //   }
+          // }
         })
         .catch((err) => {
           console.log(err);

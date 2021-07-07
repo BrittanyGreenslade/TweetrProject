@@ -26,14 +26,8 @@ export default {
     userId: Number,
   },
   computed: {
-    sortedCurrentTweets() {
-      return this.$store.getters.sortedCurrentTweets;
-    },
     currentUserTweets() {
       return this.$store.state.currentUserTweets;
-    },
-    sortedAllTweets() {
-      return this.$store.getters.sortedAllTweets;
     },
     allTweets() {
       return this.$store.state.allTweets;
@@ -56,18 +50,16 @@ export default {
         .then((res) => {
           res;
           //this works because i is the index NUMBER and need to put index number into splice
-          for (let i = 0; i < this.sortedCurrentTweets.length; i++) {
-            if (this.sortedCurrentTweets[i].tweetId === tweetId) {
-              this.sortedCurrentTweets.splice(i, 1);
+          for (let i = 0; i < this.currentUserTweets.length; i++) {
+            if (this.currentUserTweets[i].tweetId === tweetId) {
+              this.$store.commit("removeTweetFromCurrentTweets", i);
             }
           }
-          for (let i = 0; i < this.sortedAllTweets.length; i++) {
-            if (this.sortedAllTweets[i].tweetId === tweetId) {
-              this.sortedAllTweets.splice(i, 1);
+          for (let i = 0; i < this.allTweets.length; i++) {
+            if (this.allTweets[i].tweetId === tweetId) {
+              this.$store.commit("removeTweetFromAllUsersTweets", i);
             }
           }
-          this.$store.commit("updateCurrentUserTweets", this.currentUserTweets);
-          this.$store.commit("updateAllTweets", this.allTweets);
         })
         .catch((err) => {
           console.log(err);
@@ -77,13 +69,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .actionIcon {
-  width: 17px;
-} */
-/* #deleteTweetCont {
-  justify-self: end;
-  margin-right: 5px;
-  align-self: center;
-} */
-</style>
+<style scoped></style>

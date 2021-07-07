@@ -36,8 +36,6 @@
 </template>
 
 <script>
-// import cookies from "vue-cookies";
-// import axios from "axios";
 import DeleteTweet from "./DeleteTweet.vue";
 import EditTweet from "./EditTweet.vue";
 import TweetComments from "./TweetComments.vue";
@@ -50,47 +48,26 @@ export default {
     TweetComments,
     LikeTweet,
   },
-  data() {
-    return {
-      currentAndFollowing: [],
-    };
-  },
   mounted() {
     if (this.$store.state.followingTweets === undefined) {
       this.$store.dispatch("getFollowingTweets");
-    } else {
-      this.addToCurrentAndFollowing(this.followingTweets);
     }
     if (this.$store.state.currentUserTweets === undefined) {
       this.$store.dispatch("viewMyTweets");
-    } else {
-      this.addToCurrentAndFollowing(this.currentUserTweets);
     }
-    this.sortCurrentAndFollowing(this.currentAndFollowing);
-  },
-  watch: {
-    currentUserTweets(newValue, oldValue) {
-      this.addToCurrentAndFollowing(this.currentUserTweets);
-      this.sortCurrentAndFollowing(this.currentAndFollowing);
-      oldValue;
-      newValue;
-    },
-    followingTweets(newValue, oldValue) {
-      this.addToCurrentAndFollowing(this.followingTweets);
-      this.sortCurrentAndFollowing(this.currentAndFollowing);
-      oldValue;
-      newValue;
-    },
+    if (this.$store.state.allTweets === undefined) {
+      this.$store.dispatch("getAllTweets");
+    }
   },
   computed: {
-    followingTweets() {
-      return this.$store.state.followingTweets;
-    },
-    currentUserTweets() {
-      return this.$store.state.currentUserTweets;
+    currentAndFollowing() {
+      return this.$store.getters.currentAndFollowing;
     },
     currentUserInfo() {
       return this.$store.state.currentUserInfo;
+    },
+    tweetLikes() {
+      return this.$store.state.tweetLikes;
     },
   },
   methods: {
@@ -104,20 +81,6 @@ export default {
         this.currentAndFollowing.push(tweets[i]);
       }
     },
-
-    // filterFollowingTweets() {
-    //   let tempArray = [];
-    //   console.log(this.allTweets);
-    //   for (let tweet = 0; tweet < this.allTweets.length; tweet++) {
-    //     for (let i = 0; i < this.followingUsers.length; i++) {
-    //       if (this.allTweets[tweet].userId == this.followingUsers[i].userId) {
-    //         console.log(this.allTweets[tweet]);
-    //         tempArray.push(this.allTweets[tweet]);
-    //       }
-    //     }
-    //   }
-    //   this.followedTweets = tempArray;
-    // },
   },
 };
 </script>

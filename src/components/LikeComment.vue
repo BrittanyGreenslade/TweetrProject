@@ -14,7 +14,7 @@
       src="@/assets/images/unlike.svg"
       alt="hand drawn heart light green - unlike btn"
     />
-    <p v-if="this.commentLikes.length >= 1">Likes: {{ numLikes }}</p>
+    <p>Likes: {{ numLikes }}</p>
   </div>
 </template>
 
@@ -31,15 +31,36 @@ export default {
       loginToken: cookies.get("loginToken"),
       commentLiked: false,
       currentUserInfo: cookies.get("currentUserInfo"),
-      commentLikes: [],
-      numLikes: "",
+      numLikes: 0,
     };
   },
+  computed: {
+    commentLikes() {
+      return this.$store.state.commentLikes;
+    },
+  },
   mounted() {
-    this.viewCommentLikes();
+    //obj will return undefined if it's not there
+    if (this.commentLikes[this.commentId] === undefined) {
+      this.viewCommentLikes(this.commentId);
+    } else {
+      this.checkCommentLiked();
+      this.numLikes = this.commentLikes[this.commentId].length;
+    }
   },
   methods: {
-    viewCommentLikes() {
+    checkCommentLiked() {
+      for (let i = 0; i < this.commentLikes[this.commentId].length; i++) {
+        if (
+          this.currentUserInfo.userId ===
+            this.commentLikes[this.commentId][i].userId &&
+          this.commentLikes[this.commentId][i].commentId === this.commentId
+        ) {
+          this.commentLiked = true;
+        }
+      }
+    },
+    viewCommentLikes(commentId) {
       axios
         .request({
           url: `${process.env.VUE_APP_API_URL}/comment-likes`,
@@ -47,17 +68,16 @@ export default {
             "Content-Type": "application/json",
           },
           params: {
-            commentId: this.commentId,
+            commentId: commentId,
           },
         })
         .then((res) => {
-          this.commentLikes = res.data;
-          this.numLikes = res.data.length;
-          for (let i = 0; i < res.data.length; i++) {
-            if (this.currentUserInfo.userId === res.data[i].userId) {
-              this.commentLiked = true;
-            }
-          }
+          this.$store.commit("addLikeToCommentLikes", {
+            commentId: commentId,
+            likes: res.data,
+          });
+          this.checkCommentLiked();
+          this.numLikes = this.commentLikes[this.commentId].length;
         })
         .catch((err) => {
           console.log(err);
@@ -78,8 +98,11 @@ export default {
           },
         })
         .then((res) => {
-          res;
-          this.viewCommentLikes();
+          this.numLikes += 1;
+          this.$store.commit("likeComment", {
+            commentId: this.commentId,
+            like: res.data,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -100,8 +123,11 @@ export default {
           },
         })
         .then((res) => {
-          this.viewCommentLikes();
-          res;
+          this.numLikes -= 1;
+          this.$store.commit("removeLikeFromCommentLikes", {
+            commentId: this.commentId,
+            like: res.data,
+          });
         })
         .catch((err) => {
           console.log(err);

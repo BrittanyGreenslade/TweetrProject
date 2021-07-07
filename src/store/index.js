@@ -13,29 +13,24 @@ export default new Vuex.Store({
     allTweets: undefined,
     followingUsers: undefined,
     followingTweets: undefined,
-    // usersNotFollowing: [],
     currentUserTweets: undefined,
-    // followedUser: false,
+    tweetLikes: {},
+    commentLikes: {},
   },
   mutations: {
     //all users mutations
-    //used
     updateAllUsers(state, data) {
       state.allUsers = data;
     },
-    //used
     updateFollowingUsers(state, data) {
       state.followingUsers = data;
     },
-    //used
     updateFollowingTweets(state, data) {
       state.followingTweets = data;
     },
-    //used
     addUserToFollowing(state, data) {
       state.followingUsers.push(data);
     },
-    //used
     removeUserFromFollowing(state, data) {
       state.followingUsers.splice(data, 1);
     },
@@ -50,6 +45,52 @@ export default new Vuex.Store({
     addCurrentToFollowing(state) {
       state.followingUsers.push(state.currentUserInfo);
     },
+    //tweet like mutations
+    addLikeToTweetLikes(state, data) {
+      Vue.set(state.tweetLikes, data.tweetId, data.likes);
+    },
+    likeTweet(state, data) {
+      let likes = state.tweetLikes[data.tweetId];
+      likes.push(data.like);
+      Vue.set(state.tweetLikes, data.tweetId, likes);
+    },
+    removeLikeFromTweetLikes(state, data) {
+      let likes = state.tweetLikes[data.tweetId];
+      //filter based on user_id != my userid (if my user_id is not in, keep those ones)
+      function notCurrentLike(likes) {
+        for (let i = 0; i < likes.length; i++) {
+          if (likes[i].userId != state.currentUserInfo.userId) {
+            likes.push(data.like);
+          }
+        }
+      }
+      let filtered = likes.filter(notCurrentLike);
+
+      Vue.set(state.tweetLikes, data.tweetId, filtered);
+    },
+    //comment like mutations
+    addLikeToCommentLikes(state, data) {
+      Vue.set(state.commentLikes, data.commentId, data.likes);
+    },
+    likeComment(state, data) {
+      let likes = state.commentLikes[data.commentId];
+      likes.push(data.like);
+      Vue.set(state.commentLikes, data.commentId, likes);
+    },
+    removeLikeFromCommentLikes(state, data) {
+      let likes = state.commentLikes[data.commentId];
+      //filter based on user_id != my userid (if my user_id is not in, keep those ones)
+      function notCurrentLike(likes) {
+        for (let i = 0; i < likes.length; i++) {
+          if (likes[i].userId != state.currentUserInfo.userId) {
+            likes.push(data.like);
+          }
+        }
+      }
+      let filtered = likes.filter(notCurrentLike);
+
+      Vue.set(state.commentLikes, data.commentId, filtered);
+    },
     //tweet mutations
     updateCurrentUserTweets(state, data) {
       state.currentUserTweets = data;
@@ -57,17 +98,29 @@ export default new Vuex.Store({
     updateAllTweets(state, data) {
       state.allTweets = data;
     },
-    // addTweetToCurrentTweets(state, data) {
-    //   state.currentUserTweets = data;
-    // },
+    addTweetToCurrentTweets(state, data) {
+      if (state.currentUserTweets !== undefined) {
+        state.currentUserTweets.push(data);
+      } else {
+        let currentUserTweets = [];
+        currentUserTweets.push(data);
+        state.currentUserTweets = currentUserTweets;
+      }
+    },
     addTweetToAllTweets(state, data) {
-      state.allTweets.push(data);
+      if (state.allTweets !== undefined) {
+        state.allTweets.push(data);
+      } else {
+        let allTweets = [];
+        allTweets.push(data);
+        state.allTweets = allTweets;
+      }
     },
     removeTweetFromCurrentTweets(state, data) {
-      state.currentUserTweets.splice(data);
+      state.currentUserTweets.splice(data, 1);
     },
     removeTweetFromAllUsersTweets(state, data) {
-      state.allTweets.splice(data);
+      state.allTweets.splice(data, 1);
     },
   },
   actions: {
@@ -82,7 +135,6 @@ export default new Vuex.Store({
         })
         .then((res) => {
           context.commit("updateFollowingTweets", res.data);
-          //add current user tweets here
         })
         .catch((err) => {
           console.log(err);
@@ -140,7 +192,6 @@ export default new Vuex.Store({
         })
         .then((res) => {
           context.commit("updateAllTweets", res.data);
-          console.log(context.state.allTweets);
         })
         .catch((err) => {
           console.log(err);
@@ -164,15 +215,40 @@ export default new Vuex.Store({
   },
 
   getters: {
-    // sortedCurrentTweets: function(state) {
-    //   return state.currentUserTweets.sort(function(tweet1, tweet2) {
-    //     return tweet2.tweetId - tweet1.tweetId;
-    //   });
-    // },
-    // sortedAllTweets: function(state) {
-    //   return state.allTweets.sort(function(tweet1, tweet2) {
-    //     return tweet2.tweetId - tweet1.tweetId;
-    //   });
-    // },
+    currentAndFollowing(state) {
+      let tweets = [];
+      if (
+        state.followingTweets === undefined ||
+        state.currentUserTweets === undefined
+      ) {
+        return tweets;
+      }
+      // for each tweet in tweets, push that tweet to tweets array
+      state.followingTweets.forEach((tweet) => tweets.push(tweet));
+      state.currentUserTweets.forEach((tweet) => tweets.push(tweet));
+
+      return tweets.sort(function(tweet1, tweet2) {
+        return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
+      });
+    },
+    sortedCurrentTweets(state) {
+      let tweets = [];
+      if (state.currentUserTweets === undefined) {
+        return tweets;
+      }
+
+      return state.currentUserTweets.sort(function(tweet1, tweet2) {
+        return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
+      });
+    },
+    sortedAllTweets(state) {
+      let tweets = [];
+      if (state.allTweets === undefined) {
+        return tweets;
+      }
+      return state.allTweets.sort(function(tweet1, tweet2) {
+        return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
+      });
+    },
   },
 });

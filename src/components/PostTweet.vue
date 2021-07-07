@@ -37,9 +37,6 @@ export default {
     },
   },
   methods: {
-    // emptySubmitStatus() {
-    //   this.submitStatus = "";
-    // },
     postTweet() {
       if (document.getElementById("postTweet").value !== "") {
         axios
@@ -57,19 +54,16 @@ export default {
           .then((res) => {
             this.$store.commit("addTweetToCurrentTweets", res.data);
             this.$store.commit("addTweetToAllTweets", res.data);
-            // this.$store.commit(
-            //   "updateCurrentUserTweets",
-            //   this.currentUserTweets
-            // );
-            // this.$store.commit("updateAllTweets", this.allTweets);
             document.getElementById("postTweet").value = "";
-            this.submitStatus = "";
           })
           .catch((err) => {
             console.log(err);
           });
       } else if (document.getElementById("postTweet").value === "") {
-        this.submitStatus = "Your tweet has no content!";
+        this.submitStatus = "Your post has no content!";
+        setTimeout(() => {
+          this.submitStatus = "";
+        }, 1000);
       }
     },
   },
