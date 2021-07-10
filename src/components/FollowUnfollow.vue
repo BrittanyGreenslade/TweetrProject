@@ -116,9 +116,7 @@ export default {
         })
         .then((res) => {
           res;
-          console.log(this.followingUsers);
           this.$store.commit("addUserToFollowing", res.data);
-          console.log(this.followingUsers);
           this.checkUserFollowed(this.userId);
           //dispatch followed users' tweets or get tweets by their id
         })
@@ -143,13 +141,11 @@ export default {
           res;
           //filter out unfollowed users tweets
           this.followedUser = false;
-          console.log(this.followingUsers);
           for (let i = 0; i < this.followingUsers.length; i++) {
             if (this.userId === this.followingUsers[i].userId) {
               this.$store.commit("removeUserFromFollowing", i);
             }
           }
-          console.log(this.followingUsers);
           this.checkUserFollowed();
           // this.$store.commit("updateFollowingUsers", this.followingUsers);
         })
