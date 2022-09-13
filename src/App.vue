@@ -95,7 +95,6 @@ export default {
 <style scoped>
 #inApp {
   display: grid;
-  place-items: center;
 }
 h1 {
   font-size: 33px;
@@ -118,11 +117,12 @@ font-family: 'Prata', serif; */
 }
 #titleContainer {
   display: grid;
-  width: 85%;
-  grid-template-columns: 2fr 1.25fr;
-  column-gap: 5px;
+  /* width: 40%; */
+  grid-template-columns: 0.75fr 0.1fr;
+  column-gap: 15px;
   margin-top: 5vh;
-  margin-right: 5%;
+  place-self: center;
+  /* margin-right: 5%; */
 }
 .pageContainer {
   display: grid;
