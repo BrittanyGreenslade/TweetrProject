@@ -63,7 +63,7 @@ export default {
     attemptLogin() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/api/login`,
+          url: `${process.env.VUE_APP_API_URL}/login`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
