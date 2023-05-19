@@ -49,7 +49,8 @@ export default {
       this.editViewOn = false;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comments`,
+          // url: `${process.env.VUE_APP_API_URL}/comments`,
+          url: `api/comments`,
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

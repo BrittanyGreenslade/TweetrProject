@@ -37,7 +37,8 @@ export default {
     deleteTweet(tweetId) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweets`,
+          // url: `${process.env.VUE_APP_API_URL}/tweets`,
+          url: `api/tweets`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

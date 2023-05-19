@@ -35,7 +35,8 @@ export default {
     deleteComment() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comments`,
+          // url: `${process.env.VUE_APP_API_URL}/comments`,
+          url: `api/comments`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

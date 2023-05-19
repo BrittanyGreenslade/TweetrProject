@@ -57,7 +57,8 @@ export default {
     deleteProfile() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/users`,
+          // url: `${process.env.VUE_APP_API_URL}/users`,
+          url: `api/users`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

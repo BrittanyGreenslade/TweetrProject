@@ -14,7 +14,8 @@ export default {
     getFollowers() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
+          // url: `${process.env.VUE_APP_API_URL}/follows`,
+          url: `api/follows`,
           // method:"GET",
           headers: {
             "Content-Type": "application/json",

@@ -84,7 +84,8 @@ export default {
     getFollowingUsers() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
+          // url: `${process.env.VUE_APP_API_URL}/follows`,
+          url: `api/follows`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -104,7 +105,8 @@ export default {
       this.followedUser = true;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
+          // url: `${process.env.VUE_APP_API_URL}/follows`,
+          url: `api/follows`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -127,7 +129,8 @@ export default {
     unfollowUser() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/follows`,
+          // url: `${process.env.VUE_APP_API_URL}/follows`,
+          url: `api/follows`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

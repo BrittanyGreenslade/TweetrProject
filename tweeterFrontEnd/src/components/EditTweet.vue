@@ -63,7 +63,9 @@ export default {
       this.toggleEditOn = false;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweets`,
+          // url: `${process.env.VUE_APP_API_URL}/tweets`,
+          url: `api/tweets`,
+
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

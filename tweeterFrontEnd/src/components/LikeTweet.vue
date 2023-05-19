@@ -62,7 +62,8 @@ export default {
     viewTweetLikes(tweetId) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          url: `api/tweet-likes`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -86,7 +87,8 @@ export default {
       this.tweetLiked = true;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          url: `api/tweet-likes`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +113,8 @@ export default {
       this.tweetLiked = false;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/tweet-likes`,
+          url: `api/tweet-likes`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

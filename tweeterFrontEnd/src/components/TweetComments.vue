@@ -88,7 +88,8 @@ export default {
       this.commentViewOn = true;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comments`,
+          // url: `${process.env.VUE_APP_API_URL}/comments`,
+          url: `api/comments`,
           headers: {
             "Content-Type": "application/json",
           },

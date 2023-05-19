@@ -63,7 +63,8 @@ export default {
     viewCommentLikes(commentId) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          url: `api/comment-likes`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -87,7 +88,8 @@ export default {
       this.commentLiked = true;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          url: `api/comment-likes`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -112,7 +114,8 @@ export default {
       this.commentLiked = false;
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          // url: `${process.env.VUE_APP_API_URL}/comment-likes`,
+          url: `api/comment-likes`,
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

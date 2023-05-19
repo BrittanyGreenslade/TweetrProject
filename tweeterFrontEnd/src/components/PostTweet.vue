@@ -41,7 +41,8 @@ export default {
       if (document.getElementById("postTweet").value !== "") {
         axios
           .request({
-            url: `${process.env.VUE_APP_API_URL}/tweets`,
+            // url: `${process.env.VUE_APP_API_URL}/tweets`,
+            url: `api/tweets`,
             method: "POST",
             headers: {
               "Content-Type": "application/json",

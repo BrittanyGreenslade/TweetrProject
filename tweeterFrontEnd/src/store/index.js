@@ -133,7 +133,8 @@ export default new Vuex.Store({
     getFollowingTweets(context) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/followingTweets`,
+          url: `api/followingTweets`,
+          // url: `${process.env.VUE_APP_API_URL}/followingTweets`,
           headers: {
             "Content-Type": "application/json",
             loginToken: context.state.loginToken,
@@ -149,7 +150,8 @@ export default new Vuex.Store({
     viewMyTweets(context) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweets`,
+          url: `api/tweets`,
+          // url: `${process.env.VUE_APP_API_URL}/tweets`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -191,7 +193,8 @@ export default new Vuex.Store({
     getAllTweets(context) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/tweets`,
+          url: `api/tweets`,
+          // url: `${process.env.VUE_APP_API_URL}/tweets`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -206,7 +209,8 @@ export default new Vuex.Store({
     getAllUsers(context) {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/users`,
+          // url: `${process.env.VUE_APP_API_URL}/users`,
+          url: `api/users`,
           headers: {
             "Content-Type": "application/json",
           },

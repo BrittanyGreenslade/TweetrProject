@@ -57,6 +57,7 @@ export default {
     userSignup() {
       axios
         .request({
+          // url: `${process.env.VUE_APP_API_URL}/users`,
           url: `api/users`,
           method: "POST",
           headers: {

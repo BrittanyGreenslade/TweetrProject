@@ -32,7 +32,8 @@ export default {
     viewUserProfile() {
       axios
         .request({
-          url: `${process.env.VUE_APP_API_URL}/users`,
+          // url: `${process.env.VUE_APP_API_URL}/users`,
+          url: `api/users`,
           headers: {
             "Content-Type": "application/json",
           },
