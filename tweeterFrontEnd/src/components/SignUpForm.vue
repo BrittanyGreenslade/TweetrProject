@@ -57,7 +57,7 @@ export default {
     userSignup() {
       axios
         .request({
-          url: `sustainappbility.bgreenslade.com/api/users`,
+          url: `${process.env.VUE_APP_API_URL}/users`,
           method: "POST",
           headers: {
             "Content-Type": "application/json",
