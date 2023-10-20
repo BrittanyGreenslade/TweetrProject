@@ -1,40 +1,40 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store";
-import Discover from "@/views/Discover.vue";
-import Feed from "@/views/Feed.vue";
-import Login from "@/views/Login.vue";
-import Profile from "@/views/Profile.vue";
-import Users from "@/views/Users.vue";
+import DiscoverPage from "@/views/DiscoverPage.vue";
+import FeedPage from "@/views/FeedPage.vue";
+import LoginPage from "@/views/LoginPage.vue";
+import ProfilePage from "@/views/ProfilePage.vue";
+import UsersPage from "@/views/UsersPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/discover",
-    name: "Discover",
-    component: Discover,
+    name: "DiscoverPage",
+    component: DiscoverPage,
   },
   {
     path: "/login",
-    name: "Login",
-    component: Login,
+    name: "LoginPage",
+    component: LoginPage,
   },
 
   {
     path: "/users",
-    name: "Users",
-    component: Users,
+    name: "UsersPage",
+    component: UsersPage,
   },
   {
     path: "/profile/:userId",
-    name: "Profile",
-    component: Profile,
+    name: "ProfilePage",
+    component: ProfilePage,
   },
   {
     path: "/feed",
-    name: "Feed",
-    component: Feed,
+    name: "FeedPage",
+    component: FeedPage,
   },
 ];
 
