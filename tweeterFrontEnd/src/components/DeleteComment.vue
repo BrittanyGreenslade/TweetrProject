@@ -46,7 +46,7 @@ export default {
             commentId: this.commentId,
           },
         })
-        .then((res) => {
+        .then(() => {
           const updatedComments = this.tweetComments.filter(
             (comment) => comment.commentId !== this.commentId
           );
