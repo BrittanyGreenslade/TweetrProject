@@ -3,7 +3,7 @@
     <p
       v-if="
         toggleEditOn === false &&
-          Number(currentUserInfo.userId) === Number(userId)
+        Number(currentUserInfo.userId) === Number(userId)
       "
       @click="toggleEditOn = true"
       id="viewCmt"

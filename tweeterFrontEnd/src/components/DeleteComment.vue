@@ -3,7 +3,7 @@
     <img
       v-if="
         toggleDeleteOn === false &&
-          Number(currentUserInfo.userId) === Number(userId)
+        Number(currentUserInfo.userId) === Number(userId)
       "
       @click="deleteComment"
       class="actionIcon"

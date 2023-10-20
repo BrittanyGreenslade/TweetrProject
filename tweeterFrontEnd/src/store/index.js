@@ -237,7 +237,7 @@ export default new Vuex.Store({
       state.followingTweets.forEach((tweet) => tweets.push(tweet));
       state.currentUserTweets.forEach((tweet) => tweets.push(tweet));
 
-      return tweets.sort(function(tweet1, tweet2) {
+      return tweets.sort(function (tweet1, tweet2) {
         return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
       });
     },
@@ -247,7 +247,7 @@ export default new Vuex.Store({
         return tweets;
       }
 
-      return state.currentUserTweets.sort(function(tweet1, tweet2) {
+      return state.currentUserTweets.sort(function (tweet1, tweet2) {
         return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
       });
     },
@@ -256,7 +256,7 @@ export default new Vuex.Store({
       if (state.allTweets === undefined) {
         return tweets;
       }
-      return state.allTweets.sort(function(tweet1, tweet2) {
+      return state.allTweets.sort(function (tweet1, tweet2) {
         return Date.parse(tweet2.createdAt) - Date.parse(tweet1.createdAt);
       });
     },

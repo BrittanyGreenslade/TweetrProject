@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     sortCurrentAndFollowing() {
-      return this.currentAndFollowing.sort(function(tweet1, tweet2) {
+      return this.currentAndFollowing.sort(function (tweet1, tweet2) {
         return tweet2.tweetId - tweet1.tweetId;
       });
     },
