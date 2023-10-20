@@ -9,7 +9,7 @@
 import AllUsers from "@/components/AllUsers.vue";
 
 export default {
-  name: "users",
+  name: "UsersPage",
   components: {
     AllUsers,
   },

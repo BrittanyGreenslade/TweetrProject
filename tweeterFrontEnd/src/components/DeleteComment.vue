@@ -16,6 +16,7 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
+
 export default {
   name: "delete-comment",
   data() {
@@ -35,7 +36,6 @@ export default {
     deleteComment() {
       axios
         .request({
-          // url: `${process.env.VUE_APP_API_URL}/comments`,
           url: `api/comments`,
           method: "DELETE",
           headers: {
@@ -47,18 +47,12 @@ export default {
           },
         })
         .then((res) => {
-          res;
-          for (let i = 0; i < this.tweetComments.length; i++) {
-            if (this.tweetComments[i].commentId === this.commentId) {
-              //at index [i] (where tweet comment id = commentID)
-              this.tweetComments.splice(i, 1);
-              this.$emit("commentsAfterDelete", this.tweetComments);
-            }
-          }
+          const updatedComments = this.tweetComments.filter(
+            (comment) => comment.commentId !== this.commentId
+          );
+          this.$emit("commentsAfterDelete", updatedComments);
         })
         .catch((err) => {
-          console.log(this.tweetComments);
-
           console.log(err);
         });
     },
